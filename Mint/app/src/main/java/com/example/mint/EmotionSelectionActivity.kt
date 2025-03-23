@@ -14,12 +14,13 @@ class EmotionSelectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_emotion_selection)
 
-        // Toolbar를 액션바로 설정
+        // XML에 정의된 Toolbar를 찾아서 액션바로 설정
         val toolbar = findViewById<Toolbar>(R.id.toolbar_emotion)
         setSupportActionBar(toolbar)
 
-        // 액션바에 뒤로가기(업 네비게이션) 버튼 표시
+        // 액션바에 뒤로가기 버튼을 표시하고, 커스텀 아이콘을 설정
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_custom_back)
 
         // 1) "행복" 아이콘/텍스트 클릭 시
         val btnHappy = findViewById<LinearLayout>(R.id.btn_emotion_happy)

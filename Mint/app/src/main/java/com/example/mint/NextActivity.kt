@@ -11,13 +11,13 @@ class NextActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_next)
 
-        // Toolbar를 액션바로 설정
+        // XML에 정의된 Toolbar를 찾아서 액션바로 설정
         val toolbar = findViewById<Toolbar>(R.id.toolbar_emotion)
         setSupportActionBar(toolbar)
 
-        // 액션바에 뒤로가기(업 네비게이션) 버튼 표시
+        // 액션바에 뒤로가기 버튼을 표시하고, 커스텀 아이콘을 설정
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        // 만약 제목이 필요없다면 아래 코드를 추가해서 숨길 수 있습니다.
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_custom_back)
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
