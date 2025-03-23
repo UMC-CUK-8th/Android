@@ -1,172 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_emotion_selection"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp"
-    android:gravity="center_horizontal">
-
-    <!-- 툴바 추가 -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_emotion"
-        android:label=""
+    android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layout_emotion_selection"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:titleTextColor="@android:color/black" />
-
-    <!-- 상단 문구들 -->
-    <TextView
-        android:id="@+id/tv_main_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="오늘 하루는 어땠나요?"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:id="@+id/tv_sub_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="감정우표를 선택해주세요"
-        android:layout_marginTop="8dp"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:id="@+id/tv_guide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="선택한 감정우표를 기반으로 맞춤형 문장이 배달됩니다."
-        android:textSize="12sp"
-        android:textColor="@android:color/darker_gray"
-        android:layout_marginTop="4dp"
-        android:layout_gravity="center_horizontal" />
-
-    <!-- 1) 행복 -->
-    <LinearLayout
-        android:id="@+id/btn_emotion_happy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="40dp"
-        android:clickable="true"
-        android:focusable="true">
+        android:padding="20dp"
+        android:gravity="center_horizontal">
 
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_happy_face" />
+        <!-- 툴바 추가 -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_emotion"
+            android:label=""
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="@android:color/black" />
 
+        <!-- 상단 문구들 -->
         <TextView
-            android:id="@+id/tv_emotion_happy"
+            android:id="@+id/tv_main_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="더없이 행복한 하루였어요"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <!-- 2) 들뜸 -->
-    <LinearLayout
-        android:id="@+id/btn_emotion_excited"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="24dp"
-        android:clickable="true"
-        android:focusable="true">
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_excited_face" />
+            android:text="오늘 하루는 어땠나요?"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal" />
 
         <TextView
-            android:id="@+id/tv_emotion_excited"
+            android:id="@+id/tv_sub_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="들뜨고 흥분돼요"
+            android:text="감정우표를 선택해주세요"
             android:layout_marginTop="8dp"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <!-- 3) 평범 -->
-    <LinearLayout
-        android:id="@+id/btn_emotion_normal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="24dp"
-        android:clickable="true"
-        android:focusable="true">
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_normal_face" />
+            android:layout_gravity="center_horizontal" />
 
         <TextView
-            android:id="@+id/tv_emotion_normal"
+            android:id="@+id/tv_guide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="평범한 하루였어요"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp" />
-    </LinearLayout>
+            android:text="선택한 감정우표를 기반으로 맞춤형 문장이 배달됩니다."
+            android:textSize="12sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginTop="4dp"
+            android:layout_gravity="center_horizontal" />
 
-    <!-- 4) 불안 -->
-    <LinearLayout
-        android:id="@+id/btn_emotion_anxious"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="24dp"
-        android:clickable="true"
-        android:focusable="true">
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_anxious_face" />
-
-        <TextView
-            android:id="@+id/tv_emotion_anxious"
+        <!-- 1) 행복 -->
+        <LinearLayout
+            android:id="@+id/btn_emotion_happy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="생각이 많아지고 불안해요"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="40dp"
+            android:clickable="true"
+            android:focusable="true">
 
-    <!-- 5) 화남 -->
-    <LinearLayout
-        android:id="@+id/btn_emotion_angry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="24dp"
-        android:clickable="true"
-        android:focusable="true">
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_happy_face" />
 
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_angry_face" />
+            <TextView
+                android:id="@+id/tv_emotion_happy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="더없이 행복한 하루였어요"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_emotion_angry"
+        <!-- 2) 들뜸 -->
+        <LinearLayout
+            android:id="@+id/btn_emotion_excited"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="부글부글 화가 나요"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="24dp"
+            android:clickable="true"
+            android:focusable="true">
 
-</LinearLayout>
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_excited_face" />
+
+            <TextView
+                android:id="@+id/tv_emotion_excited"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="들뜨고 흥분돼요"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- 3) 평범 -->
+        <LinearLayout
+            android:id="@+id/btn_emotion_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="24dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_normal_face" />
+
+            <TextView
+                android:id="@+id/tv_emotion_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="평범한 하루였어요"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- 4) 불안 -->
+        <LinearLayout
+            android:id="@+id/btn_emotion_anxious"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="24dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_anxious_face" />
+
+            <TextView
+                android:id="@+id/tv_emotion_anxious"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="생각이 많아지고 불안해요"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- 5) 화남 -->
+        <LinearLayout
+            android:id="@+id/btn_emotion_angry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="24dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_angry_face" />
+
+            <TextView
+                android:id="@+id/tv_emotion_angry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="부글부글 화가 나요"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
