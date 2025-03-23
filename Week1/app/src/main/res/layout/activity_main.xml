@@ -112,7 +112,8 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:contentDescription="들뜸 아이콘"
-                    android:src="@drawable/blue_face"/>
+                    android:src="@drawable/blue_face"
+                    android:onClick="goToBlue" />
             </LinearLayout>
 
             <TextView
