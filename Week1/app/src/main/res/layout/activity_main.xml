@@ -70,10 +70,9 @@
 
                 <ImageButton
                     android:id="@+id/button_yellow"
-                    android:layout_weight="1"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:contentDescription="행복 아이콘"
+                    android:contentDescription="행복 버튼"
                     android:src="@drawable/yellow_face"
                     android:onClick="goToYellow" />
 
@@ -108,10 +107,9 @@
 
                 <ImageButton
                     android:id="@+id/button_blue"
-                    android:layout_weight="1"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:contentDescription="들뜸 아이콘"
+                    android:contentDescription="들뜸 버튼"
                     android:src="@drawable/blue_face"
                     android:onClick="goToBlue" />
             </LinearLayout>
@@ -144,10 +142,9 @@
 
                 <ImageButton
                     android:id="@+id/button_purple"
-                    android:layout_weight="1"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:contentDescription="평범 아이콘"
+                    android:contentDescription="평범 버튼"
                     android:src="@drawable/puple_face"/>
             </LinearLayout>
 
@@ -179,10 +176,9 @@
 
                 <ImageButton
                     android:id="@+id/button_green"
-                    android:layout_weight="1"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:contentDescription="불안 아이콘"
+                    android:contentDescription="불안 버튼"
                     android:src="@drawable/green_face"/>
             </LinearLayout>
 
@@ -214,10 +210,9 @@
 
                 <ImageButton
                     android:id="@+id/button_red"
-                    android:layout_weight="1"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:contentDescription="화남 아이콘"
+                    android:contentDescription="화남 버튼"
                     android:src="@drawable/red_face"/>
             </LinearLayout>
 
