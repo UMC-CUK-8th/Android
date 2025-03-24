@@ -19,8 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-
-rootProject.name = "Week1"
-
+rootProject.name = "Mint"
 include(":app")
  

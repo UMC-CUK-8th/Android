@@ -5,13 +5,11 @@ plugins {
 }
 
 android {
-
-    namespace = "com.example.week1"
+    namespace = "com.example.mint"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.week1"
-
+        applicationId = "com.example.mint"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -51,7 +49,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.appcompat)
+    implementation("androidx.appcompat:appcompat:1.6.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
