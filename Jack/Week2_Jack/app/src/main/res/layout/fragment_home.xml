@@ -2,15 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#E7D44B"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:gravity="center"
+    android:id="@+id/homeFragment" >
 
     <TextView
-        android:id="@+id/searchText"
+        android:id="@+id/homeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="홈 화면"
-        android:textSize="24sp"
-        android:textColor="@android:color/black" />
+        android:text="홈"
+        android:textSize="50dp" />
 
 </LinearLayout>

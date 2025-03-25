@@ -2,15 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#DE6271"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:gravity="center"
+    android:id="@+id/searchFragment"
+    tools:context="com.example.week2_jack.SearchFragment">
 
     <TextView
         android:id="@+id/searchText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="검색 화면"
-        android:textSize="24sp"
-        android:textColor="@android:color/black" />
+        android:text="검색"
+        android:textSize="50dp" />
 
 </LinearLayout>

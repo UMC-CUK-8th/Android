@@ -3,39 +3,28 @@ package com.example.week2_jack
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+import androidx.fragment.app.FragmentTransaction
+import com.example.week2_jack.R
+import com.example.week2_jack.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var mBinding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        mBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
 
-        // 앱 실행 시 기본 화면을 HomeFragment로 설정
-        if (savedInstanceState == null) {
-            replaceFragment(HomeFragment())  // 기본 화면 설정
-        }
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.my_nav_host) as NavHostFragment
+        val navController = navHostFragment.navController
 
-        bottomNavigationView.setOnItemSelectedListener { menuItem ->
-            val selectedFragment: Fragment = when (menuItem.itemId) {
-                R.id.nav_home -> HomeFragment()
-                R.id.nav_search -> SearchFragment()
-                R.id.nav_category -> CategoryFragment()
-                R.id.nav_profile -> ProfileFragment()
-                else -> HomeFragment()
-            }
+        NavigationUI.setupWithNavController(mBinding.myBottomNav, navController)
 
-            replaceFragment(selectedFragment)
-            true
         }
     }
-
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out) // 슬라이드 애니메이션 효과
-            .replace(R.id.fragmentContainer, fragment)
-            .commit()
-    }
-}
