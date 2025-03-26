@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.MintAndroid" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 여기에 필요한 스타일 정의 -->
+    </style>
+
+</resources>
