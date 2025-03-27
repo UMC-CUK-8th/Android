@@ -1,11 +1,12 @@
-package com.example.mint
+package com.example.mint.week1
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.LinearLayout
 import androidx.appcompat.widget.Toolbar
-import com.example.mint.NextActivity
+import com.example.mint.week1.NextActivity
 import com.example.mint.R
 
 
@@ -60,6 +61,17 @@ class EmotionSelectionActivity : AppCompatActivity() {
             val intent = Intent(this, NextActivity::class.java)
             // intent.putExtra("emotion", "angry")
             startActivity(intent)
+        }
+    }
+
+    // 업 버튼 클릭 시 동작 처리
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()  // 뒤로가기: 현재 Activity 종료
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

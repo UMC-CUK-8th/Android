@@ -12,18 +12,10 @@
         android:theme="@style/Theme.MintAndroid"
         tools:targetApi="31">
 
-        <!-- MainActivity는 LAUNCHER에서 제거 -->
+        <!-- MainActivity를 LAUNCHER로 지정 -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.MintAndroid" />
-
-        <!-- 감정 선택 화면 액티비티를 LAUNCHER로 설정 -->
-        <activity
-            android:name=".EmotionSelectionActivity"
-            android:exported="true"
-            android:label=""
             android:theme="@style/Theme.MintAndroid">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,11 +23,14 @@
             </intent-filter>
         </activity>
 
+        <!-- 각 주차별 액티비티 -->
         <activity
-            android:name=".NextActivity"
-            android:exported="false" />
+            android:name=".week1.EmotionSelectionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".week1.NextActivity"
+            android:exported="true" />
+
 
     </application>
-
-
 </manifest>
