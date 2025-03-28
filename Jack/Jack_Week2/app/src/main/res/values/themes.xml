@@ -7,4 +7,15 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@android:color/black</item>
     </style>
+
+    <style name="Theme.Screen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
+    </style>
+
+    <style name = "AppTheme.Splash" parent = "Theme.SplashScreen">
+        <item name = "windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/images</item>
+        <item name = "windowSplashScreenAnimationDuration">1000</item>
+        <item name="postSplashScreenTheme">@style/Theme.Week2Jack</item>
+    </style>
 </resources>
