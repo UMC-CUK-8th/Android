@@ -19,12 +19,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
 import com.example.mint.R
 
@@ -48,16 +51,15 @@ sealed class NavScreen(val route: String) {
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ToYouApp() {
-    // 2) 배경을 깔기 위해 전체를 감싸는 Box
-    Box(modifier = Modifier.fillMaxSize()) {
-        // 회색 종이질감 이미지 배경
-        Image(
-            painter = painterResource(id = R.drawable.gray_paper_bg),
-            contentDescription = null,
-            modifier = Modifier.matchParentSize()
-        )
+    val gangwonFontFamily = FontFamily(Font(R.font.gangwon_edu_hyeonok_t))
 
-        val navController = rememberNavController()
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFF6F6F6))
+    ) {
+
+    val navController = rememberNavController()
         val currentRoute = remember { mutableStateOf(NavScreen.Home.route) }
 
         // BottomNav에 표시할 아이템 목록
@@ -73,33 +75,37 @@ fun ToYouApp() {
             topBar = {
                 TopAppBar(
                     modifier = Modifier.height(100.dp),  // 앱바 자체 높이
+                    backgroundColor = Color(0xFFF6F6F6),
                     title = {
                         Text(
                             text = "투유",
-                            fontSize = 24.sp                 // 글자 크게
+                            fontFamily = gangwonFontFamily,
+                            fontSize = 30.sp,                 // 글자 크게
+                            modifier = Modifier.offset(x = 20.dp)
                         )
                     },
                     actions = {
                         IconButton(
                             onClick = { /* 알림 처리 */ },
                             modifier = Modifier.size(48.dp)  // IconButton 자체도 크게
+                                .offset(x = -20.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Notifications,
                                 contentDescription = "알림",
-                                modifier = Modifier.size(32.dp) // 아이콘 크기
+                                modifier = Modifier.size(50.dp) // 아이콘 크기
                             )
                         }
                     },
-                    backgroundColor = Color.White,
                     contentColor = Color.Black,
+
                     elevation = 0.dp
                 )
             },
             bottomBar = {
                 BottomNavigation(
-                    backgroundColor = Color.White,
                     contentColor = Color.Black,
+                    backgroundColor = Color(0xFFF6F6F6),
                     modifier = Modifier.height(90.dp)
                 ) {
                     bottomNavItems.forEach { screen ->

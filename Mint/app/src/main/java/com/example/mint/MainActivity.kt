@@ -6,12 +6,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -46,7 +49,8 @@ fun WeekSelectionScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .background(Color(0xFFAAF0D1)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -56,7 +60,8 @@ fun WeekSelectionScreen() {
             contentDescription = "개발자 민트의 로고",
             modifier = Modifier
                 .size(200.dp) // 이미지 크기 설정
-                .padding(bottom = 5.dp) // 이미지와 텍스트 간 간격
+                .padding(bottom = 10.dp) // 이미지와 텍스트 간 간격
+                .clip(RoundedCornerShape(50.dp)) // ← 모서리를 둥글게
         )
 
         // 텍스트 추가
