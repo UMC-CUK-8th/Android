@@ -32,5 +32,11 @@
             android:exported="true" />
 
 
+        <activity
+            android:name=".week2.ToYouAppActivity"
+            android:exported="true" />
+
+
+
     </application>
 </manifest>

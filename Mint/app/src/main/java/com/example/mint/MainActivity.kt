@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mint.ui.theme.MintTheme
 import com.example.mint.week1.EmotionSelectionActivity
+import com.example.mint.week2.ToYouAppActivity
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +73,15 @@ fun WeekSelectionScreen() {
         Button(onClick = {context.startActivity(Intent(context, EmotionSelectionActivity::class.java)) }) {
             Text("Go to Week 1")
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = {
+            context.startActivity(Intent(context, ToYouAppActivity::class.java))  // HomeScreenActivity로 이동
+        }) {
+            Text("Go to Week 2")
+        }
+
+
     }
 }
 
