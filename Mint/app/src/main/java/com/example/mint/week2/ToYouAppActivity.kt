@@ -33,7 +33,7 @@ class ToYouAppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ToYouApp() //
+            ToYouApp()
         }
     }
 }
@@ -168,24 +168,31 @@ fun AnimatedNavHost(
     currentRoute: String,
     modifier: Modifier = Modifier
 ) {
-    // AnimatedContent를 통해 화면 전환 애니메이션을 처리
     AnimatedContent(
         targetState = currentRoute,
         transitionSpec = {
-            // 슬라이드로 들어오고 슬라이드로 나가는 애니메이션
-            slideInHorizontally(
-                initialOffsetX = { fullWidth -> fullWidth },  // 화면 오른쪽에서 시작
-                animationSpec = tween(durationMillis = 300)
-            ) with slideOutHorizontally(
-                targetOffsetX = { fullWidth -> -fullWidth }, // 왼쪽으로 나가기
-                animationSpec = tween(durationMillis = 300)
-            )
+            when (targetState) {
+                // 슬라이드 애니메이션을 적용할 라우트
+                NavScreen.Pencil.route, NavScreen.Calendar.route -> {
+                    slideInHorizontally(
+                        initialOffsetX = { fullWidth -> fullWidth },
+                        animationSpec = tween(durationMillis = 300)
+                    ) with slideOutHorizontally(
+                        targetOffsetX = { fullWidth -> -fullWidth },
+                        animationSpec = tween(durationMillis = 300)
+                    )
+                }
+                // 그 외에는 페이드 애니메이션 적용
+                else -> {
+                    fadeIn(animationSpec = tween(durationMillis = 300)) with
+                            fadeOut(animationSpec = tween(durationMillis = 300))
+                }
+            }
         }
     ) { targetRoute ->
-        // targetRoute에 맞춰 NavHost 구성
         NavHost(
             navController = navController,
-            startDestination = targetRoute,  // targetRoute로 변경
+            startDestination = targetRoute,
             modifier = modifier
         ) {
             composable(NavScreen.Home.route) {
@@ -198,8 +205,9 @@ fun AnimatedNavHost(
                 ProfileScreen()
             }
             composable(NavScreen.Calendar.route) {
-                CalendarScreen() // Calendar 화면을 추가
+                CalendarScreen()
             }
         }
     }
 }
+
