@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
-                    // Fragment 제거 → 기본 UI 복귀
+
                     supportFragmentManager.popBackStack(
                         null,
                         androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 R.anim.slide_out_left
             )
             .replace(R.id.container, fragment)
-            .addToBackStack(null)  // ← 이것도 꼭 필요해!
+            .addToBackStack(null)
             .commit()
     }
 }
