@@ -57,4 +57,23 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation ("androidx.compose.foundation:foundation:1.4.2")
+
+    // Jetpack Compose
+    implementation("androidx.compose.ui:ui:1.4.2")           // 예시 버전
+    implementation("androidx.compose.material:material:1.4.2")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.4.2")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.4.2")
+
+    // Navigation Compose
+    implementation("androidx.navigation:navigation-compose:2.5.3")
+
+    // Accompanist Pager
+    implementation ("com.google.accompanist:accompanist-pager:0.31.3-beta")
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.31.3-beta")
+
+
+    // 기타 필요한 라이브러리들(예: Coil로 이미지 로딩, 등등)
+    // implementation "io.coil-kt:coil-compose:2.2.2"
 }

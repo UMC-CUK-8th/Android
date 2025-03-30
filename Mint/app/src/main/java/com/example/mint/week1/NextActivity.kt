@@ -1,9 +1,10 @@
-package com.example.mint
+package com.example.mint.week1
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
+import com.example.mint.R
 
 // 필요한 import 추가
 class NextActivity : AppCompatActivity() {
