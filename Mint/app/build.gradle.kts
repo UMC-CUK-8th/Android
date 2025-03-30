@@ -69,6 +69,11 @@ dependencies {
     // Navigation Compose
     implementation("androidx.navigation:navigation-compose:2.5.3")
 
+    // Accompanist Pager
+    implementation ("com.google.accompanist:accompanist-pager:0.31.3-beta")
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.31.3-beta")
+
+
     // 기타 필요한 라이브러리들(예: Coil로 이미지 로딩, 등등)
     // implementation "io.coil-kt:coil-compose:2.2.2"
 }
