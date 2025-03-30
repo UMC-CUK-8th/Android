@@ -12,34 +12,48 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-
-
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
-                    // 홈 버튼 눌렀을 때 (현재 화면이니까 아무 것도 안 해도 됨)
+                    // Fragment 제거 → 기본 UI 복귀
+                    supportFragmentManager.popBackStack(
+                        null,
+                        androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+                    )
                     true
                 }
+
                 R.id.nav_pencil -> {
-                    // pencil 버튼 누르면 PencilActivity로 이동
-                    val intent = Intent(this, PencilActivity::class.java)
-                    startActivity(intent)
+                    val fragment = PencilFragment()
+                    showFragment(fragment)
                     true
                 }
+
                 R.id.nav_calender -> {
-                    // pencil 버튼 누르면 CalenderActivity로 이동
-                    val intent = Intent(this, PencilActivity::class.java)
-                    startActivity(intent)
+                    val fragment = CalendarFragment()
+                    showFragment(fragment)
                     true
                 }
+
                 R.id.nav_user -> {
-                    // pencil 버튼 누르면 UserActivity로 이동
-                    val intent = Intent(this, PencilActivity::class.java)
-                    startActivity(intent)
+                    val fragment = UserFragment()
+                    showFragment(fragment)
                     true
                 }
+
                 else -> false
             }
         }
+    }
+
+    private fun showFragment(fragment: androidx.fragment.app.Fragment) {
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+            )
+            .replace(R.id.container, fragment)
+            .addToBackStack(null)  // ← 이것도 꼭 필요해!
+            .commit()
     }
 }

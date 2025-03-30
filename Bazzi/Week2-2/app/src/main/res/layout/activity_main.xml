@@ -4,9 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- 화면 내용 들어가는 부분 -->
-    <FrameLayout
-        android:id="@+id/container"
+    <RelativeLayout
+        android:id="@+id/home_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation">
@@ -26,7 +25,8 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/ic_bell"
-            android:layout_gravity="top|end"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp" />
 
@@ -36,11 +36,11 @@
             android:layout_height="28dp"
             android:text="알림"
             android:textSize="18sp"
-            android:textColor="#666666"
+            android:textColor="#333333"
             android:gravity="center"
-            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="150dp"
-            android:background="#E0E0E0"/>
+            android:background="#E0E0E0" />
 
         <TextView
             android:id="@+id/com_text"
@@ -49,7 +49,7 @@
             android:text="멘트"
             android:textSize="18sp"
             android:textColor="#666666"
-            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="180dp" />
 
         <ImageView
@@ -57,17 +57,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_messege"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="220dp"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="220dp" />
 
         <ImageView
             android:id="@+id/mailbox_image"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_mailbox"
-            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="300dp" />
-    </FrameLayout>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_navigation" />
 
     <!-- BottomNavigationView -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -81,4 +87,3 @@
         app:itemIconTint="@color/bottom_nav_icon_color"
         app:itemTextColor="@color/bottom_nav_icon_color"/>
 </RelativeLayout>
-
