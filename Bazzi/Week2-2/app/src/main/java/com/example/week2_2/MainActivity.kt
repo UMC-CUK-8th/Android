@@ -1,47 +1,45 @@
 package com.example.week2_2
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.week2_2.ui.theme.Week22Theme
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            Week22Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+        setContentView(R.layout.activity_main)
+
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    // 홈 버튼 눌렀을 때 (현재 화면이니까 아무 것도 안 해도 됨)
+                    true
                 }
+                R.id.nav_pencil -> {
+                    // pencil 버튼 누르면 PencilActivity로 이동
+                    val intent = Intent(this, PencilActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.nav_calender -> {
+                    // pencil 버튼 누르면 CalenderActivity로 이동
+                    val intent = Intent(this, PencilActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.nav_user -> {
+                    // pencil 버튼 누르면 UserActivity로 이동
+                    val intent = Intent(this, PencilActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Week22Theme {
-        Greeting("Android")
     }
 }
