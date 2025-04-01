@@ -1,58 +1,62 @@
 package com.example.jack_week3
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager2.widget.ViewPager2
+import com.example.jack_week3.databinding.FragmentHomeBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class HomeFragment : androidx.fragment.app.Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var bannerAdapter: BannerAdapter
+    private val bannerList = listOf(
+        BannerItem(R.drawable.banner1),
+        BannerItem(R.drawable.banner2),
+        BannerItem(R.drawable.banner3)
+    )
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private val handler = Handler(Looper.getMainLooper())
+    private var currentPage = 0
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupBannerViewPager(view)
+        startAutoSlide()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
+    private fun setupBannerViewPager(view: View) {
+        bannerAdapter = BannerAdapter(bannerList)
+        view.findViewById<ViewPager2>(R.id.bannerViewPager)?.adapter = bannerAdapter
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        view.findViewById<ViewPager2>(R.id.bannerViewPager)?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                currentPage = position
             }
+        })
+    }
+
+    private fun startAutoSlide() {
+        val runnable = object : Runnable {
+            override fun run() {
+                if (currentPage == bannerList.size - 1) {
+                    currentPage = 0
+                } else {
+                    currentPage++
+                }
+                view?.findViewById<ViewPager2>(R.id.bannerViewPager)?.setCurrentItem(currentPage, true)
+                handler.postDelayed(this, 3000) // 3초마다 변경
+            }
+        }
+        handler.postDelayed(runnable, 3000)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        handler.removeCallbacksAndMessages(null)
     }
 }

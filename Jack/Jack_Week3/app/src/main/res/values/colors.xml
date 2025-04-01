@@ -13,4 +13,7 @@
     <color name="colorSecondary">#03DAC5</color>
     <color name="colorOnSecondary">#000000</color>
     <color name="windowBackground">#FFFFFF</color>
+    <color name="background">#F5F3FF</color>  <!-- 배경색 -->
+    <color name="primary">#6B4EFF</color>  <!-- 강조색 -->
+    <color name="nav_item_color">#6B4EFF</color> <!--네비게이션 아이콘 -->
 </resources>

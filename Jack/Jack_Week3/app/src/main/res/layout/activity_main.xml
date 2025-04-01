@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#D8D8D8">
+    android:background="#F8F8F8">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/my_nav_host"
@@ -15,11 +15,89 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 
+    <LinearLayout
+        android:id="@+id/music_bar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#FFFFFF"
+        android:padding="8dp"
+        android:orientation="horizontal"
+        android:elevation="8dp">
+
+        <!-- 곡 정보 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp">
+
+            <TextView
+                android:id="@+id/song_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="라일락"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/artist_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="아이유(IU)"
+                android:textSize="12sp"
+                android:textColor="#777777"/>
+        </LinearLayout>
+
+        <!-- 이전 곡 버튼 -->
+        <ImageView
+            android:id="@+id/prev_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_prev"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            app:tint="@color/black"/>
+
+        <!-- 재생/일시정지 버튼 -->
+        <ImageView
+            android:id="@+id/play_pause_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_play"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            app:tint="@color/black"/>
+
+        <!-- 다음 곡 버튼 -->
+        <ImageView
+            android:id="@+id/next_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_next"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            app:tint="@color/black"/>
+
+        <ImageView
+            android:id="@+id/playlist_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_playlist"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            app:tint="@color/black"/>
+    </LinearLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/my_bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/white"
+        android:layout_height="80dp"
+        android:background="@color/background"
         app:itemTextColor="@color/black"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_menu" />
 </LinearLayout>
