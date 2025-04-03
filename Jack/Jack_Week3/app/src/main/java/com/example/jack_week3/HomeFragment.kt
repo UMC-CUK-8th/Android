@@ -17,7 +17,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val albumList = listOf(
+            Album("LILAC", "아이유 (IU)", R.drawable.img_album_exp2)
+        )
+        val viewPager: ViewPager2 = view.findViewById(R.id.home_banner)
+        val adapter = AlbumAdapter(albumList)
+
+        viewPager.adapter = adapter
+        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
