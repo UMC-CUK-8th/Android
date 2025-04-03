@@ -8,7 +8,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.example.jack_week3.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -20,11 +19,7 @@ class MainActivity : AppCompatActivity() {
     private var isPlaying: Boolean = false // 음악이 재생 중인지 여부
     private var mediaPlayer: MediaPlayer? = null // MediaPlayer 객체
     private lateinit var bannerAdapter: BannerAdapter
-    private val bannerList = listOf(
-        BannerItem(R.drawable.banner1),
-        BannerItem(R.drawable.banner2),
-        BannerItem(R.drawable.banner3)
-    )
+
 
     private val handler = Handler(Looper.getMainLooper())
     private var currentPage = 0
