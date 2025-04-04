@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- AppCompat / MaterialComponents 계열 테마 -->
+    <style name="Theme.Flo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- 원하는 커스텀 스타일 -->
+        <item name="android:windowBackground">@color/flo_main_bg</item>
+        <!-- 예시로 배경색 지정 -->
+    </style>
+
+    <!-- 미니플레이어 / 버튼 / TextView 등의 스타일은 필요시 추가 -->
+</resources>

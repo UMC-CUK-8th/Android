@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- 뒤로가기 버튼: 오른쪽 상단에 배치 -->
+    <Button
+        android:id="@+id/songBackBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="뒤로가기"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
+    <!-- 앨범 제목과 가수 정보: 상단 중앙 (뒤로가기 버튼과 겹치지 않도록 marginTop 조정) -->
+    <LinearLayout
+        android:id="@+id/albumInfoLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="56dp">
+
+        <!-- 앨범 제목 (큰 글씨) -->
+        <TextView
+            android:id="@+id/songTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Album Title"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <!-- 가수 이름 (작은 글씨) -->
+        <TextView
+            android:id="@+id/songSingerTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Singer Name"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+
+    <!-- 앨범 이미지 -->
+    <ImageView
+        android:id="@+id/songAlbumImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_album_sample"
+        app:layout_constraintTop_toBottomOf="@id/albumInfoLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <!-- 노래 가사 -->
+    <TextView
+        android:id="@+id/songLyricsTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="여기에 노래 가사가 표시됩니다."
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/songAlbumImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- 재생 진행 상태 (SeekBar) -->
+    <SeekBar
+        android:id="@+id/songSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/songLyricsTv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- 하단 재생 컨트롤 (반복, 이전, 재생/일시정지, 다음, 셔플) -->
+    <LinearLayout
+        android:id="@+id/songControlLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="32dp">
+
+        <!-- 반복재생 버튼 -->
+        <ImageView
+            android:id="@+id/songRepeatBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_repeat_inactive"
+            android:layout_margin="8dp"/>
+
+        <!-- 이전곡 버튼 -->
+        <ImageView
+            android:id="@+id/songPrevBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_prev"
+            android:layout_margin="8dp"/>
+
+        <!-- 재생/일시정지 버튼 -->
+        <ImageView
+            android:id="@+id/songPlayBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_play"
+            android:layout_margin="8dp"/>
+
+        <!-- 다음곡 버튼 -->
+        <ImageView
+            android:id="@+id/songNextBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_next"
+            android:layout_margin="8dp"/>
+
+        <!-- 셔플 버튼 -->
+        <ImageView
+            android:id="@+id/songShuffleBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_shuffle_inactive"
+            android:layout_margin="8dp"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

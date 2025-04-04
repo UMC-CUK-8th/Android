@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 앨범 커버 및 오버레이 텍스트 -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
+
+            <ImageView
+                android:id="@+id/albumCoverIv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_album_sample"/>
+
+            <!-- 오버레이: 앨범 제목과 가수명 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:background="#80000000"
+                android:layout_gravity="bottom">
+
+                <TextView
+                    android:id="@+id/albumTitleTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Album Title"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/albumSingerTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Singer Name"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- 앨범 가사 샘플 -->
+        <TextView
+            android:id="@+id/albumLyricsTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="여기에 앨범 가사가 표시됩니다.\n(샘플 가사 내용)"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp"/>
+
+        <!-- 취향 MIX 스위치 및 상태 아이콘 -->
+        <Switch
+            android:id="@+id/albumMixSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="취향MIX"
+            android:layout_marginTop="16dp"/>
+
+
+        <!-- 재생 컨트롤 버튼들 -->
+        <LinearLayout
+            android:id="@+id/albumControlLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <ImageView
+                android:id="@+id/albumRepeatBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_repeat_inactive"
+                android:layout_margin="8dp"/>
+
+            <ImageView
+                android:id="@+id/albumPrevBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_prev"
+                android:layout_margin="8dp"/>
+
+            <ImageView
+                android:id="@+id/albumPlayBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_play"
+                android:layout_margin="8dp"/>
+
+            <ImageView
+                android:id="@+id/albumNextBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_next"
+                android:layout_margin="8dp"/>
+
+            <ImageView
+                android:id="@+id/albumShuffleBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_shuffle_inactive"
+                android:layout_margin="8dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
