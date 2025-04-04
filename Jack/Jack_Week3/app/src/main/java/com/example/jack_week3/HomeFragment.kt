@@ -1,35 +1,26 @@
 package com.example.jack_week3
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager2.widget.ViewPager2
 import com.example.jack_week3.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
+    lateinit var binding: FragmentHomeBinding
 
-    private val handler = Handler(Looper.getMainLooper())
-    private var currentPage = 0
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val albumList = listOf(
-            Album("LILAC", "아이유 (IU)", R.drawable.img_album_exp2)
-        )
-        val viewPager: ViewPager2 = view.findViewById(R.id.home_banner)
-        val adapter = AlbumAdapter(albumList)
+        binding.homePannelAlbumImgIv.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.my_nav_host,AlbumFragment()).commitAllowingStateLoss()
+        }
 
-        viewPager.adapter = adapter
-        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-    }
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        handler.removeCallbacksAndMessages(null)
+        return binding.root
     }
 }
