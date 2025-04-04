@@ -16,7 +16,7 @@
         app:navGraph="@navigation/nav_graph" />
 
     <LinearLayout
-        android:id="@+id/music_bar"
+        android:id="@+id/musicBar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#FFFFFF"

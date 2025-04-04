@@ -1,5 +1,6 @@
 package com.example.jack_week3
 
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -12,9 +13,7 @@ import com.example.jack_week3.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private val binding: ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
-    }
+    lateinit var binding: ActivityMainBinding
 
     private var isPlaying: Boolean = false // 음악이 재생 중인지 여부
     private var mediaPlayer: MediaPlayer? = null // MediaPlayer 객체
@@ -26,7 +25,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.musicBar.setOnClickListener{
+            startActivity(Intent(this,SongActivity::class.java))
+        }
 
         // Set up bottom navigation view
         setBottomNavigationView()
