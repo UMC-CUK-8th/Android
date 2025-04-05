@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jack_week3.R
-import com.example.jack_week3.Album
 
 class AlbumAdapter(
     private val albumList: List<Album>,
@@ -22,7 +20,6 @@ class AlbumAdapter(
         val title: TextView = itemView.findViewById(R.id.item_album_title_tv)
         val singer: TextView = itemView.findViewById(R.id.item_album_singer_tv)
         val image: ImageView = itemView.findViewById(R.id.item_album_cover_img_iv)
-        val playBtn: ImageView = itemView.findViewById(R.id.item_album_play_img_iv)
 
         init {
             itemView.setOnClickListener {

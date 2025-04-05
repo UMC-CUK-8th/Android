@@ -13,11 +13,11 @@
             android:id="@+id/home_pannel_background_iv"
             android:layout_width="match_parent"
             android:layout_height="430dp"
-            android:src="@drawable/img_first_album_default"
             android:scaleType="centerCrop"
-            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/img_first_album_default"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/home_pannel_btn_mike_iv"
@@ -88,7 +88,7 @@
             android:id="@+id/home_pannel_album_img_iv"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/img_album_exp2"
+            android:src="@drawable/img_album_exp"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="30dp"
             app:layout_constraintStart_toStartOf="parent"

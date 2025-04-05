@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="150dp"
     android:layout_height="match_parent"
-    android:layout_marginLeft="20dp">
+    android:layout_marginLeft="20dp"
+    android:id="@+id/song_lalac_layout">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/item_album_cover_img_cardView"

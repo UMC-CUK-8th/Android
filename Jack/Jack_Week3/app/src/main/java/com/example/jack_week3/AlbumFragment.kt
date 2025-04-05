@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.jack_week3.databinding.FragmentAlbumBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -17,7 +18,7 @@ class AlbumFragment : Fragment(){
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentAlbumBinding.inflate(inflater,container,false)
         binding.albumBack.setOnClickListener {
@@ -25,6 +26,7 @@ class AlbumFragment : Fragment(){
                 .replace(R.id.my_nav_host, HomeFragment())
                 .commitAllowingStateLoss()
         }
+
 
         val albumAdapter = AlbumVPAdapter(this)
         binding.albumContentVp.adapter = albumAdapter
