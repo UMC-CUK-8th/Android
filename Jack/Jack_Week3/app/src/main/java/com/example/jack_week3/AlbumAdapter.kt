@@ -9,18 +9,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jack_week3.R
 import com.example.jack_week3.Album
 
-class AlbumAdapter(private val albumList: List<Album>) : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
+class AlbumAdapter(
+    private val albumList: List<Album>,
+    private val itemClickListener: OnItemClickListener
+) : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
 
-    class AlbumViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val albumCover: ImageView = itemView.findViewById(R.id.item_album_cover_img_iv)  // 앨범 커버 이미지
-        private val playButton: ImageView = itemView.findViewById(R.id.item_album_play_img_iv)  // 플레이 버튼
-        private val albumTitle: TextView = itemView.findViewById(R.id.item_album_title_tv)      // 앨범 제목
-        private val albumSinger: TextView = itemView.findViewById(R.id.item_album_singer_tv)    // 가수 이름
+    interface OnItemClickListener {
+        fun onItemClick(album: Album)
+    }
 
-        fun bind(album: Album) {
-            albumCover.setImageResource(album.coverImageResId) // 이미지 설정
-            albumTitle.text = album.title // 앨범 제목 설정
-            albumSinger.text = album.singer // 가수 이름 설정
+    inner class AlbumViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val title: TextView = itemView.findViewById(R.id.item_album_title_tv)
+        val singer: TextView = itemView.findViewById(R.id.item_album_singer_tv)
+        val image: ImageView = itemView.findViewById(R.id.item_album_cover_img_iv)
+        val playBtn: ImageView = itemView.findViewById(R.id.item_album_play_img_iv)
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    itemClickListener.onItemClick(albumList[position])
+                }
+            }
         }
     }
 
@@ -30,7 +40,10 @@ class AlbumAdapter(private val albumList: List<Album>) : RecyclerView.Adapter<Al
     }
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
-        holder.bind(albumList[position])
+        val album = albumList[position]
+        holder.title.text = album.title
+        holder.singer.text = album.singer
+        holder.image.setImageResource(album.coverImageResId)
     }
 
     override fun getItemCount(): Int = albumList.size

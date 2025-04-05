@@ -88,7 +88,7 @@
             android:id="@+id/home_pannel_album_img_iv"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/img_album_exp"
+            android:src="@drawable/img_album_exp2"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="30dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -177,10 +177,11 @@
             android:layout_width="match_parent"
             android:layout_height="210dp"
             android:layout_marginTop="10dp"
-            tools:listitem="@layout/item_album"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/home_album_total"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/home_album_total"
+            tools:layout_editor_absoluteX="0dp"
+            tools:listitem="@layout/item_album" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/home_banner"
@@ -191,16 +192,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/home_today_music_album"/>
 
-        <ImageView
-            android:id="@+id/home_viewpager_exp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="15dp"
-            android:src="@drawable/img_home_viewpager_exp"
-            app:layout_constraintStart_toStartOf="parent"
+        <me.relex.circleindicator.CircleIndicator3
+            android:id="@+id/home_banner_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/home_banner"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_album_global"
-            android:layout_marginTop="180dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"/>
 
         <TextView
             android:id="@+id/home_daily_music_title"
@@ -210,7 +209,7 @@
             android:layout_marginTop="5dp"
             android:text="오디오로 에너지 충전"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/home_banner" />

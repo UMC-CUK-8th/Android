@@ -7,4 +7,124 @@
     android:layout_height="match_parent"
     tools:context=".AlbumFragment">
 
+    <ImageView
+        android:id="@+id/album_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/white"
+        android:scaleType="fitXY"
+        android:src="@drawable/btn_arrow_black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/album_like"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/ic_my_like_off"
+        app:layout_constraintTop_toTopOf="@id/album_more"
+        app:layout_constraintBottom_toBottomOf="@id/album_more"
+        app:layout_constraintEnd_toStartOf="@id/album_more"/>
+
+    <ImageView
+        android:id="@+id/album_more"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/btn_player_more"
+        android:scaleType="fitXY"
+        android:background="@color/white"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/album_music_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IU 5th Album 'LiLAC'"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/album_back"/>
+
+    <TextView
+        android:id="@+id/album_singer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아이유 (IU)"
+        android:textSize="14sp"
+        android:layout_marginTop="3dp"
+        app:layout_constraintEnd_toEndOf="@id/album_music_title"
+        app:layout_constraintStart_toStartOf="@id/album_music_title"
+        app:layout_constraintTop_toBottomOf="@id/album_music_title"/>
+
+    <TextView
+        android:id="@+id/album_music_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2021.03.25 | 정규 | 댄스 팝"
+        android:textSize="14sp"
+        android:layout_marginTop="3dp"
+        app:layout_constraintEnd_toEndOf="@id/album_singer"
+        app:layout_constraintStart_toStartOf="@id/album_singer"
+        app:layout_constraintTop_toBottomOf="@id/album_singer"/>
+
+    <ImageView
+        android:id="@+id/album_album_img"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/img_album_exp2"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/album_music_info"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <ImageView
+        android:id="@+id/album_lp"
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"
+        android:src="@drawable/img_album_lp"
+        android:layout_marginStart="155dp"
+        app:layout_constraintTop_toTopOf="@id/album_album_img"
+        app:layout_constraintStart_toStartOf="@id/album_album_img"
+        app:layout_constraintBottom_toBottomOf="@id/album_album_img"/>
+
+    <ImageView
+        android:id="@+id/album_play_black"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/widget_black_play"
+        app:layout_constraintBottom_toBottomOf="@id/album_album_img"
+        app:layout_constraintEnd_toEndOf="@id/album_album_img"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/album_content_tb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorFullWidth="false"
+        app:tabSelectedTextColor="#3f3fff"
+        app:tabIndicatorColor="#3f3fff"
+        app:tabRippleColor="#00ff0000"
+        app:layout_constraintEnd_toEndOf="@id/album_album_img"
+        app:layout_constraintStart_toStartOf="@id/album_album_img"
+        app:layout_constraintTop_toBottomOf="@id/album_album_img"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/album_content_vp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/album_content_tb"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

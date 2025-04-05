@@ -1,5 +1,6 @@
 package com.example.jack_week3
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -15,6 +16,9 @@ class SongActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
         binding.songDown.setOnClickListener{
+            val resultIntent = Intent()
+            resultIntent.putExtra("album_title", binding.songMusicTitle.text.toString())
+            setResult(RESULT_OK, resultIntent)
             finish()
         }
         binding.songPlay.setOnClickListener {

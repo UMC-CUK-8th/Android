@@ -1,5 +1,7 @@
 package com.example.jack_week3
 
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -12,6 +14,17 @@ import androidx.navigation.fragment.findNavController
 import com.example.jack_week3.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private val songActivityLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val title = result.data?.getStringExtra("album_title")
+            title?.let {
+                Toast.makeText(this, "제목: $it", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     lateinit var binding: ActivityMainBinding
 
@@ -30,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.musicBar.setOnClickListener{
             startActivity(Intent(this,SongActivity::class.java))
+            songActivityLauncher.launch(intent)
         }
 
         // Set up bottom navigation view
