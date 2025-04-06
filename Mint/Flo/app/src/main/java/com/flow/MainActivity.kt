@@ -3,6 +3,7 @@ package com.flow
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.flow.SongActivity
 import com.flow.data.Album
@@ -34,6 +35,19 @@ class MainActivity : AppCompatActivity() {
         inputDummyAlbums()
         initBottomNavigation()
 
+        val spf = getSharedPreferences("song", MODE_PRIVATE)
+        val isPlaying = spf.getBoolean("isPlaying", false)
+        song.isPlaying = isPlaying
+        setPlayerStatus(isPlaying)
+
+        binding.mainMiniplayerBtn.setOnClickListener {
+            setPlayerStatus(true)
+        }
+
+        binding.mainPauseBtn.setOnClickListener {
+            setPlayerStatus(false)
+        }
+
         binding.mainPlayerCl.setOnClickListener {
             val editor = getSharedPreferences("song", MODE_PRIVATE).edit()
             editor.putInt("songId", song.id)
@@ -42,8 +56,29 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SongActivity::class.java)
             startActivity(intent)
         }
-
     }
+
+
+    private fun setPlayerStatus(isPlaying: Boolean) {
+        song.isPlaying = isPlaying
+
+        if (isPlaying) {
+            binding.mainMiniplayerBtn.visibility = View.GONE
+            binding.mainPauseBtn.visibility = View.VISIBLE
+        } else {
+            binding.mainMiniplayerBtn.visibility = View.VISIBLE
+            binding.mainPauseBtn.visibility = View.GONE
+        }
+
+        // 상태 저장
+        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putBoolean("isPlaying", isPlaying)
+            apply()
+        }
+    }
+
+
 
     private fun getJwt(): String? {
         val spf = this.getSharedPreferences("auth2", AppCompatActivity.MODE_PRIVATE)

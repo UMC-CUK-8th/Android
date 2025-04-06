@@ -167,23 +167,28 @@ class SongActivity : AppCompatActivity() {
     }
 
 
-    private fun setPlayerStatus (isPlaying : Boolean){
+    private fun setPlayerStatus(isPlaying: Boolean) {
         songs[nowPos].isPlaying = isPlaying
         timer.isPlaying = isPlaying
 
-        if(isPlaying){
+        // 저장
+        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putBoolean("isPlaying", isPlaying)
+            apply()
+        }
+
+        if (isPlaying) {
             binding.songMiniplayerIv.visibility = View.GONE
             binding.songPauseIv.visibility = View.VISIBLE
             mediaPlayer?.start()
         } else {
             binding.songMiniplayerIv.visibility = View.VISIBLE
             binding.songPauseIv.visibility = View.GONE
-            if(mediaPlayer?.isPlaying == true){
-                mediaPlayer?.pause()
-            }
+            mediaPlayer?.pause()
         }
-
     }
+
 
     private fun startTimer(){
         timer = Timer(songs[nowPos].playTime,songs[nowPos].isPlaying)
