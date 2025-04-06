@@ -1,85 +1,82 @@
 package com.flow.ui
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
+import com.flow.MainActivity
 import com.flow.R
 import com.flow.data.Album
+import com.flow.data.SongDatabase
 import com.flow.databinding.FragmentHomeBinding
-import com.flow.ui.adapters.AlbumListAdapter
-import com.flow.ui.adapters.HomeBannerAdapter
+import com.flow.ui.adapters.AlbumRVAdapter
+import com.flow.ui.adapters.BannerVPAdapter
+import com.google.gson.Gson
+
 
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    lateinit var binding: FragmentHomeBinding
+    private var albumDatas = ArrayList<Album>()
 
-    private val sampleAlbums = listOf(
-        Album("앨범1", R.drawable.ic_album_sample),
-        Album("앨범2", R.drawable.ic_album_sample),
-        Album("앨범3", R.drawable.ic_album_sample),
-        Album("앨범4", R.drawable.ic_album_sample),
-        Album("앨범5", R.drawable.ic_album_sample)
-    )
-
-    private val bannerImages = listOf(
-        R.drawable.ic_banner_sample,
-        R.drawable.ic_banner_sample,
-        R.drawable.ic_banner_sample
-    )
-
-    private val sliderHandler = Handler(Looper.getMainLooper())
-    private val sliderRunnable = Runnable {
-        binding.homeBannerVp.currentItem =
-            (binding.homeBannerVp.currentItem + 1) % bannerImages.size
-    }
+    private lateinit var songDB : SongDatabase
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+    ): View? {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        val albumAdapter = AlbumListAdapter(sampleAlbums) { album ->
-            // 앨범 클릭 시 처리
-            val fragment = AlbumFragment().apply {
-                arguments = Bundle().apply {
-                    putString("albumTitle", album.title)
-                }
+//        binding.homeAlbum01Iv.setOnClickListener {
+//            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm, AlbumFragment()).commitAllowingStateLoss()
+//        }
+
+        // 데이터 리스트 생성 더머 데이터
+        songDB = SongDatabase.getInstance(requireContext())!!
+        albumDatas.addAll(songDB.albumDao().getAlbums()) // songDB에서 album list를 가져옵니다.
+        Log.d("albumlist", albumDatas.toString())
+
+        // 어댑터와 데이터 리스트 연결
+        val albumRVAdapter = AlbumRVAdapter(albumDatas)
+        binding.homeTodayMusicAlbumRv.adapter = albumRVAdapter
+        binding.homeTodayMusicAlbumRv.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        albumRVAdapter.setMyItemClickListener(object : AlbumRVAdapter.MyItemClickListener {
+            override fun onItemClick(album: Album) {
+                changeAlbumFragment(album)
             }
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.main_container, fragment)
-                .addToBackStack(null)
-                .commit()
-        }
 
-        binding.homeAlbumRv.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.homeAlbumRv.adapter = albumAdapter
-
-        val bannerAdapter = HomeBannerAdapter(bannerImages)
-        binding.homeBannerVp.adapter = bannerAdapter
-        binding.homeBannerIndicator.setViewPager(binding.homeBannerVp)
-
-        binding.homeBannerVp.registerOnPageChangeCallback(object :
-            androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                sliderHandler.removeCallbacks(sliderRunnable)
-                sliderHandler.postDelayed(sliderRunnable, 3000)
+            override fun onRemoveAlbum(position: Int) {
+                albumRVAdapter.removeItem(position)
             }
         })
+
+        val bannerAdapter = BannerVPAdapter(this)
+        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp))
+        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp2))
+        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp3))
+
+        binding.homeBannerVp.adapter = bannerAdapter
+        binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        sliderHandler.removeCallbacks(sliderRunnable)
-        _binding = null
+    private fun changeAlbumFragment(album: Album) {
+        (context as MainActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.main_frm, AlbumFragment().apply {
+                arguments = Bundle().apply {
+                    val gson = Gson()
+                    val albumJson = gson.toJson(album)
+                    putString("album", albumJson)
+                }
+            })
+            .commitAllowingStateLoss()
     }
 }

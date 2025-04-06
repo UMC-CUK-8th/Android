@@ -9,20 +9,15 @@ import com.flow.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
 
-    private var _binding: FragmentDetailBinding? = null
-    private val binding get() = _binding!!
+    lateinit var binding: FragmentDetailBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentDetailBinding.inflate(inflater, container, false)
-        // 예시: binding.detailText.text = "상세정보가 들어갈 자리"
-        return binding.root
-    }
+    ): View? {
+        binding = FragmentDetailBinding.inflate(inflater, container, false)
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        return binding.root
     }
 }

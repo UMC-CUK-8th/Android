@@ -1,29 +1,32 @@
 package com.flow.ui
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.MediaController
 import androidx.fragment.app.Fragment
+import com.flow.databinding.FragmentDetailBinding
 import com.flow.databinding.FragmentVideoBinding
-
 
 class VideoFragment : Fragment() {
 
-    private var _binding: FragmentVideoBinding? = null
-    private val binding get() = _binding!!
+    lateinit var binding: FragmentVideoBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentVideoBinding.inflate(inflater, container, false)
-        // 예시: binding.videoText.text = "앨범 관련 영상 목록"
-        return binding.root
-    }
+    ): View? {
+        binding = FragmentVideoBinding.inflate(inflater, container, false)
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+//        var videoUri: Uri = Uri.parse("https://www.youtube.com/watch?v=86BST8NIpNM")
+//        binding.videoVideo01Vv.setVideoURI(videoUri)
+//        binding.videoVideo01Vv.setMediaController(MediaController(this.context))
+//        binding.videoVideo01Vv.requestFocus()
+
+
+        return binding.root
     }
 }

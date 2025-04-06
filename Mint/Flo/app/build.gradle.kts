@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
 }
 
 android {
@@ -42,14 +43,16 @@ android {
 
 dependencies {
     // 기존 Compose 관련은 유지
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
+    implementation("androidx.core:core-ktx:1.3.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    implementation("androidx.activity:activity-compose:1.3.1")
+    // Compose BOM (최신 버전으로 수정: 예시 2023.03.00)
+    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    // Compose
+    implementation("androidx.compose.ui:ui") // BOM이 있으면 버전 생략 가능
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    // Material 3 (안정화 버전 예시)
+    implementation("androidx.compose.material3:material3")
 
     // AndroidX (추가)
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -66,17 +69,35 @@ dependencies {
     // ViewPager, TabLayout
     implementation("androidx.viewpager:viewpager:1.0.0")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
-    implementation("com.google.android.material:material:1.8.0") // 중복 있지만 괜찮음
 
     // CircleIndicator
     implementation("me.relex:circleindicator:2.1.6")
 
-    // 테스트 관련은 기존 그대로
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    // 기존 의존성들 추가
+    implementation("androidx.core:core-ktx:1.3.0")
+    implementation("androidx.appcompat:appcompat:1.4.0")
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
+    implementation("com.google.code.gson:gson:2.8.7") // GSON
+    testImplementation("junit:junit:4.+")
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+
+    // RoomDB
+    implementation("androidx.room:room-ktx:2.4.1")
+    implementation("androidx.room:room-runtime:2.4.1")
+    kapt ("androidx.room:room-compiler:2.5.2")
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
+
+    // OkHttp
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
 }

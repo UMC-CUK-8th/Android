@@ -4,46 +4,115 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.flow.MainActivity
+import com.flow.R
+import com.flow.data.Album
+import com.flow.data.Like
+import com.flow.data.SongDatabase
 import com.flow.databinding.FragmentAlbumBinding
+import com.flow.ui.adapters.AlbumVPAdapter
+import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.Gson
 
 class AlbumFragment : Fragment() {
 
-    private var _binding: FragmentAlbumBinding? = null
-    private val binding get() = _binding!!
+    lateinit var binding: FragmentAlbumBinding
+    private var gson: Gson = Gson()
+
+    private val information = arrayListOf("수록곡", "상세정보", "영상")
+
+    private var isLiked: Boolean = false
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAlbumBinding.inflate(inflater, container, false)
+    ): View? {
+        binding = FragmentAlbumBinding.inflate(inflater, container, false)
 
-        // 앨범 제목, 가수명 설정 (오버레이 텍스트)
-        val albumTitle = arguments?.getString("albumTitle") ?: "앨범 제목"
-        val albumSinger = arguments?.getString("albumSinger") ?: "앨범 가수"
+        // Home에서 넘어온 데이터 받아오기
+        val albumJson = arguments?.getString("album")
+        val album = gson.fromJson(albumJson, Album::class.java)
+        // Home에서 넘어온 데이터를 반영
+        isLiked = isLikedAlbum(album.id)
+        setInit(album)
+        setOnClickListeners(album)
 
-        binding.albumTitleTv.text = albumTitle
-        binding.albumSingerTv.text = albumSinger
-
-        // 취향MIX 스위치 (버튼 대신 스위치 사용)
-        binding.albumMixSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                // 취향 MIX ON (필요한 경우 아이콘 업데이트)
-                // binding.albumMixImage.setImageResource(R.drawable.ic_mymix_active)
-            } else {
-                // 취향 MIX OFF
-                // binding.albumMixImage.setImageResource(R.drawable.ic_mymix_inactive)
-            }
+        /*
+        binding.albumBackIv.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commitAllowingStateLoss()
         }
 
-        // 앨범 가사 샘플 설정
-        binding.albumLyricsTv.text = "여기에 앨범 가사가 표시됩니다.\n(샘플 가사 내용)"
+        binding.songLalacLayout.setOnClickListener {
+            Toast.makeText(activity, "LILAC", Toast.LENGTH_SHORT).show()
+        }
+        */
+        binding.albumBackIv.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, HomeFragment())
+                .commitAllowingStateLoss()
+        }
+
+        val albumAdapter = AlbumVPAdapter(this)
+        binding.albumContentVp.adapter = albumAdapter
+        TabLayoutMediator(binding.albumContentTb, binding.albumContentVp) { tab, position ->
+            tab.text = information[position]
+        }.attach()
 
         return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun setInit(album: Album) {
+        binding.albumAlbumIv.setImageResource(album.coverImg!!)
+        binding.albumMusicTitleTv.text = album.title.toString()
+        binding.albumSingerNameTv.text = album.singer.toString()
+        if (isLiked) {
+            binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_on)
+        } else {
+            binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_off)
+        }
     }
+
+    private fun getJwt(): Int {
+        val spf = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
+        return spf!!.getInt("jwt", 0)
+    }
+
+    private fun likeAlbum(userId: Int, albumId: Int) {
+        val songDB = SongDatabase.getInstance(requireContext())!!
+        val like = Like(userId, albumId)
+
+        songDB.albumDao().likeAlbum(like)
+    }
+
+    private fun isLikedAlbum(albumId: Int): Boolean {
+        val songDB = SongDatabase.getInstance(requireContext())!!
+        val userId = getJwt()
+
+        val likeId: Int? = songDB.albumDao().isLikedAlbum(userId, albumId)
+
+        return likeId != null
+    }
+
+    private fun disLikeAlbum(userId: Int, albumId: Int) {
+        val songDB = SongDatabase.getInstance(requireContext())!!
+        songDB.albumDao().disLikeAlbum(userId, albumId)
+    }
+
+    private fun setOnClickListeners(album: Album) {
+        val userId: Int = getJwt()
+
+        binding.albumLikeIv.setOnClickListener {
+            if(isLiked) {
+                binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_off)
+                disLikeAlbum(userId, album.id)
+            } else {
+                binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_on)
+                likeAlbum(userId, album.id)
+            }
+        }
+    }
+
 }
