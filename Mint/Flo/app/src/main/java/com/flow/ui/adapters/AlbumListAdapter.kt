@@ -10,17 +10,19 @@ import com.flow.R
 import com.flow.data.Album
 
 class AlbumListAdapter(
-    private val albumList: List<Album>,
+    private val albums: List<Album>,
     private val onAlbumClick: (Album) -> Unit
 ) : RecyclerView.Adapter<AlbumListAdapter.AlbumViewHolder>() {
 
     inner class AlbumViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val ivCover: ImageView = itemView.findViewById(R.id.iv_cover)
-        private val tvTitle: TextView = itemView.findViewById(R.id.tv_title)
+        private val albumImageIv: ImageView = itemView.findViewById(R.id.albumImageIv)
+        private val albumTitleTv: TextView = itemView.findViewById(R.id.albumTitleTv)
 
         fun bind(album: Album) {
-            ivCover.setImageResource(album.coverResId)
-            tvTitle.text = album.title
+            albumTitleTv.text = album.title
+            albumImageIv.setImageResource(album.imageResId)
+
+            // 아이템 클릭 시 호출
             itemView.setOnClickListener {
                 onAlbumClick(album)
             }
@@ -34,8 +36,8 @@ class AlbumListAdapter(
     }
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
-        holder.bind(albumList[position])
+        holder.bind(albums[position])
     }
 
-    override fun getItemCount(): Int = albumList.size
+    override fun getItemCount(): Int = albums.size
 }

@@ -17,7 +17,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/homeBannerVp"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="350dp"
             android:layout_marginTop="16dp" />
 
         <!-- CircleIndicator -->
@@ -28,45 +28,51 @@
             android:layout_marginTop="8dp"
             android:layout_gravity="center"/>
 
-        <!-- '오늘 발매 음악' 섹션 Title -->
-        <TextView
-            android:id="@+id/todayReleaseTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="오늘 발매 음악"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
-
-        <!-- 국내 / 해외 탭 (두 개의 TextView) -->
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="16dp">
 
+            <!-- 왼쪽에 "오늘 발매 음악" 텍스트 -->
             <TextView
-                android:id="@+id/homeKoreaTv"
-                android:layout_width="0dp"
+                android:id="@+id/todayReleaseTv"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="국내"
-                android:textAlignment="center"
-                android:padding="8dp"
-                android:textSize="16sp"
-                android:textColor="@color/black"/>
+                android:text="오늘 발매 음악"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/homeGlobalTv"
-                android:layout_width="0dp"
+            <!-- 오른쪽에 탭: 종합, 국내, 해외 -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/todayReleaseTabLayout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="해외"
-                android:textAlignment="center"
-                android:padding="8dp"
-                android:textSize="16sp"
-                android:textColor="@color/black"/>
-        </LinearLayout>
+                app:tabSelectedTextColor="@android:color/holo_blue_dark"
+                app:tabTextColor="@android:color/black"
+                app:tabIndicatorColor="@android:color/holo_blue_dark"
+                app:tabIndicatorHeight="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.tabs.TabItem
+                    android:text="종합"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:text="국내"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:text="해외"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.tabs.TabLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <!-- 수평 RecyclerView (앨범 목록) -->
         <androidx.recyclerview.widget.RecyclerView
@@ -77,16 +83,6 @@
             android:overScrollMode="never"
             android:clipToPadding="false" />
 
-        <!-- '앨범 보기' 텍스트 (클릭 시 AlbumFragment 이동) -->
-        <TextView
-            android:id="@+id/albumClickTv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="앨범 보기(예시: 클릭)"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:layout_marginTop="50dp"
-            android:padding="16dp" />
 
         <!-- 하단 여백 -->
         <View

@@ -7,18 +7,17 @@
     android:padding="8dp">
 
     <ImageView
-        android:id="@+id/iv_cover"
+        android:id="@+id/albumImageIv"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@drawable/ic_album_sample"
-        android:scaleType="centerCrop"/>
+        android:contentDescription=""
+        android:scaleType="centerCrop" />
 
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/albumTitleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="앨범제목"
+        android:text="Album Title"
         android:textSize="14sp"
-        android:layout_marginTop="4dp"/>
-
+        android:layout_marginTop="4dp" />
 </LinearLayout>
