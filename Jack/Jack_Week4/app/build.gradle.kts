@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.jack_week3"
+    namespace = "com.example.jack_week4"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.jack_week3"
+        applicationId = "com.example.jack_week4"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
