@@ -12,26 +12,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Jack_Week3"
         tools:targetApi="31">
+
+
         <activity
-            android:name=".DetailFragment"
-            android:exported="false" />
-        <activity
-            android:name=".AlbumFragment"
-            android:exported="false" />
-        <activity
-            android:name=".SongActivity"
+            android:name=".SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/Theme.AppCompat.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".SongActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

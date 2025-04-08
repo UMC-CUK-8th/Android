@@ -174,7 +174,7 @@
         android:id="@+id/song_end_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="03:32"
+        android:text="01:00"
         android:textColor="@color/gray_color"
         app:layout_constraintEnd_toEndOf="@id/song_progress"
         app:layout_constraintTop_toBottomOf="@id/song_progress"/>

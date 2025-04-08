@@ -54,6 +54,22 @@ class MainActivity : AppCompatActivity() {
         // Default fragment selection
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host) as NavHostFragment
         val navController = navHostFragment.navController
+        val song = Song(binding.songTitle.text.toString(), binding.artistName.text.toString(),
+        0,
+            120,
+            false,
+            "lilac")
+
+        binding.musicBar.setOnClickListener {
+            val intent = Intent(this, SongActivity::class.java)
+            intent.putExtra("title",song.title)
+            intent.putExtra("singer",song.singer)
+            intent.putExtra("second",song.second)
+            intent.putExtra("playTime",song.playTime)
+            intent.putExtra("isPlaying",song.isPlaying)
+            intent.putExtra("music",song.music)
+            startActivity(intent)
+        }
 
         if (savedInstanceState == null) {
             binding.myBottomNav.selectedItemId = R.id.homeFragment
@@ -61,15 +77,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBottomNavigationView() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host) as NavHostFragment
+        val navController = navHostFragment.navController
+
         binding.myBottomNav.setOnItemSelectedListener { item ->
-            val navController = supportFragmentManager.findFragmentById(R.id.my_nav_host)?.findNavController()
-            navController?.let {
-                when (item.itemId) {
-                    R.id.homeFragment -> it.navigate(R.id.homeFragment)
-                    R.id.seeFragment -> it.navigate(R.id.seeFragment)
-                    R.id.searchFragment -> it.navigate(R.id.searchFragment)
-                    R.id.libraryFragment -> it.navigate(R.id.libraryFragment)
-                }
+            when (item.itemId) {
+                R.id.homeFragment -> navController.navigate(R.id.homeFragment)
+                R.id.seeFragment -> navController.navigate(R.id.seeFragment)
+                R.id.searchFragment -> navController.navigate(R.id.searchFragment)
+                R.id.libraryFragment -> navController.navigate(R.id.libraryFragment)
             }
             true
         }
