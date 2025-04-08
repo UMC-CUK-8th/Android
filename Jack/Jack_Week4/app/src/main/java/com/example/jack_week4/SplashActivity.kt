@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Looper
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import com.example.jack_week4.R
 
 class SplashActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
