@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <ImageButton
         android:id="@+id/song_setting"
         android:layout_width="25dp"
@@ -17,7 +18,7 @@
         android:src="@drawable/btn_player_setting"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-    
+
     <ImageButton
         android:id="@+id/song_eq"
         android:layout_width="25dp"
