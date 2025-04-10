@@ -4,62 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a11468aa-3630-477f-b675-eb842bdd0f9f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/proguard-rules.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/androidTest/java/com/example/week2_1/ExampleInstrumentedTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/java/com/example/week2_1/MainActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/java/com/example/week2_1/ui/theme/Color.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/java/com/example/week2_1/ui/theme/Theme.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/java/com/example/week2_1/ui/theme/Type.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/anim/slide_in_left.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/anim/slide_in_right.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/color/nav_icon_color.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/drawable/group_462g__1_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/drawable/ic_home.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/drawable/ic_launcher_foreground.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/drawable/ic_profile.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/drawable/ic_search.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/drawable/lucide_pencil_line.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/drawable/rectangle_238.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/layout/activity_splash.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/layout/fragment_profile.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/layout/fragment_search.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/menu/bottom_nav_menu.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/mipmap-hdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/mipmap-mdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/xml/backup_rules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/main/res/xml/data_extraction_rules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/app/src/test/java/com/example/week2_1/ExampleUnitTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/gradle/libs.versions.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/Week2-1/settings.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-    </list>
+    <list default="true" id="a11468aa-3630-477f-b675-eb842bdd0f9f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,9 +17,10 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
+  "customColor": "",
+  "associatedIndex": 7
 }]]></component>
-  <component name="ProjectId" id="2v2n9LxtCnYhmjC2tz4KcBW46qN" />
+  <component name="ProjectId" id="2v2WQkJqx67He71qXPA5H2XZR6r" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
