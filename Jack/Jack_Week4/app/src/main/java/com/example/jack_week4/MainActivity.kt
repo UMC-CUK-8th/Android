@@ -137,7 +137,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        // Activity가 종료될 때 MediaPlayer 객체 해제
         mediaPlayer?.release()
         mediaPlayer = null
     }

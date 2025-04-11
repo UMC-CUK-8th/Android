@@ -135,7 +135,7 @@ class SongActivity : AppCompatActivity() {
 
                         if (mills % 1000 == 0f){
                             runOnUiThread {
-                                binding.songStartTime.text = String.format("%02d:%02d",second / 60, second % 60)
+                                binding.songStartTime.text = String.format("%02d:%02d",second/60, second%60)
                             }
                             second++
                         }
