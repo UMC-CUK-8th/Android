@@ -10,14 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.example.mint.R
@@ -25,7 +22,6 @@ import com.example.mint.R
 
 @Composable
 fun HomeScreen() {
-    val gangwonFontFamily = FontFamily(Font(R.font.gangwon_edu_hyeonok_t))
 
         Box(
             modifier = Modifier
@@ -82,7 +78,7 @@ fun HomeScreen() {
                             modifier = Modifier
                                 .zIndex(0f)
                                 .offset(y = (-10).dp)
-                                .size(width = 60.dp, height = 230.dp) // <- 원하는 크기로 강제
+//                                .size(width = 60.dp, height = 230.dp) // <- 원하는 크기로 강제
                         )
 
                     }

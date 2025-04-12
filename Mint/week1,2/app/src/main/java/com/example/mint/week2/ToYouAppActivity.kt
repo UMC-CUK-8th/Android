@@ -1,34 +1,46 @@
 package com.example.mint.week2
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.*
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.with
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.mint.R
 
 
@@ -52,7 +64,7 @@ sealed class NavScreen(val route: String) {
 @Composable
 fun ToYouApp() {
     val gangwonFontFamily = FontFamily(Font(R.font.gangwon_edu_hyeonok_t))
-
+    val iconSize = 30.dp
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -74,7 +86,7 @@ fun ToYouApp() {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    modifier = Modifier.height(100.dp),  // 앱바 자체 높이
+                    modifier = Modifier.height(60.dp),  // 앱바 자체 높이
                     backgroundColor = Color(0xFFF6F6F6),
                     title = {
                         Text(
@@ -87,7 +99,7 @@ fun ToYouApp() {
                     actions = {
                         IconButton(
                             onClick = { /* 알림 처리 */ },
-                            modifier = Modifier.size(48.dp)  // IconButton 자체도 크게
+                            modifier = Modifier.size(40.dp)  // IconButton 자체도 크게
                                 .offset(x = -20.dp)
                         ) {
                             Icon(
@@ -113,23 +125,24 @@ fun ToYouApp() {
                             icon = {
                                 when (screen) {
                                     is NavScreen.Home -> Icon(
-                                        painter = painterResource(id = R.drawable.ic_home), // VectorDrawable 사용
-                                        contentDescription = "홈", modifier = Modifier.size(40.dp)
+                                        painter = painterResource(id = R.drawable.ic_home),
+                                        contentDescription = "홈",
+                                        modifier = Modifier.size(iconSize)
                                     )
-
                                     is NavScreen.Pencil -> Icon(
-                                        painter = painterResource(id = R.drawable.ic_pencil), // VectorDrawable 사용
-                                        contentDescription = "연필", modifier = Modifier.size(40.dp)
+                                        painter = painterResource(id = R.drawable.ic_pencil),
+                                        contentDescription = "연필",
+                                        modifier = Modifier.size(iconSize)
                                     )
-
                                     is NavScreen.Profile -> Icon(
-                                        painter = painterResource(id = R.drawable.ic_profile), // VectorDrawable 사용
-                                        contentDescription = "프로필", modifier = Modifier.size(40.dp)
+                                        painter = painterResource(id = R.drawable.ic_profile),
+                                        contentDescription = "프로필",
+                                        modifier = Modifier.size(iconSize)
                                     )
-
                                     is NavScreen.Calendar -> Icon(
-                                        painter = painterResource(id = R.drawable.ic_calendar), // VectorDrawable 사용
-                                        contentDescription = "캘린더", modifier = Modifier.size(40.dp)
+                                        painter = painterResource(id = R.drawable.ic_calendar),
+                                        contentDescription = "캘린더",
+                                        modifier = Modifier.size(iconSize)
                                     )
                                 }
                             },
