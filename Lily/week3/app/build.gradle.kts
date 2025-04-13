@@ -66,7 +66,8 @@ dependencies {
     implementation("me.relex:circleindicator:2.1.6")
     implementation ("androidx.viewpager2:viewpager2:1.1.0")
     implementation ("me.relex:circleindicator:2.1.6")
-    implementation("androidx.room:room-runtime:2.6.1") // 최신 버전 기준
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation ("androidx.appcompat:appcompat:1.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

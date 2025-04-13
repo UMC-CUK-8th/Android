@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a11468aa-3630-477f-b675-eb842bdd0f9f" name="Changes" comment="" />
+    <list default="true" id="a11468aa-3630-477f-b675-eb842bdd0f9f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/java/com/example/week3/SplashActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/res/drawable/ic_flo_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/res/layout/activity_splash.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lily/week3/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/week3/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lily/week3/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lily/week3/app/src/main/java/com/example/week3/SongActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/java/com/example/week3/SongActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lily/week3/app/src/main/java/com/example/week3/SongDatabase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/java/com/example/week3/SongDatabase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lily/week3/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lily/week3/app/src/main/res/layout/activity_song.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/res/layout/activity_song.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,27 +26,27 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2v2WQkJqx67He71qXPA5H2XZR6r" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "릴리/최효비",
-    "kotlin-language-version-configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;릴리/최효비&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
