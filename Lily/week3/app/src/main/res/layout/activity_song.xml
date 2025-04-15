@@ -213,15 +213,15 @@
 
             <ImageView
                 android:id="@+id/song_previous_iv"
-                android:layout_width="32dp"
-                android:layout_height="46dp"
+                android:layout_width="25dp"
+                android:layout_height="36dp"
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/btn_miniplayer_previous" />
 
             <ImageView
                 android:id="@+id/song_miniplayer_iv"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:src="@drawable/btn_miniplayer_play" />
 
             <ImageView
@@ -242,8 +242,8 @@
 
         <ImageView
             android:id="@+id/song_repeat_iv"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginEnd="30dp"
             android:src="@drawable/nugu_btn_repeat_inactive"
             app:layout_constraintBottom_toBottomOf="@+id/song_player_layout"
@@ -252,8 +252,8 @@
 
         <ImageView
             android:id="@+id/song_random_iv"
-            android:layout_width="48dp"
-            android:layout_height="49dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginStart="30dp"
             android:src="@drawable/nugu_btn_random_inactive"
             app:layout_constraintBottom_toBottomOf="@+id/song_player_layout"
