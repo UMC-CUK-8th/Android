@@ -154,6 +154,7 @@ class SongActivity : AppCompatActivity() {
         binding.songProgressSb.progress = (song.second * 1000 / song.playTime)
 
         val music = resources.getIdentifier(song.music, "raw", this.packageName)
+        //음악 재생
         mediaPlayer = MediaPlayer.create(this, music)
 
         if (song.isLike){
@@ -195,43 +196,36 @@ class SongActivity : AppCompatActivity() {
         timer.start()
     }
 
-    inner class Timer(private val playTime: Int,var isPlaying: Boolean = true):Thread(){
-
-        private var second : Int = 0
-        private var mills: Float = 0f
+    inner class Timer(private val playTime: Int, var isPlaying: Boolean = true) : Thread() {
+        private var second: Int = 0     // 현재 재생 시간(초)
+        private var mills: Float = 0f   // 현재 재생 시간(밀리초)
 
         override fun run() {
-            super.run()
             try {
-                while (true){
+                while (true) {
+                    if (second >= playTime) break  // 곡 다 끝나면 종료
 
-                    if (second >= playTime){
-                        break
-                    }
+                    if (isPlaying) {
+                        sleep(50)         // 50ms 기다림 (0.05초)
+                        mills += 50       // 밀리초 누적
 
-                    if (isPlaying){
-                        sleep(50)
-                        mills += 50
-
+                        // 1) SeekBar(파란 점) 이동
                         runOnUiThread {
-                            binding.songProgressSb.progress = ((mills / playTime)*100).toInt()
+                            binding.songProgressSb.progress = ((mills / playTime) * 100).toInt()
                         }
 
-                        if (mills % 1000 == 0f){
+                        // 2) 1초마다 텍스트 시간 갱신
+                        if (mills % 1000 == 0f) {
                             runOnUiThread {
-                                binding.songStartTimeTv.text = String.format("%02d:%02d",second / 60, second % 60)
+                                binding.songStartTimeTv.text = String.format("%02d:%02d", second / 60, second % 60)
                             }
                             second++
                         }
-
                     }
-
                 }
-
-            }catch (e: InterruptedException){
-                Log.d("Song","쓰레드가 죽었습니다. ${e.message}")
+            } catch (e: InterruptedException) {
+                Log.d("Song", "쓰레드가 죽었습니다. ${e.message}")
             }
-
         }
     }
 }
