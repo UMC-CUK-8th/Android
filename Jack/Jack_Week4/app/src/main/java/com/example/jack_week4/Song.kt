@@ -6,5 +6,5 @@ data class Song (
     var second : Int =0,
     var playTime : Int = 0,
     var isPlaying: Boolean = false,
-    var music:String
+    var music:String = ""
 )

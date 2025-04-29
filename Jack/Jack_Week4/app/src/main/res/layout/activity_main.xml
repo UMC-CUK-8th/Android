@@ -15,6 +15,24 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 
+    <SeekBar
+        android:id="@+id/song_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="10dp"
+        android:max="10000"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:progress="0"
+        android:progressBackgroundTint="@color/song_player_bg"
+        android:progressTint="@color/song_player"
+        android:thumb="@color/transparent"
+        app:layout_constraintBottom_toTopOf="@id/song_player"
+        app:layout_constraintEnd_toEndOf="@id/song_player"
+        app:layout_constraintStart_toStartOf="@id/song_player" />
+
     <LinearLayout
         android:id="@+id/musicBar"
         android:layout_width="match_parent"

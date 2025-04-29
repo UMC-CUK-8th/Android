@@ -1,17 +1,17 @@
 package com.example.jack_week4
 
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.example.jack_week4.databinding.ActivityMainBinding
+import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,11 +27,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     lateinit var binding: ActivityMainBinding
+    private var song: Song = Song()
+    private var gson: Gson = Gson()
 
     private var isPlaying: Boolean = false // 음악이 재생 중인지 여부
     private var mediaPlayer: MediaPlayer? = null // MediaPlayer 객체
-    private lateinit var bannerAdapter: BannerAdapter
-
 
     private val handler = Handler(Looper.getMainLooper())
     private var currentPage = 0
@@ -41,9 +41,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.musicBar.setOnClickListener{
-            startActivity(Intent(this,SongActivity::class.java))
-            songActivityLauncher.launch(intent)
+        binding.musicBar.setOnClickListener {
+            val intent = Intent(this, SongActivity::class.java)
+            // MainActivity의 음악 재생 상태와 현재 시간을 전달
+            intent.putExtra("isPlaying", isPlaying)
+            intent.putExtra("currentPosition", mediaPlayer?.currentPosition ?: 0)
+            startActivity(intent)
         }
 
         // Set up bottom navigation view
@@ -55,19 +58,19 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host) as NavHostFragment
         val navController = navHostFragment.navController
         val song = Song(binding.songTitle.text.toString(), binding.artistName.text.toString(),
-        0,
+            0,
             120,
             false,
             "lilac")
 
         binding.musicBar.setOnClickListener {
             val intent = Intent(this, SongActivity::class.java)
-            intent.putExtra("title",song.title)
-            intent.putExtra("singer",song.singer)
-            intent.putExtra("second",song.second)
-            intent.putExtra("playTime",song.playTime)
-            intent.putExtra("isPlaying",song.isPlaying)
-            intent.putExtra("music",song.music)
+            intent.putExtra("title", song.title)
+            intent.putExtra("singer", song.singer)
+            intent.putExtra("second", song.second)
+            intent.putExtra("playTime", song.playTime)
+            intent.putExtra("isPlaying", song.isPlaying)
+            intent.putExtra("music", song.music)
             startActivity(intent)
         }
 
@@ -139,5 +142,24 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         mediaPlayer?.release()
         mediaPlayer = null
+    }
+
+    private fun setMiniPlayer(song: Song) {
+        binding.songTitle.text = song.title
+        binding.artistName.text = song.singer
+        binding.songProgress.progress = (song.second * 100000) / song.playTime
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+        val songJson = sharedPreferences.getString("songData", null)
+
+        song = if (songJson == null) {
+            Song("라일락", "아이유(IU)", 0, 120, false, "lilac")
+        } else {
+            gson.fromJson(songJson, Song::class.java)
+        }
+        setMiniPlayer(song)
     }
 }
