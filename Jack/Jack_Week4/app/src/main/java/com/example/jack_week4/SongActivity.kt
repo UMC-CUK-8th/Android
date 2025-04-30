@@ -120,6 +120,7 @@ class SongActivity : AppCompatActivity() {
     private fun setPlayStatus(isPlaying: Boolean) {
         song.isPlaying = isPlaying
 
+
         if (isPlaying) {
             if (mediaPlayer?.isPlaying == false) {
                 mediaPlayer?.start()
@@ -138,7 +139,7 @@ class SongActivity : AppCompatActivity() {
     }
 
     private fun startTimer() {
-        timer = Timer(song.playTime)
+        timer = Timer(song.playTime,song.isPlaying)
         timer?.start()
     }
 
