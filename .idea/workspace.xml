@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a11468aa-3630-477f-b675-eb842bdd0f9f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/java/com/example/week3/SplashActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/res/drawable/ic_flo_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/res/layout/activity_splash.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lily/week3/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/week3/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lily/week3/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lily/week3/app/src/main/java/com/example/week3/SongActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/java/com/example/week3/SongActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lily/week3/app/src/main/java/com/example/week3/SongDatabase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/java/com/example/week3/SongDatabase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lily/week3/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lily/week3/app/src/main/res/layout/activity_song.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/week3/app/src/main/res/layout/activity_song.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/Song.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/Song.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/SongActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/SongActivity.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
