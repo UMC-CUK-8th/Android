@@ -6,27 +6,31 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [Song::class, Album::class, User::class, Like::class], version = 1)
-abstract class SongDatabase: RoomDatabase() {
+abstract class SongDatabase : RoomDatabase() {
+
     abstract fun albumDao(): AlbumDao
     abstract fun songDao(): SongDao
-    abstract fun userDao() : UserDao
+    abstract fun userDao(): UserDao
 
     companion object {
+        @Volatile
         private var instance: SongDatabase? = null
 
-        @Synchronized
-        fun getInstance(context: Context): SongDatabase? {
-            if (instance == null) {
-                synchronized(SongDatabase::class){
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        SongDatabase::class.java,
-                        "song-database" // 다른 데이터 베이스랑 이름이 겹치지 않도록 주의
-                    ).allowMainThreadQueries().build() // 편의상 메인 쓰레드에서 처리하게 한다.
-                }
+        /**
+         * SongDatabase의 싱글톤 인스턴스를 반환
+         * 메인 스레드에서 쿼리 허용 (편의 목적)
+         */
+        fun getInstance(context: Context): SongDatabase {
+            return instance ?: synchronized(this) {
+                instance ?: Room.databaseBuilder(
+                    context.applicationContext,
+                    SongDatabase::class.java,
+                    "song-database" // DB 이름 (충돌 방지를 위해 명시)
+                )
+                    .allowMainThreadQueries() // 메인 스레드에서 DB 접근 허용 (비추천이나 단순 프로젝트에서는 허용)
+                    .build()
+                    .also { instance = it }
             }
-
-            return instance
         }
     }
 }

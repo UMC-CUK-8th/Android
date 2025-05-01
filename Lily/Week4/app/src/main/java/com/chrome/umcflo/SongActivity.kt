@@ -20,7 +20,7 @@ class SongActivity : AppCompatActivity() {
 
     lateinit var binding : ActivitySongBinding
     lateinit var timer : Timer
-    private var mediaPlayer : MediaPlayer? = null // 추후에 미디어 플레이어 해제를 위해 nullable로 선언
+    private var mediaPlayer : MediaPlayer? = null //nullable 선언
 
     val songs = arrayListOf<Song>()
     lateinit var songDB: SongDatabase
@@ -143,16 +143,22 @@ class SongActivity : AppCompatActivity() {
         setPlayer(songs[nowPos])
     }
 
-    private fun setLike(isLike: Boolean){
-        songs[nowPos].isLike = !isLike
-        songDB.songDao().updateIsLikeById(!isLike,songs[nowPos].id)
+    private fun setLike(isCurrentlyLiked: Boolean) {
+        val newLikeState = !isCurrentlyLiked // 현재 상태의 반대값이 새 상태
 
-        if (!isLike){
-            binding.songLikeIv.setImageResource(R.drawable.ic_my_like_on)
-        } else{
-            binding.songLikeIv.setImageResource(R.drawable.ic_my_like_off)
+        // 데이터 모델 업데이트
+        songs[nowPos].isLike = newLikeState
+
+        // DB에 반영
+        songDB.songDao().updateIsLikeById(newLikeState, songs[nowPos].id)
+
+        // UI 아이콘 변경
+        val likeIconRes = if (newLikeState) {
+            R.drawable.ic_my_like_on
+        } else {
+            R.drawable.ic_my_like_off
         }
-
+        binding.songLikeIv.setImageResource(likeIconRes)
     }
 
     private fun moveSong(direct: Int) { // +1 또는 -1
