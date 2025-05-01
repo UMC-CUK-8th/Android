@@ -1,155 +1,113 @@
 package com.flow
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import com.flow.SongActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.flow.data.Album
 import com.flow.data.Song
-import com.flow.databinding.ActivityMainBinding
 import com.flow.data.SongDatabase
+import com.flow.databinding.ActivityMainBinding
 import com.flow.ui.HomeFragment
 import com.flow.ui.LookFragment
 import com.flow.ui.SearchFragment
-import com.google.gson.Gson
-import kotlin.collections.isNotEmpty
-import kotlin.jvm.java
-
-
 
 class MainActivity : AppCompatActivity() {
 
-
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private var song: Song = Song()
-    private var gson: Gson = Gson()
+
+    // ──────────────────────────────────────────────────────────────────────────
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_FLO)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        inputDummySongs()
-        inputDummyAlbums()
-        initBottomNavigation()
+        inputDummySongs(); inputDummyAlbums(); initBottomNavigation()
 
-        val spf = getSharedPreferences("song", MODE_PRIVATE)
-        val isPlaying = spf.getBoolean("isPlaying", false)
+        val isPlaying = getSharedPreferences("song", MODE_PRIVATE)
+            .getBoolean("isPlaying", false)
         song.isPlaying = isPlaying
         setPlayerStatus(isPlaying)
 
-        binding.mainMiniplayerBtn.setOnClickListener {
-            setPlayerStatus(true)
-        }
-
-        binding.mainPauseBtn.setOnClickListener {
-            setPlayerStatus(false)
-        }
+        binding.mainMiniplayerBtn.setOnClickListener { setPlayerStatus(true) }
+        binding.mainPauseBtn.setOnClickListener    { setPlayerStatus(false) }
 
         binding.mainPlayerCl.setOnClickListener {
-            val editor = getSharedPreferences("song", MODE_PRIVATE).edit()
-            editor.putInt("songId", song.id)
-            editor.apply()
-
-            val intent = Intent(this, SongActivity::class.java)
-            startActivity(intent)
+            getSharedPreferences("song", MODE_PRIVATE).edit()
+                .putInt("songId", song.id).apply()
+            startActivity(Intent(this, SongActivity::class.java))
         }
     }
 
-
-    private fun setPlayerStatus(isPlaying: Boolean) {
-        song.isPlaying = isPlaying
-
-        if (isPlaying) {
-            binding.mainMiniplayerBtn.visibility = View.GONE
-            binding.mainPauseBtn.visibility = View.VISIBLE
-        } else {
-            binding.mainMiniplayerBtn.visibility = View.VISIBLE
-            binding.mainPauseBtn.visibility = View.GONE
+    // ─────────────────── 진행률 수신 ──────────────────────────────────────────
+    private val progressReceiver = object : BroadcastReceiver() {
+        override fun onReceive(c: Context?, i: Intent?) {
+            val cur = i?.getIntExtra("posMs", 0) ?: 0
+            val dur = i?.getIntExtra("duration", 1) ?: 1
+            binding.mainMiniplayerProgressSb.progress = (cur * 100000 / dur)
         }
-
-        // 상태 저장
-        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        with(sharedPreferences.edit()) {
-            putBoolean("isPlaying", isPlaying)
-            apply()
-        }
-    }
-
-
-
-    private fun getJwt(): String? {
-        val spf = this.getSharedPreferences("auth2", AppCompatActivity.MODE_PRIVATE)
-
-        return spf!!.getString("jwt", "")
     }
 
     override fun onStart() {
         super.onStart()
-//        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-//        val songJson = sharedPreferences.getString("songData", null)
-//
-//        song = if(songJson == null){
-//            Song("라일락", "아이유(IU)", 0,60, false, "music_lilac")
-//        } else {
-//            gson.fromJson(songJson, Song::class.java)
-//        }
-        val spf = getSharedPreferences("song", MODE_PRIVATE)
-        val songId = spf.getInt("songId", 0)
 
-        val songDB = SongDatabase.getInstance(this)!!
-
-        song = if (songId == 0) {
-            songDB.songDao().getSong(1)
-        } else {
-            songDB.songDao().getSong(songId)
-        }
-
-        Log.d("song ID", song.id.toString())
+        // 미니플레이어 정보 로드
+        val songId = getSharedPreferences("song", MODE_PRIVATE).getInt("songId", 0)
+        val db = SongDatabase.getInstance(this)!!
+        song = if (songId == 0) db.songDao().getSong(1) else db.songDao().getSong(songId)
         setMiniPlayer(song)
+
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(progressReceiver, IntentFilter("FLOW_PROGRESS"))
     }
 
+    override fun onStop() {
+        super.onStop()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(progressReceiver)
+    }
+
+    // ─────────────────── UI ──────────────────────────────────────────────────
+    private fun setPlayerStatus(isPlaying: Boolean) {
+        song.isPlaying = isPlaying
+        binding.mainMiniplayerBtn.visibility = if (isPlaying) View.GONE else View.VISIBLE
+        binding.mainPauseBtn.visibility      = if (isPlaying) View.VISIBLE else View.GONE
+
+        getSharedPreferences("song", MODE_PRIVATE).edit()
+            .putBoolean("isPlaying", isPlaying).apply()
+    }
+
+    private fun setMiniPlayer(song: Song) = with(binding) {
+        mainMiniplayerTitleTv.text = song.title
+        mainMiniplayerSingerTv.text = song.singer
+        mainMiniplayerProgressSb.progress = (song.second * 100000 / song.playTime)
+    }
+
+    // ───────────────────── 네비게이션/더미 데이터 (기존 코드 그대로) ───────────
     private fun initBottomNavigation() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, HomeFragment())
             .commitAllowingStateLoss()
+
         binding.mainBnv.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.homeFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, HomeFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.lookFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, LookFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.searchFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, SearchFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.lockerFragment -> {
-                    supportFragmentManager.beginTransaction()
-//                        .replace(R.id.main_frm, LockerFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
+                R.id.homeFragment -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, HomeFragment()).commitAllowingStateLoss()
+                R.id.lookFragment -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, LookFragment()).commitAllowingStateLoss()
+                R.id.searchFragment -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, SearchFragment()).commitAllowingStateLoss()
+                else -> { /* 생략 */ }
             }
-            false
+            true
         }
-    }
-
-    private fun setMiniPlayer(song: Song) {
-        binding.mainMiniplayerTitleTv.text = song.title
-        binding.mainMiniplayerSingerTv.text = song.singer
-        binding.mainMiniplayerProgressSb.progress = (song.second * 100000) / song.playTime
     }
 
     private fun inputDummySongs() {
@@ -289,5 +247,4 @@ class MainActivity : AppCompatActivity() {
         )
 
     }
-
 }
