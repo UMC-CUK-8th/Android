@@ -31,17 +31,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         albumAdapter = AlbumAdapter(albumList, object : AlbumAdapter.OnItemClickListener {
             override fun onItemClick(album: Album) {
                 (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.my_nav_host, AlbumFragment())
+                    .replace(R.id.main_frm, AlbumFragment())
                     .addToBackStack(null)
                     .commitAllowingStateLoss()
             }
         })
-
-        binding.homeTodayMusicAlbum.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.homeTodayMusicAlbum.adapter = albumAdapter
-
-        // 패널 클릭 시 앨범 프래그먼트로 이동
 
 
         // 배너 뷰페이저

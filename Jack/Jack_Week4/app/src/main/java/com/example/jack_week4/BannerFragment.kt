@@ -19,6 +19,7 @@ class BannerFragment(val imgRes: Int) : Fragment(){
 
         binding = FragmentBannerBinding.inflate(inflater,container,false)
 
+
         binding.bannerImage.setImageResource(imgRes)
         return binding.root
     }
