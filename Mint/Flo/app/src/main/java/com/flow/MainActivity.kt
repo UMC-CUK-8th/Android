@@ -1,155 +1,130 @@
 package com.flow
 
+import android.content.BroadcastReceiver
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.view.View
+import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import com.flow.SongActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.flow.data.Album
 import com.flow.data.Song
-import com.flow.databinding.ActivityMainBinding
 import com.flow.data.SongDatabase
+import com.flow.databinding.ActivityMainBinding
 import com.flow.ui.HomeFragment
 import com.flow.ui.LookFragment
 import com.flow.ui.SearchFragment
-import com.google.gson.Gson
-import kotlin.collections.isNotEmpty
 import kotlin.jvm.java
-
 
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var songDB: SongDatabase
 
-    lateinit var binding: ActivityMainBinding
-    private var song: Song = Song()
-    private var gson: Gson = Gson()
+    /* ── MusicService 바인딩 ─────────────────────────────────────────────── */
+    private var musicService: MusicService? = null
+    private var bound = false
+    private val conn = object : ServiceConnection {
+        override fun onServiceConnected(n: ComponentName?, b: IBinder?) {
+            musicService = (b as MusicService.MusicBinder).getService()
+            bound = true
+            refreshMini()           // 서비스 연결 직후 UI 세팅
+        }
+        override fun onServiceDisconnected(p0: ComponentName?) { bound = false }
+    }
+
+    /* ── 진행률 수신 ─────────────────────────────────────────────────────── */
+    private val progressReceiver = object : BroadcastReceiver() {
+        override fun onReceive(c: Context?, i: Intent?) {
+            val cur = i?.getIntExtra("posMs", 0) ?: 0
+            val dur = i?.getIntExtra("duration", 1) ?: 1
+            binding.mainMiniplayerProgressSb.progress = cur * 1000 / dur
+        }
+    }
+
+    /* ───────────────────────────────────────────────────────────────────── */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_FLO)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        inputDummySongs()
-        inputDummyAlbums()
-        initBottomNavigation()
+        /* ① DB 더미 삽입 (앱 최초 실행 대비) */
+        songDB = SongDatabase.getInstance(this)!!
+        inputDummySongs(); inputDummyAlbums()
 
-        val spf = getSharedPreferences("song", MODE_PRIVATE)
-        val isPlaying = spf.getBoolean("isPlaying", false)
-        song.isPlaying = isPlaying
-        setPlayerStatus(isPlaying)
+        /* ② MusicService 시작·바인드 */
+        Intent(this, MusicService::class.java).also { startService(it); bindService(it, conn, 0) }
 
+        /* ③ 버튼 리스너 */
         binding.mainMiniplayerBtn.setOnClickListener {
-            setPlayerStatus(true)
+            /* 곡이 아직 없다면 1번 곡부터 재생 */
+            if (musicService?.currentSong == null) {
+                val first = songDB.songDao().getSong(1)          // id=1 이 첫 곡
+                musicService?.setSong(first, autoPlay = true)
+            } else {
+                musicService?.play()
+            }
+            updatePlayPause()
         }
-
         binding.mainPauseBtn.setOnClickListener {
-            setPlayerStatus(false)
+            musicService?.pause(); updatePlayPause()
         }
-
         binding.mainPlayerCl.setOnClickListener {
-            val editor = getSharedPreferences("song", MODE_PRIVATE).edit()
-            editor.putInt("songId", song.id)
-            editor.apply()
-
-            val intent = Intent(this, SongActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
-
-    private fun setPlayerStatus(isPlaying: Boolean) {
-        song.isPlaying = isPlaying
-
-        if (isPlaying) {
-            binding.mainMiniplayerBtn.visibility = View.GONE
-            binding.mainPauseBtn.visibility = View.VISIBLE
-        } else {
-            binding.mainMiniplayerBtn.visibility = View.VISIBLE
-            binding.mainPauseBtn.visibility = View.GONE
+            val id = musicService?.currentSong?.id ?: return@setOnClickListener
+            startActivity(Intent(this, SongActivity::class.java).putExtra("songId", id))
         }
 
-        // 상태 저장
-        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        with(sharedPreferences.edit()) {
-            putBoolean("isPlaying", isPlaying)
-            apply()
-        }
+        /* ④ 네비게이션 · 진행률 리시버 */
+        initBottomNavigation()
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(progressReceiver, IntentFilter("FLOW_PROGRESS"))
     }
 
-
-
-    private fun getJwt(): String? {
-        val spf = this.getSharedPreferences("auth2", AppCompatActivity.MODE_PRIVATE)
-
-        return spf!!.getString("jwt", "")
+    override fun onDestroy() {
+        super.onDestroy()
+        if (bound) unbindService(conn)
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(progressReceiver)
     }
 
-    override fun onStart() {
-        super.onStart()
-//        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-//        val songJson = sharedPreferences.getString("songData", null)
-//
-//        song = if(songJson == null){
-//            Song("라일락", "아이유(IU)", 0,60, false, "music_lilac")
-//        } else {
-//            gson.fromJson(songJson, Song::class.java)
-//        }
-        val spf = getSharedPreferences("song", MODE_PRIVATE)
-        val songId = spf.getInt("songId", 0)
-
-        val songDB = SongDatabase.getInstance(this)!!
-
-        song = if (songId == 0) {
-            songDB.songDao().getSong(1)
-        } else {
-            songDB.songDao().getSong(songId)
-        }
-
-        Log.d("song ID", song.id.toString())
-        setMiniPlayer(song)
+    /* ── 미니플레이어 UI 갱신 ───────────────────────────────────────────── */
+    private fun refreshMini() {
+        val s = musicService?.currentSong ?: return
+        binding.mainMiniplayerTitleTv.text  = s.title
+        binding.mainMiniplayerSingerTv.text = s.singer
+        updatePlayPause()
+    }
+    private fun updatePlayPause() = with(binding) {
+        val playing = musicService?.isPlaying == true
+        mainMiniplayerBtn.visibility = if (playing) View.GONE else View.VISIBLE
+        mainPauseBtn.visibility      = if (playing) View.VISIBLE else View.GONE
     }
 
+    // ───────────────────── 네비게이션/더미 데이터 (기존 코드 그대로) ───────────
     private fun initBottomNavigation() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, HomeFragment())
             .commitAllowingStateLoss()
+
         binding.mainBnv.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.homeFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, HomeFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.lookFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, LookFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.searchFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, SearchFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.lockerFragment -> {
-                    supportFragmentManager.beginTransaction()
-//                        .replace(R.id.main_frm, LockerFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
-                }
+                R.id.homeFragment -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, HomeFragment()).commitAllowingStateLoss()
+                R.id.lookFragment -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, LookFragment()).commitAllowingStateLoss()
+                R.id.searchFragment -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, SearchFragment()).commitAllowingStateLoss()
+                else -> { /* 생략 */ }
             }
-            false
+            true
         }
-    }
-
-    private fun setMiniPlayer(song: Song) {
-        binding.mainMiniplayerTitleTv.text = song.title
-        binding.mainMiniplayerSingerTv.text = song.singer
-        binding.mainMiniplayerProgressSb.progress = (song.second * 100000) / song.playTime
     }
 
     private fun inputDummySongs() {
@@ -289,5 +264,4 @@ class MainActivity : AppCompatActivity() {
         )
 
     }
-
 }
