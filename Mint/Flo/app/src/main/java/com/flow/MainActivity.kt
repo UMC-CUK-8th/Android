@@ -1,10 +1,13 @@
 package com.flow
 
 import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.view.View
 import android.widget.SeekBar
@@ -17,77 +20,91 @@ import com.flow.databinding.ActivityMainBinding
 import com.flow.ui.HomeFragment
 import com.flow.ui.LookFragment
 import com.flow.ui.SearchFragment
+import kotlin.jvm.java
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var song: Song = Song()
+    private lateinit var songDB: SongDatabase
 
-    // ──────────────────────────────────────────────────────────────────────────
+    /* ── MusicService 바인딩 ─────────────────────────────────────────────── */
+    private var musicService: MusicService? = null
+    private var bound = false
+    private val conn = object : ServiceConnection {
+        override fun onServiceConnected(n: ComponentName?, b: IBinder?) {
+            musicService = (b as MusicService.MusicBinder).getService()
+            bound = true
+            refreshMini()           // 서비스 연결 직후 UI 세팅
+        }
+        override fun onServiceDisconnected(p0: ComponentName?) { bound = false }
+    }
+
+    /* ── 진행률 수신 ─────────────────────────────────────────────────────── */
+    private val progressReceiver = object : BroadcastReceiver() {
+        override fun onReceive(c: Context?, i: Intent?) {
+            val cur = i?.getIntExtra("posMs", 0) ?: 0
+            val dur = i?.getIntExtra("duration", 1) ?: 1
+            binding.mainMiniplayerProgressSb.progress = cur * 1000 / dur
+        }
+    }
+
+    /* ───────────────────────────────────────────────────────────────────── */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_FLO)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        inputDummySongs(); inputDummyAlbums(); initBottomNavigation()
+        /* ① DB 더미 삽입 (앱 최초 실행 대비) */
+        songDB = SongDatabase.getInstance(this)!!
+        inputDummySongs(); inputDummyAlbums()
 
-        val isPlaying = getSharedPreferences("song", MODE_PRIVATE)
-            .getBoolean("isPlaying", false)
-        song.isPlaying = isPlaying
-        setPlayerStatus(isPlaying)
+        /* ② MusicService 시작·바인드 */
+        Intent(this, MusicService::class.java).also { startService(it); bindService(it, conn, 0) }
 
-        binding.mainMiniplayerBtn.setOnClickListener { setPlayerStatus(true) }
-        binding.mainPauseBtn.setOnClickListener    { setPlayerStatus(false) }
-
+        /* ③ 버튼 리스너 */
+        binding.mainMiniplayerBtn.setOnClickListener {
+            /* 곡이 아직 없다면 1번 곡부터 재생 */
+            if (musicService?.currentSong == null) {
+                val first = songDB.songDao().getSong(1)          // id=1 이 첫 곡
+                musicService?.setSong(first, autoPlay = true)
+            } else {
+                musicService?.play()
+            }
+            updatePlayPause()
+        }
+        binding.mainPauseBtn.setOnClickListener {
+            musicService?.pause(); updatePlayPause()
+        }
         binding.mainPlayerCl.setOnClickListener {
-            getSharedPreferences("song", MODE_PRIVATE).edit()
-                .putInt("songId", song.id).apply()
-            startActivity(Intent(this, SongActivity::class.java))
+            val id = musicService?.currentSong?.id ?: return@setOnClickListener
+            startActivity(Intent(this, SongActivity::class.java).putExtra("songId", id))
         }
-    }
 
-    // ─────────────────── 진행률 수신 ──────────────────────────────────────────
-    private val progressReceiver = object : BroadcastReceiver() {
-        override fun onReceive(c: Context?, i: Intent?) {
-            val cur = i?.getIntExtra("posMs", 0) ?: 0
-            val dur = i?.getIntExtra("duration", 1) ?: 1
-            binding.mainMiniplayerProgressSb.progress = (cur * 100000 / dur)
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        // 미니플레이어 정보 로드
-        val songId = getSharedPreferences("song", MODE_PRIVATE).getInt("songId", 0)
-        val db = SongDatabase.getInstance(this)!!
-        song = if (songId == 0) db.songDao().getSong(1) else db.songDao().getSong(songId)
-        setMiniPlayer(song)
-
+        /* ④ 네비게이션 · 진행률 리시버 */
+        initBottomNavigation()
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(progressReceiver, IntentFilter("FLOW_PROGRESS"))
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
+        if (bound) unbindService(conn)
         LocalBroadcastManager.getInstance(this).unregisterReceiver(progressReceiver)
     }
 
-    // ─────────────────── UI ──────────────────────────────────────────────────
-    private fun setPlayerStatus(isPlaying: Boolean) {
-        song.isPlaying = isPlaying
-        binding.mainMiniplayerBtn.visibility = if (isPlaying) View.GONE else View.VISIBLE
-        binding.mainPauseBtn.visibility      = if (isPlaying) View.VISIBLE else View.GONE
-
-        getSharedPreferences("song", MODE_PRIVATE).edit()
-            .putBoolean("isPlaying", isPlaying).apply()
+    /* ── 미니플레이어 UI 갱신 ───────────────────────────────────────────── */
+    private fun refreshMini() {
+        val s = musicService?.currentSong ?: return
+        binding.mainMiniplayerTitleTv.text  = s.title
+        binding.mainMiniplayerSingerTv.text = s.singer
+        updatePlayPause()
     }
-
-    private fun setMiniPlayer(song: Song) = with(binding) {
-        mainMiniplayerTitleTv.text = song.title
-        mainMiniplayerSingerTv.text = song.singer
-        mainMiniplayerProgressSb.progress = (song.second * 100000 / song.playTime)
+    private fun updatePlayPause() = with(binding) {
+        val playing = musicService?.isPlaying == true
+        mainMiniplayerBtn.visibility = if (playing) View.GONE else View.VISIBLE
+        mainPauseBtn.visibility      = if (playing) View.VISIBLE else View.GONE
     }
 
     // ───────────────────── 네비게이션/더미 데이터 (기존 코드 그대로) ───────────

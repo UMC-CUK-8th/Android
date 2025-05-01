@@ -1,9 +1,8 @@
 package com.flow
 
-import android.content.Intent
-import android.media.MediaPlayer
+import android.content.*
 import android.os.Bundle
-import android.util.Log
+import android.os.IBinder
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,173 +14,98 @@ import com.flow.databinding.ActivitySongBinding
 class SongActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySongBinding
-    private lateinit var timer: Timer
-
-    private var mediaPlayer: MediaPlayer? = null
     private val songs = arrayListOf<Song>()
-    private lateinit var songDB: SongDatabase
-    private var nowPos = 0           // 재생 중인 곡 인덱스
+    private var nowPos = 0
 
-    // ──────────────────────────────────────────────────────────────────────────
+    /* ── MusicService ───────────────────────────────────────────────────── */
+    private var musicService: MusicService? = null
+    private var bound = false
+    private val conn = object : ServiceConnection {
+        override fun onServiceConnected(c: ComponentName?, b: IBinder?) {
+            musicService = (b as MusicService.MusicBinder).getService()
+            bound = true
+            initPlayerUI()                 // 곡 이미 재생 중이라면 위치 그대로 표시
+        }
+        override fun onServiceDisconnected(p0: ComponentName?) { bound = false }
+    }
+
+    /* ── Broadcast 수신 ──────────────────────────────────────────────────── */
+    private val progressReceiver = object : BroadcastReceiver() {
+        override fun onReceive(c: Context?, i: Intent?) {
+            val cur = i?.getIntExtra("posMs", 0) ?: 0
+            val dur = i?.getIntExtra("duration", 1) ?: 1
+            binding.songProgressSb.progress = cur * 1000 / dur
+            binding.songStartTimeTv.text =
+                String.format("%02d:%02d", cur/1000/60, (cur/1000)%60)
+        }
+    }
+
+    /* ───────────────────────────────────────────────────────────────────── */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySongBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initPlayList()
-        initSong()
-        initClickListener()
-    }
+        // Service 바인드
+        Intent(this, MusicService::class.java).also { startService(it); bindService(it, conn, 0) }
 
-    override fun onPause() {
-        super.onPause()
+        // 플레이리스트
+        songs.addAll(SongDatabase.getInstance(this)!!.songDao().getSongs())
+        nowPos = songs.indexOfFirst { it.id == intent.getIntExtra("songId", 0) }.let { if (it==-1) 0 else it }
 
-        // 현재 위치 저장
-        songs[nowPos].second =
-            ((binding.songProgressSb.progress * songs[nowPos].playTime) / 100000) / 1000
-        songs[nowPos].isPlaying = false
-        setPlayerStatus(false)
+        initClick()
 
-        getSharedPreferences("song", MODE_PRIVATE).edit()
-            .putInt("songId", songs[nowPos].id)
-            .apply()
+        // 진행률 브로드캐스트
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(progressReceiver, IntentFilter("FLOW_PROGRESS"))
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (::timer.isInitialized) timer.interrupt()
-        mediaPlayer?.release()
-        mediaPlayer = null
+        if (bound) unbindService(conn)
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(progressReceiver)
     }
 
-    // ─────────────────── 초기화 ────────────────────────────────────────────────
-    private fun initPlayList() {
-        songDB = SongDatabase.getInstance(this)!!
-        songs.addAll(songDB.songDao().getSongs())
+    /* ───────────── UI 세팅 ───────────── */
+    private fun initPlayerUI() = setPlayer(songs[nowPos])
+
+    private fun setPlayer(song: Song) = with(binding) {
+        songMusicTitleTv.text = song.title
+        songSingerNameTv.text = song.singer
+        songAlbumIv.setImageResource(song.coverImg!!)
+        songEndTimeTv.text = String.format("%02d:%02d", song.playTime/60, song.playTime%60)
+
+        /** 이미 같은 곡이 서비스에 재생 중이면 재설정하지 않고 UI만 맞춘다 */
+        if (musicService?.currentSong?.id == song.id) {
+            val cur = musicService?.currentPosition ?: 0
+            songProgressSb.progress = cur * 1000 / musicService!!.durationMs
+            songStartTimeTv.text = String.format("%02d:%02d", cur/1000/60, (cur/1000)%60)
+        } else {
+            musicService?.setSong(song, autoPlay = true)   // 새 곡이면 재생
+        }
+        updatePlayPause()
     }
 
-    private fun initSong() {
-        val songId = getSharedPreferences("song", MODE_PRIVATE).getInt("songId", 0)
-        nowPos = songs.indexOfFirst { it.id == songId }.takeIf { it != -1 } ?: 0
-
-        Log.d("SongActivity", "current song id=${songs[nowPos].id}")
-        startTimer(0)
-        setPlayer(songs[nowPos])
+    private fun updatePlayPause() = with(binding) {
+        val playing = musicService?.isPlaying == true
+        songMiniplayerIv.visibility = if (playing) View.GONE else View.VISIBLE
+        songPauseIv.visibility      = if (playing) View.VISIBLE else View.GONE
     }
 
-    private fun initClickListener() = with(binding) {
-        songDownIb.setOnClickListener { finish() }
-        songMiniplayerIv.setOnClickListener { setPlayerStatus(true); restartTimer() }
-        songPauseIv.setOnClickListener { setPlayerStatus(false) }
-        songNextIv.setOnClickListener { moveSong(+1) }
-        songPreviousIv.setOnClickListener { moveSong(-1) }
-        songLikeIv.setOnClickListener { toggleLike() }
+    /* ───────────── 클릭 ───────────── */
+    private fun initClick() = with(binding) {
+        songMiniplayerIv.setOnClickListener { musicService?.play();  updatePlayPause() }
+        songPauseIv.setOnClickListener      { musicService?.pause(); updatePlayPause() }
+        songNextIv.setOnClickListener       { moveSong(+1) }
+        songPreviousIv.setOnClickListener   { moveSong(-1) }
+        songDownIb.setOnClickListener       { finish() }
     }
 
-    // ─────────────────── 좋아요 ────────────────────────────────────────────────
-    private fun toggleLike() {
-        val cur = songs[nowPos]
-        cur.isLike = !cur.isLike
-        songDB.songDao().updateIsLikeById(cur.isLike, cur.id)
-        binding.songLikeIv.setImageResource(
-            if (cur.isLike) R.drawable.ic_my_like_on else R.drawable.ic_my_like_off
-        )
-    }
-
-    // ─────────────────── 곡 이동 ───────────────────────────────────────────────
-    private fun moveSong(direct: Int) {
-        if (nowPos + direct !in songs.indices) {
+    private fun moveSong(d: Int) {
+        if (nowPos + d !in songs.indices) {
             Toast.makeText(this, "더 이상 곡이 없습니다", Toast.LENGTH_SHORT).show(); return
         }
-        nowPos += direct
-
-        restartTimer()
-        mediaPlayer?.release(); mediaPlayer = null
+        nowPos += d
         setPlayer(songs[nowPos])
-    }
-
-    // ─────────────────── Player 세팅 ─────────────────────────────────────────
-    private fun setPlayer(song: Song) = with(binding) {
-        songMusicTitleTv.text   = song.title
-        songSingerNameTv.text   = song.singer
-        songStartTimeTv.text    = String.format("%02d:%02d", song.second / 60, song.second % 60)
-        songEndTimeTv.text      = String.format("%02d:%02d", song.playTime / 60, song.playTime % 60)
-        songAlbumIv.setImageResource(song.coverImg!!)
-        songProgressSb.progress = (song.second * 100000) / song.playTime
-
-        val resId = resources.getIdentifier(song.music, "raw", packageName)
-        mediaPlayer = MediaPlayer.create(this@SongActivity, resId)
-
-        songLikeIv.setImageResource(
-            if (song.isLike) R.drawable.ic_my_like_on else R.drawable.ic_my_like_off
-        )
-        setPlayerStatus(song.isPlaying)
-    }
-
-    private fun setPlayerStatus(isPlaying: Boolean) = with(binding) {
-        songs[nowPos].isPlaying = isPlaying
-        timer.isPlaying         = isPlaying
-
-        getSharedPreferences("song", MODE_PRIVATE).edit()
-            .putBoolean("isPlaying", isPlaying).apply()
-
-        if (isPlaying) {
-            songMiniplayerIv.visibility = View.GONE
-            songPauseIv.visibility      = View.VISIBLE
-            mediaPlayer?.start()
-        } else {
-            songMiniplayerIv.visibility = View.VISIBLE
-            songPauseIv.visibility      = View.GONE
-            mediaPlayer?.pause()
-        }
-    }
-
-    // ─────────────────── Timer 스레드 ─────────────────────────────────────────
-    private fun startTimer(startMs: Int) {
-        timer = Timer(songs[nowPos].playTime, startMs, songs[nowPos].isPlaying)
-        timer.start()
-    }
-
-    private fun restartTimer() {
-        if (::timer.isInitialized && timer.isAlive) timer.interrupt()
-        startTimer(mediaPlayer?.currentPosition ?: 0)
-    }
-
-    inner class Timer(
-        private val durationSec: Int,
-        startMs: Int = 0,
-        @Volatile var isPlaying: Boolean = true
-    ) : Thread() {
-
-        private var mills  = startMs
-        private var second = startMs / 1000
-
-        override fun run() {
-            try {
-                while (second < durationSec) {
-                    if (isPlaying) {
-                        sleep(200)
-                        mills  += 200
-                        second  = mills / 1000
-
-                        runOnUiThread {
-                            binding.songProgressSb.progress =
-                                (mills * 100000 / (durationSec * 1000f)).toInt()
-                            binding.songStartTimeTv.text =
-                                String.format("%02d:%02d", second / 60, second % 60)
-                        }
-
-                        // 메인 화면으로 진행률 브로드캐스트
-                        val i = Intent("FLOW_PROGRESS").apply {
-                            putExtra("posMs", mills)
-                            putExtra("duration", durationSec * 1000)
-                        }
-                        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(i)
-                    }
-                }
-            } catch (e: InterruptedException) {
-                Log.d("SongActivity", "Timer stop: ${e.message}")
-            }
-        }
     }
 }
