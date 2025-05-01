@@ -23,7 +23,7 @@ class AlbumFragment : Fragment(){
         binding = FragmentAlbumBinding.inflate(inflater,container,false)
         binding.albumBack.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.my_nav_host, HomeFragment())
+                .replace(R.id.main_frm, HomeFragment())
                 .commitAllowingStateLoss()
         }
 

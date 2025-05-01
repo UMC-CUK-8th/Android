@@ -1,103 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F8F8F8">
+    tools:context=".MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/my_nav_host"
-        class="androidx.navigation.fragment.NavHostFragment"
+    <FrameLayout
+        android:id="@+id/main_frm"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph" />
 
-    <LinearLayout
-        android:id="@+id/musicBar"
+        app:layout_constraintBottom_toTopOf="@id/main_player_cl"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/main_miniplayer_progress_sb"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#FFFFFF"
-        android:padding="8dp"
-        android:orientation="horizontal"
-        android:elevation="8dp">
+        android:layout_height="0dp"
+        android:background="@null"
+        android:paddingEnd="0dp"
+        android:paddingStart="0dp"
+        android:layout_marginBottom="-3dp"
+        android:progressBackgroundTint="@color/song_player_bg"
+        android:progressTint="@color/song_player"
+        android:progress="0"
+        android:max="100000"
+        android:thumb="@color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/main_player_cl" />
 
-        <!-- 곡 정보 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_player_cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F9F9F9"
+        android:paddingVertical="5dp"
+        app:layout_constraintBottom_toTopOf="@id/main_bnv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:paddingStart="8dp">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/song_title"
+                android:id="@+id/main_miniplayer_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="라일락"
-                android:textSize="14sp"
-                android:textColor="#000000"
-                android:maxLines="1"
-                android:ellipsize="end"/>
+                android:textColor="@color/black"
+                android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/artist_name"
+                android:id="@+id/main_miniplayer_singer_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="아이유(IU)"
-                android:textSize="12sp"
-                android:textColor="#777777"/>
+                android:text="아이유 (IU)"
+                android:textSize="12sp" />
+
         </LinearLayout>
 
-        <!-- 이전 곡 버튼 -->
-        <ImageView
-            android:id="@+id/prev_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_prev"
-            android:padding="8dp"
-            android:scaleType="centerInside"
-            app:tint="@color/black"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <!-- 재생/일시정지 버튼 -->
-        <ImageView
-            android:id="@+id/play_pause_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_play"
-            android:padding="8dp"
-            android:scaleType="centerInside"
-            app:tint="@color/black"/>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/btn_miniplayer_previous" />
 
-        <!-- 다음 곡 버튼 -->
-        <ImageView
-            android:id="@+id/next_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_next"
-            android:padding="8dp"
-            android:scaleType="centerInside"
-            app:tint="@color/black"/>
+            <ImageView
+                android:id="@+id/main_miniplayer_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/btn_miniplayer_play" />
 
-        <ImageView
-            android:id="@+id/playlist_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_playlist"
-            android:padding="8dp"
-            android:scaleType="centerInside"
-            app:tint="@color/black"/>
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/main_pause_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/btn_miniplayer_pause"
+                android:visibility="gone" />
+
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/btn_miniplayer_next" />
+
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginHorizontal="15dp"
+                android:src="@drawable/btn_player_go_list" />
+
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/my_bottom_nav"
+        android:id="@+id/main_bnv"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/background"
-        app:itemTextColor="@color/black"
+        android:layout_height="wrap_content"
+        app:itemIconSize="20dp"
+        app:itemIconTint="@drawable/btm_color_selector"
+        app:itemTextColor="@drawable/btm_color_selector"
         app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_menu" />
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
