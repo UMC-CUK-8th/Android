@@ -30,46 +30,27 @@ class MainActivity : AppCompatActivity() {
     private var song: Song = Song()
     private var gson: Gson = Gson()
 
-    private var isPlaying: Boolean = false // 음악이 재생 중인지 여부
-    private var mediaPlayer: MediaPlayer? = null // MediaPlayer 객체
-
+    private var isPlaying: Boolean = false
+    private var mediaPlayer: MediaPlayer? = null
     private val handler = Handler(Looper.getMainLooper())
-    private var currentPage = 0
+    private var updateRunnable: Runnable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.musicBar.setOnClickListener {
-            val intent = Intent(this, SongActivity::class.java)
-            // MainActivity의 음악 재생 상태와 현재 시간을 전달
-            intent.putExtra("isPlaying", isPlaying)
-            intent.putExtra("currentPosition", mediaPlayer?.currentPosition ?: 0)
-            startActivity(intent)
-        }
-
-        // Set up bottom navigation view
         setBottomNavigationView()
-        // Set up music bar
         setupMusicBar()
 
-        // Default fragment selection
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host) as NavHostFragment
-        val navController = navHostFragment.navController
-        val song = Song(binding.songTitle.text.toString(), binding.artistName.text.toString(),
-            0,
-            120,
-            false,
-            "lilac")
-
+        val song = Song("라일락", "아이유(IU)", 0, 120, false, "lilac")
         binding.musicBar.setOnClickListener {
             val intent = Intent(this, SongActivity::class.java)
             intent.putExtra("title", song.title)
             intent.putExtra("singer", song.singer)
-            intent.putExtra("second", song.second)
+            intent.putExtra("second", mediaPlayer?.currentPosition?.div(1000) ?: 0)
             intent.putExtra("playTime", song.playTime)
-            intent.putExtra("isPlaying", song.isPlaying)
+            intent.putExtra("isPlaying", isPlaying)
             intent.putExtra("music", song.music)
             startActivity(intent)
         }
@@ -102,40 +83,48 @@ class MainActivity : AppCompatActivity() {
 
         playPauseButton.setOnClickListener {
             if (isPlaying) {
-                pauseMusic() // 음악 일시 정지
+                pauseMusic()
             } else {
-                playMusic() // 음악 재생
+                playMusic()
             }
         }
 
-        prevButton.setOnClickListener {
-            // 이전 곡으로 이동하는 기능 추가
-        }
-
-        nextButton.setOnClickListener {
-            // 다음 곡으로 이동하는 기능 추가
-        }
-
-        playlistButton.setOnClickListener {
-            // 재생 목록 화면으로 이동하는 기능 추가
-        }
+        prevButton.setOnClickListener { /* 구현 */ }
+        nextButton.setOnClickListener { /* 구현 */ }
+        playlistButton.setOnClickListener { /* 구현 */ }
     }
 
     private fun playMusic() {
         if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(this, R.raw.lilac) // `raw` 폴더에 있는 음악 파일 경로
+            mediaPlayer = MediaPlayer.create(this, R.raw.lilac)
         }
         mediaPlayer?.start()
         isPlaying = true
-        // 버튼 아이콘 변경
         findViewById<ImageView>(R.id.play_pause_button).setImageResource(R.drawable.ic_pause)
+        startSeekBarUpdate()
     }
 
     private fun pauseMusic() {
         mediaPlayer?.pause()
         isPlaying = false
-        // 버튼 아이콘 변경
         findViewById<ImageView>(R.id.play_pause_button).setImageResource(R.drawable.ic_play)
+        stopSeekBarUpdate()
+    }
+
+    private fun startSeekBarUpdate() {
+        updateRunnable = object : Runnable {
+            override fun run() {
+                val current = mediaPlayer?.currentPosition ?: 0
+                val total = mediaPlayer?.duration ?: 1
+                binding.songProgress.progress = (current * 100000) / total
+                handler.postDelayed(this, 500)
+            }
+        }
+        handler.post(updateRunnable!!)
+    }
+
+    private fun stopSeekBarUpdate() {
+        updateRunnable?.let { handler.removeCallbacks(it) }
     }
 
     override fun onDestroy() {
@@ -154,12 +143,17 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
         val songJson = sharedPreferences.getString("songData", null)
-
         song = if (songJson == null) {
             Song("라일락", "아이유(IU)", 0, 120, false, "lilac")
         } else {
             gson.fromJson(songJson, Song::class.java)
         }
         setMiniPlayer(song)
+
+        if (song.isPlaying){
+            playMusic()
+        } else {
+            pauseMusic()
+        }
     }
 }
