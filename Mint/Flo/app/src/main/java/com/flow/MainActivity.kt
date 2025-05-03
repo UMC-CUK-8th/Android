@@ -18,6 +18,7 @@ import com.flow.data.Song
 import com.flow.data.SongDatabase
 import com.flow.databinding.ActivityMainBinding
 import com.flow.ui.HomeFragment
+import com.flow.ui.LockerFragment
 import com.flow.ui.LookFragment
 import com.flow.ui.SearchFragment
 import kotlin.jvm.java
@@ -121,7 +122,8 @@ class MainActivity : AppCompatActivity() {
                     .replace(R.id.main_frm, LookFragment()).commitAllowingStateLoss()
                 R.id.searchFragment -> supportFragmentManager.beginTransaction()
                     .replace(R.id.main_frm, SearchFragment()).commitAllowingStateLoss()
-                else -> { /* 생략 */ }
+                R.id.lockerFragment -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, LockerFragment()).commitAllowingStateLoss()
             }
             true
         }

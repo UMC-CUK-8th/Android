@@ -22,7 +22,8 @@ abstract class SongDatabase: RoomDatabase() {
                         context.applicationContext,
                         SongDatabase::class.java,
                         "song-database"  // 다른 데이터베이스랑 이름겹치면 꼬임
-                    ).allowMainThreadQueries().build()
+                    )
+                        .fallbackToDestructiveMigration().allowMainThreadQueries().build()
                 }
             }
 
