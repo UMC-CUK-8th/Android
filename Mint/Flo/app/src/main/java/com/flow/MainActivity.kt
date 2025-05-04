@@ -11,6 +11,7 @@ import android.os.IBinder
 import android.util.Log
 import android.view.View
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.flow.data.Album
@@ -66,15 +67,21 @@ class MainActivity : AppCompatActivity() {
 
         /* ③ 버튼 리스너 */
         binding.mainMiniplayerBtn.setOnClickListener {
-            /* 곡이 아직 없다면 1번 곡부터 재생 */
             if (musicService?.currentSong == null) {
-                val first = songDB.songDao().getSong(1)          // id=1 이 첫 곡
-                musicService?.setSong(first, autoPlay = true)
+                val first = songDB.songDao().getSongs().firstOrNull()
+
+                if (first != null) {
+                    musicService?.setSong(first, autoPlay = true)
+                    updatePlayPause()
+                } else {
+                    Toast.makeText(this, "재생할 곡이 없습니다.", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 musicService?.play()
+                updatePlayPause()
             }
-            updatePlayPause()
         }
+
         binding.mainPauseBtn.setOnClickListener {
             musicService?.pause(); updatePlayPause()
         }
@@ -131,9 +138,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun inputDummySongs() {
         val songDB = SongDatabase.getInstance(this)!!
-        val songs = songDB.songDao().getSongs()
+        songDB.songDao().getSongs().forEach { songDB.songDao().delete(it) }
 
-        if (songs.isNotEmpty()) return
 
         songDB.songDao().insert(
             Song(
