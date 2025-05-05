@@ -12,6 +12,7 @@ class AlbumRVAdapter(private val albumList: ArrayList<Album>) :
     interface MyItemClickListener {
         fun onItemClick(album: Album)
         fun onRemoveAlbum(position: Int)
+        fun onPlayAlbum(album: Album)
     }
 
     private lateinit var mItemClickListener: MyItemClickListener
@@ -43,6 +44,11 @@ class AlbumRVAdapter(private val albumList: ArrayList<Album>) :
         holder.bind(albumList[position])
         holder.itemView.setOnClickListener { mItemClickListener.onItemClick(albumList[position]) }
 //        holder.binding.itemAlbumTitleTv.setOnClickListener { mItemClickListener.onRemoveAlbum(position) }
+        // ✅ play 버튼 클릭 이벤트 추가
+        holder.binding.itemAlbumPlayImgIv.setOnClickListener {
+            mItemClickListener.onPlayAlbum(albumList[position])
+        }
+
     }
 
     override fun getItemCount(): Int = albumList.size

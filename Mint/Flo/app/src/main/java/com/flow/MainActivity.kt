@@ -136,6 +136,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun playSongFromFragment(song: Song) {
+        musicService?.setSong(song, autoPlay = true)
+        refreshMini()
+        updatePlayPause()
+    }
+
+
     private fun inputDummySongs() {
         val songDB = SongDatabase.getInstance(this)!!
         songDB.songDao().getSongs().forEach { songDB.songDao().delete(it) }
