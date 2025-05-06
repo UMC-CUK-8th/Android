@@ -8,8 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.jack_week4.databinding.FragmentHomeBinding
+import com.google.gson.Gson
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
+    private var albumDates = ArrayList<Album>()
+
     private lateinit var binding: FragmentHomeBinding
     private lateinit var albumAdapter: AlbumAdapter
 
@@ -20,31 +23,47 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        // 앨범 리스트 데이터
-        val albumList = listOf(
-            Album("라일락", "아이유", R.drawable.img_album_exp2),
-            Album("Celebrity", "아이유", R.drawable.img_album_exp2),
-            Album("Blueming", "아이유", R.drawable.img_album_exp2)
-        )
+        albumDates.apply {
+            add(Album("Butter","방탄소년단 (BTS)",R.drawable.img_album_exp))
+            add(Album("Lilac","아이유 (IU)",R.drawable.img_album_exp2))
+            add(Album("Next Level","에스파 (AESPA)",R.drawable.img_album_exp))
+            add(Album("Boy with luv","방탄소년단 (BTS)",R.drawable.img_album_exp2))
+            add(Album("BBoom BBoom","모모랜드 (MOMOLAND)",R.drawable.img_album_exp))
+            add(Album("Weekend","태연 (Tae Yeon)",R.drawable.img_album_exp2))
+        }
 
-        // 어댑터 설정
-        albumAdapter = AlbumAdapter(albumList, object : AlbumAdapter.OnItemClickListener {
-            override fun onItemClick(album: Album) {
-                (context as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_frm, AlbumFragment())
-                    .addToBackStack(null)
-                    .commitAllowingStateLoss()
+        val albumRVAdapter = AlbumRVAdapter(albumDates)
+        binding.homeTodayMusicAlbumRv.adapter = albumRVAdapter
+        binding.homeTodayMusicAlbumRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        albumRVAdapter.setMyItemClickListener(object: AlbumRVAdapter.MyItemClickListener{
+            override fun onItemClick(album:Album){
+                changeAlbumFragment(album)
+            }
+
+            override fun onRemoveAlbum(position: Int) {
+                albumRVAdapter.removeItem(position)
             }
         })
 
-
-        // 배너 뷰페이저
         val bannerAdapter = BannerVPAdapter(this)
         bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp))
         bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp2))
-        binding.homeBanner.adapter = bannerAdapter
-        binding.homeBanner.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        binding.homeBannerVp.adapter = bannerAdapter
+        binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         return binding.root
+    }
+
+    private fun changeAlbumFragment(album: Album) {
+        (context as MainActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.main_frm, AlbumFragment().apply {
+                arguments = Bundle().apply {
+                    val gson = Gson()
+                    val albumJson = gson.toJson(album)
+                    putString("album", albumJson)
+                }
+            })
+            .commitAllowingStateLoss()
     }
 }

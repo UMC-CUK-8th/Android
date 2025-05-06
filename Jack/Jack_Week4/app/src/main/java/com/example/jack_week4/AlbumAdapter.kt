@@ -40,7 +40,7 @@ class AlbumAdapter(
         val album = albumList[position]
         holder.title.text = album.title
         holder.singer.text = album.singer
-        holder.image.setImageResource(album.coverImageResId)
+        holder.image.setImageResource(album.coverImage ?: R.drawable.img_album_exp2)
     }
 
     override fun getItemCount(): Int = albumList.size

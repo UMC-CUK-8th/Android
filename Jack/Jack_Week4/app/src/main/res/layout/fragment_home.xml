@@ -224,7 +224,7 @@
             app:layout_constraintTop_toBottomOf="@id/home_today_music_total_tv"/>
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/homeBanner"
+            android:id="@+id/home_banner_vp"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginTop="15dp"
@@ -243,7 +243,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/homeBanner" />
+            app:layout_constraintTop_toBottomOf="@id/home_banner_vp" />
 
         <HorizontalScrollView
             android:id="@+id/home_daily_music_hs"
