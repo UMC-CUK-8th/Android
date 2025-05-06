@@ -12,7 +12,7 @@ import com.google.gson.Gson
 
 class SavedSongFragment : Fragment() {
 
-    lateinit var songDB: SongDatabase
+    private var albumDatas = ArrayList<Album>()
     lateinit var binding : FragmentSavedSongBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,13 +23,26 @@ class SavedSongFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentSavedSongBinding.inflate(inflater, container, false)
 
-        songDB = SongDatabase.getInstance(requireContext())!!
+        albumDatas.apply {
+            add(Album("Butter", "방탄소년단 (BTS)", R.drawable.img_album_exp))
+            add(Album("Lilac", "아이유 (IU)", R.drawable.img_album_exp2))
+            add(Album("Next Level", "에스파 (AESPA)", R.drawable.img_album_exp3))
+            add(Album("Boy with Luv", "방탄소년단 (BTS)", R.drawable.img_album_exp4))
+            add(Album("BBoom BBoom", "모모랜드 (MOMOLAND)", R.drawable.img_album_exp5))
+            add(Album("Weekend", "태연 (Tae Yeon)", R.drawable.img_album_exp6))
+        }
+
+        val lockerAlbumRVAdapter = LockerAlbumRVAdapter(albumDatas)
+        binding.lockerMusicAlbumRv.adapter = lockerAlbumRVAdapter
+        binding.lockerMusicAlbumRv.layoutManager = LinearLayoutManager(requireActivity())
 
         return binding.root
-
     }
+}
+
 
     override fun onStart() {
         super.onStart()
