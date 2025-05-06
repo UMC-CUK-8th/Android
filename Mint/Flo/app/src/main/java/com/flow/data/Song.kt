@@ -12,7 +12,9 @@ data class Song(
     var isPlaying: Boolean = false,
     var music: String = "",
     var coverImg: Int? = null,
-    var isLike: Boolean = false
+    var isLike: Boolean = false,
+    var isChecked: Boolean = false // 스위치 상태 저장용 변수 추가
+
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

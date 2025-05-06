@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.flow.data.Song
 import com.flow.databinding.ItemSongBinding
+import android.graphics.Color
 
 class SavedSongRVAdapter :
     RecyclerView.Adapter<SavedSongRVAdapter.ViewHolder>() {
@@ -62,6 +63,19 @@ class SavedSongRVAdapter :
             binding.itemSongImgIv.setImageResource(song.coverImg!!)
             binding.itemSongTitleTv.text = song.title
             binding.itemSongSingerTv.text = song.singer
+
+            // 💡 배경색 설정
+            binding.itemSongContainer.setBackgroundColor(
+                if (song.isChecked) Color.parseColor("#E0F7FA") // 하늘색
+                else Color.WHITE
+            )
+
+            // 💡 클릭 시 체크 상태 토글
+            binding.root.setOnClickListener {
+                song.isChecked = !song.isChecked
+                notifyItemChanged(adapterPosition)
+            }
         }
     }
+
 }
