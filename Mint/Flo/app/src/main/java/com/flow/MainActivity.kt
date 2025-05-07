@@ -82,6 +82,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.mainMiniplayerPreviousIv.setOnClickListener {
+            moveSong(-1)
+        }
+
+        binding.mainMiniplayerNextIv.setOnClickListener {
+            moveSong(+1)
+        }
+
+
         binding.mainPauseBtn.setOnClickListener {
             musicService?.pause(); updatePlayPause()
         }
@@ -94,7 +103,43 @@ class MainActivity : AppCompatActivity() {
         initBottomNavigation()
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(progressReceiver, IntentFilter("FLOW_PROGRESS"))
+
+        // SharedPreferences에서 songId 불러와서 곡 설정
+        val savedSongId = getSharedPreferences("song", MODE_PRIVATE).getInt("songId", -1)
+        if (savedSongId != -1) {
+            val savedSong = songDB.songDao().getSongById(savedSongId)
+            savedSong?.let {
+                musicService?.setSong(it)
+                refreshMini()
+                updatePlayPause()
+            }
+        }
+
+
     }
+
+    private fun moveSong(d: Int) {
+        val songs = songDB.songDao().getSongs()
+        val curSong = musicService?.currentSong ?: return
+        val nowPos = songs.indexOfFirst { it.id == curSong.id }
+
+        val newPos = nowPos + d
+        if (newPos !in songs.indices) {
+            Toast.makeText(this, "더 이상 곡이 없습니다.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val nextSong = songs[newPos]
+        musicService?.setSong(nextSong, autoPlay = true)
+
+        // SharedPreferences에 새로운 songId 저장
+        getSharedPreferences("song", MODE_PRIVATE)
+            .edit().putInt("songId", nextSong.id).apply()
+
+        refreshMini()
+        updatePlayPause()
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -138,6 +183,11 @@ class MainActivity : AppCompatActivity() {
 
     fun playSongFromFragment(song: Song) {
         musicService?.setSong(song, autoPlay = true)
+
+        // 현재 곡 저장
+        getSharedPreferences("song", MODE_PRIVATE)
+            .edit().putInt("songId", song.id).apply()
+
         refreshMini()
         updatePlayPause()
     }
