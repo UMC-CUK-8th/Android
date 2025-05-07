@@ -192,6 +192,23 @@ class MainActivity : AppCompatActivity() {
         updatePlayPause()
     }
 
+    fun playAlbumSongs(songs: List<Song>) {
+        if (songs.isEmpty()) return
+
+        // 첫 곡부터 재생
+        val first = songs[0]
+        musicService?.setSong(first, autoPlay = true)
+
+        // SharedPreferences에 현재 곡 저장
+        getSharedPreferences("song", MODE_PRIVATE)
+            .edit().putInt("songId", first.id).apply()
+
+        refreshMini()
+        updatePlayPause()
+
+        // 👉 나중에 SongActivity에서 사용할 수 있도록 전역 저장도 고려 가능
+    }
+
 
     private fun inputDummySongs() {
         val songDB = SongDatabase.getInstance(this)!!

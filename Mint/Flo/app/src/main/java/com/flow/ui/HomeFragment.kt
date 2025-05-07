@@ -1,5 +1,6 @@
 package com.flow.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.flow.MainActivity
 import com.flow.R
+import com.flow.SongActivity
 import com.flow.data.Album
 import com.flow.data.SongDatabase
 import com.flow.databinding.FragmentHomeBinding
@@ -57,6 +59,9 @@ class HomeFragment : Fragment() {
             }
 
             override fun onPlayAlbum(album: Album) {
+                val songs = songDB.songDao().getSongs().filter { it.coverImg == album.coverImg }
+                val activity = context as? MainActivity
+                activity?.playAlbumSongs(songs)
                 playFirstSongInAlbum(album)
             }
         })
@@ -72,6 +77,8 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+
+
     private fun changeAlbumFragment(album: Album) {
         (context as MainActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, AlbumFragment().apply {
@@ -85,17 +92,21 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     * 앨범의 첫 번째 곡을 찾아서 재생합니다.
+     * 앨범의 전체 곡 리스트 전달
      */
     private fun playFirstSongInAlbum(album: Album) {
         val songs = songDB.songDao().getSongs().filter { it.coverImg == album.coverImg }
+        if (songs.isEmpty()) return
 
-        if (songs.isNotEmpty()) {
-            val firstSong = songs.first()
-            val activity = context as? MainActivity
-            activity?.playSongFromFragment(firstSong)
-        } else {
-            Log.d("HomeFragment", "해당 앨범의 곡을 찾을 수 없습니다.")
+        val gson = Gson()
+        val songListJson = gson.toJson(songs)
+
+        val intent = Intent(requireContext(), SongActivity::class.java).apply {
+            putExtra("songList", songListJson)
+            putExtra("songId", songs[0].id)
         }
+
+        startActivity(intent)
     }
+
 }

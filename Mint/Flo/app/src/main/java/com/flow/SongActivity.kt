@@ -10,6 +10,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.flow.data.Song
 import com.flow.data.SongDatabase
 import com.flow.databinding.ActivitySongBinding
+import com.google.gson.Gson
 
 class SongActivity : AppCompatActivity() {
 
@@ -46,11 +47,17 @@ class SongActivity : AppCompatActivity() {
         binding = ActivitySongBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // JSON으로 전달받은 곡 리스트 파싱
+        val songListJson = intent.getStringExtra("songList")
+        val gson = Gson()
+        val songArray = gson.fromJson(songListJson, Array<Song>::class.java)
+        songs.addAll(songArray)
+
         // Service 바인드
         Intent(this, MusicService::class.java).also { startService(it); bindService(it, conn, 0) }
 
         // 플레이리스트
-        songs.addAll(SongDatabase.getInstance(this)!!.songDao().getSongs())
+            // songs.addAll(SongDatabase.getInstance(this)!!.songDao().getSongs())
         nowPos = songs.indexOfFirst { it.id == intent.getIntExtra("songId", 0) }.let { if (it==-1) 0 else it }
 
         initClick()
@@ -58,6 +65,8 @@ class SongActivity : AppCompatActivity() {
         // 진행률 브로드캐스트
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(progressReceiver, IntentFilter("FLOW_PROGRESS"))
+
+
     }
 
     override fun onDestroy() {
