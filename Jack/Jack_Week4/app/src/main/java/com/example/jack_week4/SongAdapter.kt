@@ -4,13 +4,14 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jack_week4.databinding.ItemLibraryAlbumBinding
+import com.example.jack_week4.databinding.ItemSongBinding
 
-class SongAdapter() : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
-    private val albums = ArrayList<Album>()
+class SongAdapter(
+    private var songs: ArrayList<Song>
+) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
 
     interface MyItemClickListener {
-        fun onRemoveSong(position: Int) // position을 전달받아서 삭제하도록 처리
+        fun onRemoveSong(position: Int)
     }
 
     private lateinit var mItemClickListener: MyItemClickListener
@@ -19,39 +20,38 @@ class SongAdapter() : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
         mItemClickListener = itemClickListener
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): SongAdapter.ViewHolder {
-        val binding: ItemLibraryAlbumBinding = ItemLibraryAlbumBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemSongBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: SongAdapter.ViewHolder, position: Int) {
-        holder.bind(albums[position])
-        holder.binding.itemAlbumMoreIv.setOnClickListener {
-            // onRemoveSong에 position을 전달
-            mItemClickListener.onRemoveSong(position)  // id 대신 position을 전달
-            removeSong(position)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(songs[position])
+        holder.binding.itemSongMoreIv.setOnClickListener {
+            if (position >= 0 && position < songs.size) {
+                // 삭제 클릭 시 onRemoveSong 호출
+                mItemClickListener.onRemoveSong(position)
+            }
         }
     }
 
-    override fun getItemCount(): Int = albums.size
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun addAlbums(albums: ArrayList<Album>) {
-        this.albums.clear()
-        this.albums.addAll(albums)
-        notifyDataSetChanged()
-    }
+    override fun getItemCount(): Int = songs.size
 
     fun removeSong(position: Int) {
-        albums.removeAt(position)
-        notifyDataSetChanged()
+        if (position >= 0 && position < songs.size) {
+            // 리스트에서 아이템 제거
+            songs.removeAt(position)
+            notifyItemRemoved(position)
+
+            notifyItemRangeChanged(position, songs.size)
+        }
     }
 
-    inner class ViewHolder(val binding: ItemLibraryAlbumBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(album: Album) {
-            binding.itemAlbumImgIv.setImageResource(album.coverImage!!)
-            binding.itemAlbumTitleTv.text = album.title
-            binding.itemAlbumSingerTv.text = album.singer
+    inner class ViewHolder(val binding: ItemSongBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(song: Song) {
+            binding.itemSongTitleTv.text = song.title
+            binding.itemSongSingerTv.text = song.singer
+            song.coverImg?.let { binding.itemSongImgIv.setImageResource(it) }
         }
     }
 }
