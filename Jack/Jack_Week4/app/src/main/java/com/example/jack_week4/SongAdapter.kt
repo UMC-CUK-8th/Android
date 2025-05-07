@@ -52,6 +52,13 @@ class SongAdapter(
             binding.itemSongTitleTv.text = song.title
             binding.itemSongSingerTv.text = song.singer
             song.coverImg?.let { binding.itemSongImgIv.setImageResource(it) }
+
+            // ✅ Switch 상태 설정
+            binding.itemSongSwitch.setOnCheckedChangeListener(null)
+            binding.itemSongSwitch.isChecked = song.isChecked
+            binding.itemSongSwitch.setOnCheckedChangeListener { _, isChecked ->
+                song.isChecked = isChecked
+            }
         }
     }
 }
