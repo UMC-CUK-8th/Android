@@ -74,6 +74,9 @@ class SongActivity : AppCompatActivity() {
         songSingerNameTv.text = song.singer
         songAlbumIv.setImageResource(song.coverImg!!)
         songEndTimeTv.text = String.format("%02d:%02d", song.playTime/60, song.playTime%60)
+        songLikeIv.setImageResource(
+            if (song.isLike) R.drawable.ic_my_like_on else R.drawable.ic_my_like_off
+        )
 
         /** 이미 같은 곡이 서비스에 재생 중이면 재설정하지 않고 UI만 맞춘다 */
         if (musicService?.currentSong?.id == song.id) {
@@ -99,6 +102,25 @@ class SongActivity : AppCompatActivity() {
         songNextIv.setOnClickListener       { moveSong(+1) }
         songPreviousIv.setOnClickListener   { moveSong(-1) }
         songDownIb.setOnClickListener       { finish() }
+        songLikeIv.setOnClickListener {
+            val song = songs[nowPos]
+            song.isLike = !song.isLike
+
+            // UI 업데이트
+            songLikeIv.setImageResource(
+                if (song.isLike) R.drawable.ic_my_like_on else R.drawable.ic_my_like_off
+            )
+
+            // DB 업데이트
+            SongDatabase.getInstance(this@SongActivity)!!
+                .songDao().updateIsLikeById(song.isLike, song.id)
+
+            Toast.makeText(this@SongActivity,
+                if (song.isLike) "좋아요 추가됨" else "좋아요 제거됨",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
     }
 
     private fun moveSong(d: Int) {
