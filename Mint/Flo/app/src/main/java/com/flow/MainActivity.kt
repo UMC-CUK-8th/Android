@@ -11,6 +11,7 @@ import android.os.IBinder
 import android.util.Log
 import android.view.View
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.flow.data.Album
@@ -18,6 +19,7 @@ import com.flow.data.Song
 import com.flow.data.SongDatabase
 import com.flow.databinding.ActivityMainBinding
 import com.flow.ui.HomeFragment
+import com.flow.ui.LockerFragment
 import com.flow.ui.LookFragment
 import com.flow.ui.SearchFragment
 import kotlin.jvm.java
@@ -65,15 +67,21 @@ class MainActivity : AppCompatActivity() {
 
         /* ③ 버튼 리스너 */
         binding.mainMiniplayerBtn.setOnClickListener {
-            /* 곡이 아직 없다면 1번 곡부터 재생 */
             if (musicService?.currentSong == null) {
-                val first = songDB.songDao().getSong(1)          // id=1 이 첫 곡
-                musicService?.setSong(first, autoPlay = true)
+                val first = songDB.songDao().getSongs().firstOrNull()
+
+                if (first != null) {
+                    musicService?.setSong(first, autoPlay = true)
+                    updatePlayPause()
+                } else {
+                    Toast.makeText(this, "재생할 곡이 없습니다.", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 musicService?.play()
+                updatePlayPause()
             }
-            updatePlayPause()
         }
+
         binding.mainPauseBtn.setOnClickListener {
             musicService?.pause(); updatePlayPause()
         }
@@ -121,17 +129,24 @@ class MainActivity : AppCompatActivity() {
                     .replace(R.id.main_frm, LookFragment()).commitAllowingStateLoss()
                 R.id.searchFragment -> supportFragmentManager.beginTransaction()
                     .replace(R.id.main_frm, SearchFragment()).commitAllowingStateLoss()
-                else -> { /* 생략 */ }
+                R.id.lockerFragment -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, LockerFragment()).commitAllowingStateLoss()
             }
             true
         }
     }
 
+    fun playSongFromFragment(song: Song) {
+        musicService?.setSong(song, autoPlay = true)
+        refreshMini()
+        updatePlayPause()
+    }
+
+
     private fun inputDummySongs() {
         val songDB = SongDatabase.getInstance(this)!!
-        val songs = songDB.songDao().getSongs()
+        songDB.songDao().getSongs().forEach { songDB.songDao().delete(it) }
 
-        if (songs.isNotEmpty()) return
 
         songDB.songDao().insert(
             Song(

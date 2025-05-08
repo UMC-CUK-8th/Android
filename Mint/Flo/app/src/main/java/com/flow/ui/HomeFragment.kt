@@ -55,6 +55,10 @@ class HomeFragment : Fragment() {
             override fun onRemoveAlbum(position: Int) {
                 albumRVAdapter.removeItem(position)
             }
+
+            override fun onPlayAlbum(album: Album) {
+                playFirstSongInAlbum(album)
+            }
         })
 
         val bannerAdapter = BannerVPAdapter(this)
@@ -78,5 +82,20 @@ class HomeFragment : Fragment() {
                 }
             })
             .commitAllowingStateLoss()
+    }
+
+    /**
+     * 앨범의 첫 번째 곡을 찾아서 재생합니다.
+     */
+    private fun playFirstSongInAlbum(album: Album) {
+        val songs = songDB.songDao().getSongs().filter { it.coverImg == album.coverImg }
+
+        if (songs.isNotEmpty()) {
+            val firstSong = songs.first()
+            val activity = context as? MainActivity
+            activity?.playSongFromFragment(firstSong)
+        } else {
+            Log.d("HomeFragment", "해당 앨범의 곡을 찾을 수 없습니다.")
+        }
     }
 }

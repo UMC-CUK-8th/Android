@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -31,16 +32,21 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/locker_content_tb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:tabSelectedTextColor="#3f3fff"
-        app:tabIndicatorFullWidth="false"
-        app:tabIndicatorColor="#3f3fff"
-        app:tabRippleColor="#00ff0000"
-        android:layout_marginLeft="5dp"
+        android:layout_width="181dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/locker_title_tv"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:tabGravity="fill"
+        app:tabIndicatorColor="#3f3fff"
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="fixed"
+        app:tabRippleColor="#00ff0000"
+        app:tabSelectedTextColor="#3f3fff" />
 
     <ImageView
         android:id="@+id/locker_select_all_img_iv"
