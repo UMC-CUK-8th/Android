@@ -1,0 +1,14 @@
+<!-- res/layout/fragment_saved_album.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 더미 텍스트뷰 -->
+    <TextView
+        android:id="@+id/albumDummyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="여기는 저장된 앨범 화면입니다 (더미 화면)"
+        android:textSize="16sp" />
+</LinearLayout>

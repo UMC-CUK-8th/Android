@@ -17,7 +17,6 @@ class SongActivity : AppCompatActivity() {
     private var mediaPlayer: MediaPlayer? = null
     private var gson: Gson = Gson()
     private var songPosition: Int = -1
-    var nowPos = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

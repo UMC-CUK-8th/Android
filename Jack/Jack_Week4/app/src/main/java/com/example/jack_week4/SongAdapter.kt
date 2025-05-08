@@ -1,0 +1,64 @@
+package com.example.jack_week4
+
+import android.annotation.SuppressLint
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.example.jack_week4.databinding.ItemSongBinding
+
+class SongAdapter(
+    private var songs: ArrayList<Song>
+) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
+
+    interface MyItemClickListener {
+        fun onRemoveSong(position: Int)
+    }
+
+    private lateinit var mItemClickListener: MyItemClickListener
+
+    fun setMyItemClickListener(itemClickListener: MyItemClickListener) {
+        mItemClickListener = itemClickListener
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemSongBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(songs[position])
+        holder.binding.itemSongMoreIv.setOnClickListener {
+            if (position >= 0 && position < songs.size) {
+                // 삭제 클릭 시 onRemoveSong 호출
+                mItemClickListener.onRemoveSong(position)
+            }
+        }
+    }
+
+    override fun getItemCount(): Int = songs.size
+
+    fun removeSong(position: Int) {
+        if (position >= 0 && position < songs.size) {
+            // 리스트에서 아이템 제거
+            songs.removeAt(position)
+            notifyItemRemoved(position)
+
+            notifyItemRangeChanged(position, songs.size)
+        }
+    }
+
+    inner class ViewHolder(val binding: ItemSongBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(song: Song) {
+            binding.itemSongTitleTv.text = song.title
+            binding.itemSongSingerTv.text = song.singer
+            song.coverImg?.let { binding.itemSongImgIv.setImageResource(it) }
+
+            // ✅ Switch 상태 설정
+            binding.itemSongSwitch.setOnCheckedChangeListener(null)
+            binding.itemSongSwitch.isChecked = song.isChecked
+            binding.itemSongSwitch.setOnCheckedChangeListener { _, isChecked ->
+                song.isChecked = isChecked
+            }
+        }
+    }
+}
