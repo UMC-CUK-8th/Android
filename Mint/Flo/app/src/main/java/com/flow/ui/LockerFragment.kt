@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.flo.ui.SavedSongFragment
 import com.flow.databinding.FragmentLockerBinding
 import com.flow.ui.adapters.LockerVPAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -27,17 +28,32 @@ class LockerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 뷰페이저 어댑터 연결
-        binding.lockerContentVp.adapter = LockerVPAdapter(this)
+        val adapter = LockerVPAdapter(this)
+        binding.lockerContentVp.adapter = adapter
 
-        // 탭 연결
-        TabLayoutMediator(binding.lockerContentTb, binding.lockerContentVp) { tab, position ->
-            tab.text = when (position) {
-                0 -> "저장한 곡"
-                1 -> "음악파일"
-                else -> ""
-            }
+        TabLayoutMediator(binding.lockerContentTb, binding.lockerContentVp) { tab, pos ->
+            tab.text = if (pos == 0) "저장한 곡" else "음악파일"
         }.attach()
+
+        // LockerFragment.kt 수정
+
+        binding.lockerContentVp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                if (position == 0) {
+                    val fragment = childFragmentManager.findFragmentByTag("f0") as? SavedSongFragment
+                    fragment?.setSelectAllButton(binding.lockerSelectAllImgIv)
+                    fragment?.setDeleteButton(binding.lockerDeleteIv)
+                    binding.lockerSelectAllImgIv.setOnClickListener {
+                        fragment?.enterDeleteMode()
+                    }
+                } else {
+                    binding.lockerDeleteIv.visibility = View.GONE
+                }
+            }
+        })
+
+
     }
 
     override fun onDestroyView() {
