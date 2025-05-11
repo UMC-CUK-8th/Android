@@ -16,7 +16,6 @@ import com.flow.data.Album
 import com.flow.data.SongDatabase
 import com.flow.databinding.FragmentHomeBinding
 import com.flow.ui.adapters.AlbumRVAdapter
-import com.flow.ui.adapters.BannerVPAdapter
 import com.google.gson.Gson
 
 
@@ -34,9 +33,6 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-//        binding.homeAlbum01Iv.setOnClickListener {
-//            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm, AlbumFragment()).commitAllowingStateLoss()
-//        }
 
         // 데이터 리스트 생성 더머 데이터
         songDB = SongDatabase.getInstance(requireContext())!!
@@ -65,14 +61,6 @@ class HomeFragment : Fragment() {
                 playFirstSongInAlbum(album)
             }
         })
-
-        val bannerAdapter = BannerVPAdapter(this)
-        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp))
-        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp2))
-        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp3))
-
-        binding.homeBannerVp.adapter = bannerAdapter
-        binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         return binding.root
     }

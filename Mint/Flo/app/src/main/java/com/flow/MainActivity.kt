@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.view.View
-import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -20,7 +19,7 @@ import com.flow.data.SongDatabase
 import com.flow.databinding.ActivityMainBinding
 import com.flow.ui.HomeFragment
 import com.flow.ui.LockerFragment
-import com.flow.ui.LookFragment
+import com.flow.ui.LockFragment
 import com.flow.ui.SearchFragment
 import kotlin.jvm.java
 
@@ -171,7 +170,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeFragment -> supportFragmentManager.beginTransaction()
                     .replace(R.id.main_frm, HomeFragment()).commitAllowingStateLoss()
                 R.id.lookFragment -> supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_frm, LookFragment()).commitAllowingStateLoss()
+                    .replace(R.id.main_frm, LockFragment()).commitAllowingStateLoss()
                 R.id.searchFragment -> supportFragmentManager.beginTransaction()
                     .replace(R.id.main_frm, SearchFragment()).commitAllowingStateLoss()
                 R.id.lockerFragment -> supportFragmentManager.beginTransaction()

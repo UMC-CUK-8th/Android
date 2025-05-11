@@ -3,7 +3,11 @@ package com.flow
 import android.content.*
 import android.os.Bundle
 import android.os.IBinder
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -18,7 +22,6 @@ class SongActivity : AppCompatActivity() {
     private val songs = arrayListOf<Song>()
     private var nowPos = 0
 
-    /* ── MusicService ─ */
     private var musicService: MusicService? = null
     private var bound = false
     private val conn = object : ServiceConnection {
@@ -33,13 +36,13 @@ class SongActivity : AppCompatActivity() {
         }
     }
 
-    /* ── 진행률 수신 ─ */
     private val progressReceiver = object : BroadcastReceiver() {
         override fun onReceive(c: Context?, i: Intent?) {
             val cur = i?.getIntExtra("posMs", 0) ?: 0
             val dur = i?.getIntExtra("duration", 1) ?: 1
             binding.songProgressSb.progress = cur * 1000 / dur
-            binding.songStartTimeTv.text = String.format("%02d:%02d", cur / 1000 / 60, (cur / 1000) % 60)
+            binding.songStartTimeTv.text =
+                String.format("%02d:%02d", cur / 1000 / 60, (cur / 1000) % 60)
         }
     }
 
@@ -52,12 +55,10 @@ class SongActivity : AppCompatActivity() {
         val songListJson = intent.getStringExtra("songList")
         val songId = intent.getIntExtra("songId", -1)
 
-        // ✅ 1. songList가 있을 경우 (앨범 재생에서 진입)
         if (!songListJson.isNullOrEmpty()) {
             val songArray = gson.fromJson(songListJson, Array<Song>::class.java)
             songs.addAll(songArray)
         } else {
-            // ✅ 2. songList 없이 단일 곡 ID만 전달된 경우 (미니플레이어 등)
             val dbSongs = SongDatabase.getInstance(this)?.songDao()?.getSongs()
             if (dbSongs.isNullOrEmpty()) {
                 Toast.makeText(this, "곡 정보가 없습니다.", Toast.LENGTH_SHORT).show()
@@ -67,12 +68,8 @@ class SongActivity : AppCompatActivity() {
             songs.addAll(dbSongs)
         }
 
-        // 현재 곡 포지션 설정
-        nowPos = songs.indexOfFirst { it.id == songId }.let {
-            if (it == -1) 0 else it
-        }
+        nowPos = songs.indexOfFirst { it.id == songId }.let { if (it == -1) 0 else it }
 
-        // MusicService 바인드
         Intent(this, MusicService::class.java).also {
             startService(it)
             bindService(it, conn, 0)
@@ -83,7 +80,6 @@ class SongActivity : AppCompatActivity() {
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(progressReceiver, IntentFilter("FLOW_PROGRESS"))
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -136,11 +132,7 @@ class SongActivity : AppCompatActivity() {
             SongDatabase.getInstance(this@SongActivity)!!
                 .songDao().updateIsLikeById(song.isLike, song.id)
 
-            Toast.makeText(
-                this@SongActivity,
-                if (song.isLike) "좋아요 추가됨" else "좋아요 제거됨",
-                Toast.LENGTH_SHORT
-            ).show()
+            showCustomToast(if (song.isLike) "좋아요 추가됨" else "좋아요 제거됨", song.isLike)
         }
     }
 
@@ -152,4 +144,25 @@ class SongActivity : AppCompatActivity() {
         nowPos += d
         setPlayer(songs[nowPos])
     }
+
+    private fun showCustomToast(message: String, isLiked: Boolean) {
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, null)
+
+        val icon = layout.findViewById<ImageView>(R.id.toast_icon)
+        val text = layout.findViewById<TextView>(R.id.toast_text)
+
+        icon.setImageResource(
+            if (isLiked) R.drawable.ic_my_like_on else R.drawable.ic_my_like_off
+        )
+        text.text = message
+
+        with(Toast(this)) {
+            duration = Toast.LENGTH_SHORT
+            view = layout
+            setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 200) // 위치 추가
+            show()
+        }
+    }
+
 }
