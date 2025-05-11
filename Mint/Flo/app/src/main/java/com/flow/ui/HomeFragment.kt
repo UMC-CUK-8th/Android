@@ -1,5 +1,6 @@
 package com.flow.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,11 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.flow.MainActivity
 import com.flow.R
+import com.flow.SongActivity
 import com.flow.data.Album
 import com.flow.data.SongDatabase
 import com.flow.databinding.FragmentHomeBinding
 import com.flow.ui.adapters.AlbumRVAdapter
-import com.flow.ui.adapters.BannerVPAdapter
 import com.google.gson.Gson
 
 
@@ -32,9 +33,6 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-//        binding.homeAlbum01Iv.setOnClickListener {
-//            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm, AlbumFragment()).commitAllowingStateLoss()
-//        }
 
         // 데이터 리스트 생성 더머 데이터
         songDB = SongDatabase.getInstance(requireContext())!!
@@ -57,20 +55,17 @@ class HomeFragment : Fragment() {
             }
 
             override fun onPlayAlbum(album: Album) {
+                val songs = songDB.songDao().getSongs().filter { it.coverImg == album.coverImg }
+                val activity = context as? MainActivity
+                activity?.playAlbumSongs(songs)
                 playFirstSongInAlbum(album)
             }
         })
 
-        val bannerAdapter = BannerVPAdapter(this)
-        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp))
-        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp2))
-        bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp3))
-
-        binding.homeBannerVp.adapter = bannerAdapter
-        binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-
         return binding.root
     }
+
+
 
     private fun changeAlbumFragment(album: Album) {
         (context as MainActivity).supportFragmentManager.beginTransaction()
@@ -85,17 +80,21 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     * 앨범의 첫 번째 곡을 찾아서 재생합니다.
+     * 앨범의 전체 곡 리스트 전달
      */
     private fun playFirstSongInAlbum(album: Album) {
         val songs = songDB.songDao().getSongs().filter { it.coverImg == album.coverImg }
+        if (songs.isEmpty()) return
 
-        if (songs.isNotEmpty()) {
-            val firstSong = songs.first()
-            val activity = context as? MainActivity
-            activity?.playSongFromFragment(firstSong)
-        } else {
-            Log.d("HomeFragment", "해당 앨범의 곡을 찾을 수 없습니다.")
+        val gson = Gson()
+        val songListJson = gson.toJson(songs)
+
+        val intent = Intent(requireContext(), SongActivity::class.java).apply {
+            putExtra("songList", songListJson)
+            putExtra("songId", songs[0].id)
         }
+
+        startActivity(intent)
     }
+
 }

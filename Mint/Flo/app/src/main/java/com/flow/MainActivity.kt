@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.view.View
-import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -20,7 +19,7 @@ import com.flow.data.SongDatabase
 import com.flow.databinding.ActivityMainBinding
 import com.flow.ui.HomeFragment
 import com.flow.ui.LockerFragment
-import com.flow.ui.LookFragment
+import com.flow.ui.LockFragment
 import com.flow.ui.SearchFragment
 import kotlin.jvm.java
 
@@ -82,6 +81,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.mainMiniplayerPreviousIv.setOnClickListener {
+            moveSong(-1)
+        }
+
+        binding.mainMiniplayerNextIv.setOnClickListener {
+            moveSong(+1)
+        }
+
+
         binding.mainPauseBtn.setOnClickListener {
             musicService?.pause(); updatePlayPause()
         }
@@ -94,7 +102,43 @@ class MainActivity : AppCompatActivity() {
         initBottomNavigation()
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(progressReceiver, IntentFilter("FLOW_PROGRESS"))
+
+        // SharedPreferences에서 songId 불러와서 곡 설정
+        val savedSongId = getSharedPreferences("song", MODE_PRIVATE).getInt("songId", -1)
+        if (savedSongId != -1) {
+            val savedSong = songDB.songDao().getSongById(savedSongId)
+            savedSong?.let {
+                musicService?.setSong(it)
+                refreshMini()
+                updatePlayPause()
+            }
+        }
+
+
     }
+
+    private fun moveSong(d: Int) {
+        val songs = songDB.songDao().getSongs()
+        val curSong = musicService?.currentSong ?: return
+        val nowPos = songs.indexOfFirst { it.id == curSong.id }
+
+        val newPos = nowPos + d
+        if (newPos !in songs.indices) {
+            Toast.makeText(this, "더 이상 곡이 없습니다.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val nextSong = songs[newPos]
+        musicService?.setSong(nextSong, autoPlay = true)
+
+        // SharedPreferences에 새로운 songId 저장
+        getSharedPreferences("song", MODE_PRIVATE)
+            .edit().putInt("songId", nextSong.id).apply()
+
+        refreshMini()
+        updatePlayPause()
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -126,7 +170,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeFragment -> supportFragmentManager.beginTransaction()
                     .replace(R.id.main_frm, HomeFragment()).commitAllowingStateLoss()
                 R.id.lookFragment -> supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_frm, LookFragment()).commitAllowingStateLoss()
+                    .replace(R.id.main_frm, LockFragment()).commitAllowingStateLoss()
                 R.id.searchFragment -> supportFragmentManager.beginTransaction()
                     .replace(R.id.main_frm, SearchFragment()).commitAllowingStateLoss()
                 R.id.lockerFragment -> supportFragmentManager.beginTransaction()
@@ -138,8 +182,30 @@ class MainActivity : AppCompatActivity() {
 
     fun playSongFromFragment(song: Song) {
         musicService?.setSong(song, autoPlay = true)
+
+        // 현재 곡 저장
+        getSharedPreferences("song", MODE_PRIVATE)
+            .edit().putInt("songId", song.id).apply()
+
         refreshMini()
         updatePlayPause()
+    }
+
+    fun playAlbumSongs(songs: List<Song>) {
+        if (songs.isEmpty()) return
+
+        // 첫 곡부터 재생
+        val first = songs[0]
+        musicService?.setSong(first, autoPlay = true)
+
+        // SharedPreferences에 현재 곡 저장
+        getSharedPreferences("song", MODE_PRIVATE)
+            .edit().putInt("songId", first.id).apply()
+
+        refreshMini()
+        updatePlayPause()
+
+        // 👉 나중에 SongActivity에서 사용할 수 있도록 전역 저장도 고려 가능
     }
 
 
