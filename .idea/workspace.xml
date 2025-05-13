@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a11468aa-3630-477f-b675-eb842bdd0f9f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/res/layout/recylerview_item.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/res/drawable/toast_bg.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/res/layout/toast_custom_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/HomeFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/LockerAlbumRVAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/LockerAlbumRVAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/MainActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/SavedSongFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/SavedSongFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/Song.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/Song.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/SongActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/SongActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lily/Week4/app/src/main/res/layout/fragment_bottom_sheet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/res/layout/fragment_bottom_sheet.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +44,8 @@
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;릴리/최효비&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hyobe/FLO&quot;
   }
 }</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />

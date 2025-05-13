@@ -130,17 +130,51 @@ class SongActivity : AppCompatActivity() {
         }
     }
 
+    private fun initClickListener(){
+        binding.songDownIb.setOnClickListener {
+            finish()
+        }
 
-    private fun initSong() { // intent 방식 사용 안함.
+        binding.songMiniplayerIv.setOnClickListener {
+            setPlayerStatus(true)
+        }
+
+        binding.songPauseIv.setOnClickListener {
+            setPlayerStatus(false)
+        }
+
+        binding.songNextIv.setOnClickListener {
+            moveSong(+1)
+        }
+
+        binding.songPreviousIv.setOnClickListener {
+            moveSong(-1)
+        }
+
+        binding.songLikeIv.setOnClickListener {
+            setLike(songs[nowPos].isLike)
+        }
+    }
+    private fun initSong() {
         val spf = getSharedPreferences("song", MODE_PRIVATE)
         val songId = spf.getInt("songId", 0)
 
         nowPos = getPlayingSongPosition(songId)
 
-        Log.d("present pos", nowPos.toString())
+        Log.d("now Song ID",songs[nowPos].id.toString())
+
 
         startTimer()
         setPlayer(songs[nowPos])
+    }
+
+    private fun getPlaysongPostion(songId: Int): Int{
+        for(i in 0 until songs.size){
+            if (songs[i].id == songId){
+                return i
+            }
+        }
+        return 0
     }
 
     private fun setLike(isCurrentlyLiked: Boolean) {
@@ -170,6 +204,29 @@ class SongActivity : AppCompatActivity() {
         else if (nowPos + direct >= songs.size){
             CustomSnackbar.make(binding.root, "마지막 곡입니다").show()
             // Toast.makeText(this,"마지막 곡입니다.",Toast.LENGTH_SHORT).show()
+        }
+
+        else {
+            nowPos += direct
+            timer.interrupt()
+            startTimer()
+
+            mediaPlayer?.release()
+            mediaPlayer = null
+
+            setPlayer(songs[nowPos])
+        }
+    }
+
+    private fun moveSong(direct: Int) { // +1 또는 -1
+        if (nowPos + direct < 0) {
+            CustomSnackbar.make(binding.root, "처음 곡입니다.").show()
+
+        }
+
+        else if (nowPos + direct >= songs.size){
+            CustomSnackbar.make(binding.root, "마지막 곡입니다").show()
+
         }
 
         else {
@@ -214,6 +271,18 @@ class SongActivity : AppCompatActivity() {
         setPlayerStatus(song.isPlaying)
     }
 
+        if(song.isLike) {
+            binding.songLikeIv.setImageResource(R.drawable.ic_my_like_on)
+            showCustomToast("좋아요를 눌렀습니다.")
+        }
+        else {
+            binding.songLikeIv.setImageResource(R.drawable.ic_my_like_off)
+            showCustomToast("좋아요를 취소했습니다.")
+
+        }
+        setPlayerStatus(song.isPlaying)
+    }
+
     fun setPlayerStatus (isPlaying : Boolean){
         songs[nowPos].isPlaying = isPlaying
         timer.isPlaying = isPlaying
@@ -229,6 +298,19 @@ class SongActivity : AppCompatActivity() {
                 mediaPlayer?.pause()
             }
         }
+    }
+
+    private fun showCustomToast(message: String) {
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.toast_custom_layout, null)
+
+        layout.findViewById<TextView>(R.id.toast_text).text = message
+
+        val toast = Toast(this)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 100)
+        toast.show()
     }
 
     private fun startStopService() {

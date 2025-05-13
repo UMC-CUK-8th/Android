@@ -42,20 +42,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.mainPlayerCl.setOnClickListener {
-//            val intent = Intent(this, SongActivity::class.java)
-//            intent.putExtra("title", song.title)
-//            intent.putExtra("singer",song.singer)
-//            intent.putExtra("second", song.second)
-//            intent.putExtra("playTime", song.playTime)
-//            intent.putExtra("isPlaying", song.isPlaying)
-//            intent.putExtra("music", song.music)
-            val editor = getSharedPreferences("song", MODE_PRIVATE).edit()
+            val editor = getSharedPreferences("Song", MODE_PRIVATE).edit()
             editor.putInt("songId", songs[nowPos].id)
             editor.apply()
 
             val intent = Intent(this,SongActivity::class.java)
             activityResultLauncher.launch(intent)
         }
+
 
         Log.d("MainActivity", getJwt().toString())
 
@@ -141,7 +135,7 @@ class MainActivity : AppCompatActivity() {
         binding.mainMiniplayerProgressSb.progress = 0
     }
 
-    private fun inputDummySongs(){
+    private fun inputDummySongs() {
         val songDB = SongDatabase.getInstance(this)!!
         val songs = songDB.songDao().getSongs()
 
@@ -233,8 +227,12 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        val songDBData = songDB.songDao().getSongs()
-        Log.d("DB data", songDBData.toString())
+        song = if (songId == 0) {
+            songDB.songDao().getSong(songId)
+        }
+
+        Log.d("song ID", song.id.toString())
+        sestMiniPlayer(song)
     }
 
     private fun getJwt() : String? {

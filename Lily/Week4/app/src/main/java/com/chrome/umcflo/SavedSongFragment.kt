@@ -11,8 +11,29 @@ import com.chrome.umcflo.databinding.FragmentSavedSongBinding
 import com.google.gson.Gson
 
 class SavedSongFragment : Fragment() {
+    private lateinit var binding: FragmentSavedSongBinding
+    private lateinit var adapter: SongAdapter
+    private val songList = mutableListOf<Song>(
+        Song("Lilac", "아이유 (IU)", 0),
+        Song("Blueming", "아이유 (IU)", 0),
+        Song("Celebrity", "아이유 (IU)", 0),
+        Song("스물셋", "아이유 (IU)", 0),
+        Song("홀씨", "아이유 (IU)", 0),
+        Song("Love Wins All", "아이유 (IU)", 0),
+        Song("밤편지", "아이유 (IU)", 0),
+        Song("팔레트", "아이유 (IU)", 0),
+        Song("에잇", "아이유 (IU)", 0),
+        Song("내 손을 잡아", "아이유 (IU)", 0),
+        Song("어푸", "아이유 (IU)", 0),
+        Song("Shopper", "아이유 (IU)", 0),
+        Song("좋은 날", "아이유 (IU)", 0),
+        Song("Strawberry Moon", "아이유 (IU)", 0),
+        Song("금요일에 만나요", "아이유 (IU)", 0)
 
-    private var albumDatas = ArrayList<Album>()
+
+
+
+                private var albumDatas = ArrayList<Album>()
     lateinit var binding : FragmentSavedSongBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +63,7 @@ class SavedSongFragment : Fragment() {
         return binding.root
     }
 }
+
 
 
     override fun onStart() {
