@@ -1,6 +1,5 @@
 package com.example.jack_week4
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +28,7 @@ class SongAdapter(
         holder.bind(songs[position])
         holder.binding.itemSongMoreIv.setOnClickListener {
             if (position >= 0 && position < songs.size) {
-                // 삭제 클릭 시 onRemoveSong 호출
+
                 mItemClickListener.onRemoveSong(position)
             }
         }
@@ -39,7 +38,7 @@ class SongAdapter(
 
     fun removeSong(position: Int) {
         if (position >= 0 && position < songs.size) {
-            // 리스트에서 아이템 제거
+
             songs.removeAt(position)
             notifyItemRemoved(position)
 
@@ -53,11 +52,10 @@ class SongAdapter(
             binding.itemSongSingerTv.text = song.singer
             song.coverImg?.let { binding.itemSongImgIv.setImageResource(it) }
 
-            // ✅ Switch 상태 설정
             binding.itemSongSwitch.setOnCheckedChangeListener(null)
-            binding.itemSongSwitch.isChecked = song.isChecked
+            binding.itemSongSwitch.isChecked = song.isLike
             binding.itemSongSwitch.setOnCheckedChangeListener { _, isChecked ->
-                song.isChecked = isChecked
+                song.isLike = isChecked
             }
         }
     }
