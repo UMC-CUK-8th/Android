@@ -23,5 +23,7 @@
     <color name="gray_color">#a8a8a8</color>
     <color name="colorPrimaryGrey">#424242</color>
     <color name="flo">#3f3fff</color>
+    <color name="item_selected_bg">#FFE0B2</color> <!-- 선택된 배경색 -->
+    <color name="item_unselected_bg">#FFFFFF</color> <!-- 기본 배경색 -->
 
 </resources>

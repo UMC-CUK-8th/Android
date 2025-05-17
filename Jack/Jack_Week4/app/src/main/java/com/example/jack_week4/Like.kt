@@ -3,9 +3,7 @@ package com.example.jack_week4
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "LikeTable", primaryKeys = ["userId", "albumId"])
-data class Like(
-    val userId: Int,
-    val albumId: Int
-)
-
+@Entity(tableName = "LikeTable")
+data class Like(var userId: Int, var albumId: Int) {
+    @PrimaryKey(autoGenerate = true) var id: Int = 0
+}

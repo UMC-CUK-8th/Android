@@ -17,7 +17,6 @@ class AlbumFragment : Fragment() {
     private val information = arrayListOf("수록곡", "상세정보", "영상")
 
     private var isLiked: Boolean = false
-    private var userId: Int = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +52,7 @@ class AlbumFragment : Fragment() {
     }
 
     private fun setClickListeners(album: Album) {
+        val userId: Int = getJwt()
 
         binding.albumLike.setOnClickListener {
             if(isLiked) {
@@ -99,10 +99,18 @@ class AlbumFragment : Fragment() {
 
     private fun isLikedAlbum(albumId: Int): Boolean {
         val songDB = SongDatabase.getInstance(requireContext())!!
+        val userId = getJwt()
 
         val likeId: Int? = songDB.albumDao().isLikedAlbum(userId, albumId)
 
         return likeId != null
     }
 
+    private fun getJwt(): Int {
+        val spf = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
+        val jwt = spf!!.getInt("jwt", 0)
+        Log.d("MAIN_ACT/GET_JWT", "jwt_token: $jwt")
+
+        return jwt
+    }
 }

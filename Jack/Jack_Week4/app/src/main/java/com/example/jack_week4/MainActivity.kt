@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         inputDummySongs()
+        inputDummyAlbums()
         initBottomNavigation()
 //        val song = Song(binding.mainMiniplayerTitleTv.text.toString(), binding.mainMiniplayerSingerTv.text.toString(),0,60,false)
 
@@ -169,6 +170,45 @@ class MainActivity : AppCompatActivity() {
         val _songs = songDB.songDao().getSongs()
         Log.d("DB data", _songs.toString())
     }
+    private fun inputDummyAlbums() {
+        val songDB = SongDatabase.getInstance(this)!!
+        val albums = songDB.albumDao().getAlbums()
 
+        if (albums.isNotEmpty()) return
 
+        songDB.albumDao().insert(
+            Album(
+                0,
+                "IU 5th Album 'LILAC'", "아이유 (IU)", R.drawable.img_album_exp2
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                1,
+                "Celebrity", "아이유 (IU)", R.drawable.img_album_exp2
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                2,
+                "Twenty-three", "아이유 (IU)", R.drawable.img_album_exp2
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                3,
+                "Eight", "아이유 (IU)", R.drawable.img_album_exp2
+            )
+        )
+        songDB . albumDao ().insert(
+            Album(
+                4,
+                "Love wins all", "아이유 (IU)", R.drawable.img_album_exp2
+            )
+        )
+
+    }
 }

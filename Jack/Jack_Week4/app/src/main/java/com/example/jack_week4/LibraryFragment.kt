@@ -25,6 +25,11 @@ class LibraryFragment : Fragment() {
             tab.text = information[position]
         }.attach()
 
+        val bottomSheetFragment = BottomSheetFragment()
+        binding.librarySelectAllTv.setOnClickListener {
+            bottomSheetFragment.show(requireFragmentManager(), "BottomSheetDialog")
+        }
+
         return binding.root
     }
 

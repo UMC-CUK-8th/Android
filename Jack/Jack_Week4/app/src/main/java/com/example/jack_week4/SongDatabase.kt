@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
-@Database(entities = [Song::class, Album::class, Like::class], version = 2)
+@Database(entities = [Song::class, Album::class, Like::class], version = 3)
 abstract class SongDatabase : RoomDatabase() {
     abstract fun songDao(): SongDao
     abstract fun albumDao(): AlbumDao
@@ -22,8 +22,8 @@ abstract class SongDatabase : RoomDatabase() {
                     SongDatabase::class.java,
                     "song-database"
                 )
-                    .fallbackToDestructiveMigration() // ← 이거 꼭 있어야 함
-                    .allowMainThreadQueries() // 테스트용
+                    .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .build()
             }
             return instance!!

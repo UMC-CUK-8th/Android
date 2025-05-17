@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id ("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -43,6 +44,10 @@ android {
 
 dependencies {
 
+    implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation ("com.google.firebase:firebase-auth-ktx:22.1.1")
+
     implementation ("me.relex:circleindicator:2.1.6")
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation(libs.androidx.core.ktx)
@@ -55,6 +60,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation ("androidx.room:room-runtime:2.6.1")
     implementation ("androidx.room:room-ktx:2.6.1")
+    implementation(libs.firebase.database)
     kapt ("androidx.room:room-compiler:2.6.1")
     implementation("com.google.code.gson:gson:2.13.1")
     implementation ("androidx.navigation:navigation-fragment-ktx:2.6.0")

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "213345418656",
+    "project_id": "flo-7301b",
+    "storage_bucket": "flo-7301b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213345418656:android:edaed917a3b541260ab8c5",
+        "android_client_info": {
+          "package_name": "com.example.jack_week4"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtz0EKI1DNuEdjy1fY96Xq6P8Rl_83fW4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

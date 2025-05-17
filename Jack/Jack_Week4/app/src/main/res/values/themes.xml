@@ -24,4 +24,7 @@
         <item name="android:windowBackground"> @drawable/ic_flo_logo</item>
         <item name="android:statusBarColor">@color/transparent</item>
     </style>
+    <style name="NoDimBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>

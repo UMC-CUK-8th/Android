@@ -12,7 +12,8 @@ data class Song(
     var isPlaying: Boolean = false,
     var music: String = "",
     var coverImg: Int? = null,
-    var isLike: Boolean = false
+    var isLike: Boolean = false,
+    var isSelected: Boolean = false
 ){
     @PrimaryKey(autoGenerate = true) var id: Int = 0
 }

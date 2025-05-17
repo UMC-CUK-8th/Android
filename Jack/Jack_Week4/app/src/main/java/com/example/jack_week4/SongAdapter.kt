@@ -52,10 +52,12 @@ class SongAdapter(
             binding.itemSongSingerTv.text = song.singer
             song.coverImg?.let { binding.itemSongImgIv.setImageResource(it) }
 
-            binding.itemSongSwitch.setOnCheckedChangeListener(null)
-            binding.itemSongSwitch.isChecked = song.isLike
-            binding.itemSongSwitch.setOnCheckedChangeListener { _, isChecked ->
-                song.isLike = isChecked
+            binding.root.isSelected = song.isSelected
+
+            // root 클릭 시 선택 상태 토글
+            binding.root.setOnClickListener {
+                song.isSelected = !song.isSelected
+                binding.root.isSelected = song.isSelected
             }
         }
     }
