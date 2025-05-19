@@ -1,58 +1,79 @@
 package com.example.jack_week4
 
 import android.os.Bundle
-import android.view.*
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.jack_week4.databinding.FragmentSavedSongBinding
+import com.example.jack_week4.databinding.FragmentLibrarySavedsongBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class SavedSongFragment : Fragment() {
 
-    private lateinit var binding: FragmentSavedSongBinding
-    private lateinit var adapter: SongAdapter
-    private val songList = mutableListOf<Song>(
-        Song("Lilac", "아이유 (IU)", 0),
-        Song("Blueming", "아이유 (IU)", 0),
-        Song("Celebrity", "아이유 (IU)", 0),
-        Song("스물셋", "아이유 (IU)", 0),
-        Song("홀씨", "아이유 (IU)", 0),
-        Song("Love Wins All", "아이유 (IU)", 0),
-        Song("밤편지", "아이유 (IU)", 0),
-        Song("팔레트", "아이유 (IU)", 0),
-        Song("에잇", "아이유 (IU)", 0),
-        Song("내 손을 잡아", "아이유 (IU)", 0),
-        Song("어푸", "아이유 (IU)", 0),
-        Song("Shopper", "아이유 (IU)", 0),
-        Song("좋은 날", "아이유 (IU)", 0),
-        Song("Strawberry Moon", "아이유 (IU)", 0),
-        Song("금요일에 만나요", "아이유 (IU)", 0)
+    private lateinit var binding: FragmentLibrarySavedsongBinding
+    private lateinit var adapter: SavedSongRVAdapter
+    private lateinit var database: DatabaseReference
+    private val likedSongs = arrayListOf<SongFirebase>()
+
+    private val userId: String
+        get() {
+            val uid = FirebaseAuth.getInstance().currentUser?.uid
+            Log.d("SavedSongFragment", "현재 로그인한 userId = $uid")
+            return uid ?: "test_user"
+        }
 
 
-    )
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSavedSongBinding.inflate(inflater, container, false)
-
-        // 어댑터 설정
-        adapter = SongAdapter(songList as ArrayList<Song>)
-
-        // 아이템 클릭 시 삭제 기능 구현
-        adapter.setMyItemClickListener(object : SongAdapter.MyItemClickListener {
-            override fun onRemoveSong(position: Int) {
-                if (position >= 0 && position < songList.size) {
-                    songList.removeAt(position)
-                    adapter.notifyItemRemoved(position)
-                    adapter.notifyItemRangeChanged(position, songList.size)
-                }
-            }
-        })
-
-        binding.savedSongRecyclerView.adapter = adapter
-        binding.savedSongRecyclerView.layoutManager = LinearLayoutManager(context)
+    ): View {
+        binding = FragmentLibrarySavedsongBinding.inflate(inflater, container, false)
+        adapter = SavedSongRVAdapter()
+        database = FirebaseDatabase.getInstance().getReference("likes").child(userId)
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initRecyclerView()
+        loadLikedSongs()
+    }
+
+    private fun initRecyclerView() {
+        binding.librarySavedSongRecyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.librarySavedSongRecyclerView.adapter = adapter
+
+        adapter.setMyItemClickListener(object : SavedSongRVAdapter.MyItemClickListener {
+            override fun onRemoveSong(songId: Int) {
+                database.child(songId.toString()).removeValue()
+                loadLikedSongs()
+            }
+        })
+    }
+
+    private fun loadLikedSongs() {
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                likedSongs.clear()
+                for (child in snapshot.children) {
+                    val songFirebase = child.getValue(SongFirebase::class.java)
+                    if (songFirebase != null) {
+                        likedSongs.add(songFirebase)
+                    } else {
+                        Log.d("SavedSongFragment", "Failed to parse SongFirebase for key ${child.key}")
+                    }
+                }
+                adapter.addSongs(likedSongs)
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
     }
 }

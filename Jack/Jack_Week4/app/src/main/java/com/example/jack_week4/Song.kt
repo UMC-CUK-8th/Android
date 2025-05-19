@@ -1,5 +1,9 @@
 package com.example.jack_week4
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "SongTable")
 data class Song(
     var title: String = "",
     var singer: String = "",
@@ -8,5 +12,8 @@ data class Song(
     var isPlaying: Boolean = false,
     var music: String = "",
     var coverImg: Int? = null,
-    var isChecked: Boolean = false
-)
+    var isLike: Boolean = false,
+    var isSelected: Boolean = false
+){
+    @PrimaryKey(autoGenerate = true) var id: Int = 0
+}
