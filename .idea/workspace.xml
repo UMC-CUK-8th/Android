@@ -5,11 +5,196 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a11468aa-3630-477f-b675-eb842bdd0f9f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/res/layout/recylerview_item.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/proguard-rules.pro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/androidTest/java/com/example/week7/ExampleInstrumentedTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/Album.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/AlbumDao.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/AlbumFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/AlbumRVAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/AlbumVPAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/BannerFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/BannerVPAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/BaseResponse.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/BottomSheetFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/CommunicationInterface.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/CustomSnackbar.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/DetailFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/ForegroundService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/HomeFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/Like.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/LockerFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/LockerVPAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/LookFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/LookView.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/MainActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/MusicFileFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/PannelFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/PannelVpAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/SavedAlbumFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/SavedAlbumRVAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/SavedSongFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/SearchFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/Song.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/SongActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/SongDao.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/SongDatabase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/SongFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/SongRVAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/SongResponse.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/SongService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/java/com/example/week7/VideoFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/app_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/apple_44.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/blue_radius.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btm_color_selector.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_actionbar_close.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_actionbar_instagram.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_arrow_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_arrow_more.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_editbar_addplaylist.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_editbar_delete.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_editbar_mylist.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_editbar_play.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_input_password.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_main_arrow_more.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_main_mike.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_main_setting.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_main_ticket.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_miniplay_mvpause.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_miniplay_pause.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_miniplayer_go_list.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_miniplayer_next.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_miniplayer_play.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_miniplayer_previous.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_panel_play_large.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_player_eq_off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_player_go_list.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_player_more.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_player_play.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_player_related.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_player_setting.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_player_unlike_off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_playlist_select_off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_playlist_select_on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_setting_phone.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_toggle_off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/btn_toggle_on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/button_background_black_color.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/button_background_flo_color.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/button_background_white_color.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/custom_snackbar_bg.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/discovery_banner_aos.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/fragment_look_chart_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/fragment_look_chip_off_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/fragment_look_chip_on_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/gray_radius.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_bottom_home_no_select.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_bottom_home_select.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_bottom_locker_no_select.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_bottom_locker_select.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_bottom_look_no_select.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_bottom_look_select.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_bottom_search_no_select.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_bottom_search_select.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_browse_arrow_right.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_flo_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_launcher_foreground.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_main_facebook.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_main_instagram.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_main_twitter.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_main_youtube.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_my_like_off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ic_my_like_on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/ico_20_logo_tid_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/icon_browse_arrow_right.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_album_exp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_album_exp2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_album_exp3.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_album_exp4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_album_exp5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_album_exp6.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_album_lp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_first_album_default.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_home_viewpager_exp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_home_viewpager_exp2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_jenre_exp_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_jenre_exp_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_jenre_exp_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_potcast_exp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/img_video_exp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/kakako_44.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/memo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/naver_44.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/not_selected_button.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/nugu_btn_down.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/nugu_btn_pause_32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/nugu_btn_play_32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/nugu_btn_random_inactive.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/nugu_btn_repeat_inactive.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/nugu_btn_skip_next_32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/nugu_btn_skip_previous_32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/selected_button.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/splash.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/textview_background_radius.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/textview_background_select_color_radius.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/toast_bg.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/drawable/widget_black_play.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/activity_song.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_album.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_audio.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_banner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_bottom_sheet.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_detail.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_locker.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_look.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_music_file.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_pannel.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_saved_album.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_saved_song.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_search.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_song.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/fragment_video.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/item_album.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/item_locker_album.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/item_song.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/layout/toast_custom_layout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/menu/bottom_nav_menu.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/mipmap-hdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/mipmap-mdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/xml/backup_rules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/main/res/xml/data_extraction_rules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/app/src/test/java/com/example/week7/ExampleUnitTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/gradle/libs.versions.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lily/Week7/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/HomeFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/LockerAlbumRVAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/LockerAlbumRVAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/SavedSongFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Lily/Week4/app/src/main/java/com/chrome/umcflo/SavedSongFragment.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +225,8 @@
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;릴리/최효비&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hyobe/FLO&quot;
   }
 }</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
