@@ -82,12 +82,17 @@ class LookFragment : Fragment(), LookView {
         getSongs()
     }
 
+    private fun initRecyclerView(result: FloChartResult) {
+        floCharAdapter = SongRVAdapter(requireContext(), result)
+
+        binding.lookFloChartRv.adapter = floCharAdapter
+    }
 
     private fun getSongs() {
         val songService = SongService()
         songService.setLookView(this)
 
-
+        songService.getSongs()
 
     }
 
@@ -116,6 +121,10 @@ class LookFragment : Fragment(), LookView {
         binding.lookLoadingPb.visibility = View.VISIBLE
     }
 
+    override fun onGetSongSuccess(code: Int, result: FloChartResult) {
+        binding.lookLoadingPb.visibility = View.GONE
+        initRecyclerView(result)
+    }
 
     override fun onGetSongFailure(code: Int, message: String) {
         binding.lookLoadingPb.visibility = View.GONE

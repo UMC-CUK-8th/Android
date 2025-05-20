@@ -11,7 +11,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.week7.databinding.ItemSongBinding
 
-class SongRVAdapter(val context: Context) : RecyclerView.Adapter<SongRVAdapter.ViewHolder>() {
+class SongRVAdapter(val context: Context, val result : FloChartResult) : RecyclerView.Adapter<SongRVAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): SongRVAdapter.ViewHolder {
@@ -20,7 +20,21 @@ class SongRVAdapter(val context: Context) : RecyclerView.Adapter<SongRVAdapter.V
         return ViewHolder(binding)
     }
 
+    override fun onBindViewHolder(holder: SongRVAdapter.ViewHolder, position: Int) {
+        //holder.bind(result.songs[position])
 
+        if(result.songs[position].coverImgUrl == "" || result.songs[position].coverImgUrl == null){
+
+        } else {
+            Log.d("image",result.songs[position].coverImgUrl )
+            Glide.with(context).load(result.songs[position].coverImgUrl).into(holder.coverImg)
+        }
+        holder.title.text = result.songs[position].title
+        holder.singer.text = result.songs[position].singer
+
+    }
+
+    override fun getItemCount(): Int = result.songs.size
 
 
     inner class ViewHolder(val binding: ItemSongBinding) : RecyclerView.ViewHolder(binding.root){
