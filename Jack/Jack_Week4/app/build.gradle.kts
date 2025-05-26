@@ -61,6 +61,7 @@ dependencies {
     implementation ("androidx.room:room-runtime:2.6.1")
     implementation ("androidx.room:room-ktx:2.6.1")
     implementation(libs.firebase.database)
+    implementation(libs.androidx.activity)
     kapt ("androidx.room:room-compiler:2.6.1")
     implementation("com.google.code.gson:gson:2.13.1")
     implementation ("androidx.navigation:navigation-fragment-ktx:2.6.0")

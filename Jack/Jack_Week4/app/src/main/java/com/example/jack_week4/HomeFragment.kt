@@ -28,7 +28,6 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         songDB = SongDatabase.getInstance(requireContext())!!
         albumDatas.addAll(songDB.albumDao().getAlbums())
-        Log.d("albumlist", albumDatas.toString())
 
         val albumRVAdapter = AlbumRVAdapter(albumDatas)
 
@@ -56,9 +55,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun changeAlbumFragment(album: Album) {
-        val intent = Intent(requireContext(), MainActivity::class.java)
-        intent.putExtra("albumId", album.id)
-        startActivity(intent)
+        (context as MainActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.main_frm, AlbumFragment().apply {
+                arguments = Bundle().apply {
+                    val gson = Gson()
+                    val albumJson = gson.toJson(album)
+                    putString("album", albumJson)
+                }
+            })
+            .commitAllowingStateLoss()
     }
 
 
