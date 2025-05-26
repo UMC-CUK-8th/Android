@@ -29,7 +29,9 @@ class AlbumFragment : Fragment() {
 
         val albumToJson = arguments?.getString("album")
         val album = gson.fromJson(albumToJson, Album::class.java)
+        isLiked = isLikedAlbum(album.id)
         setInit(album)
+        setOnClickListener(album)
 
         setFragmentResultListener("TitleInfo") { requestKey, bundle ->
             binding.albumMusicTitleTv.text = bundle.getString("title")
@@ -72,6 +74,11 @@ class AlbumFragment : Fragment() {
         }
     }
 
+    private fun getJwt() : Int {
+        val spf = requireActivity().getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
+        return spf.getInt("jwt", 0)
+    }
+
     private fun likeAlbum(userId : Int, albumId : Int) {
         val songDB = SongDatabase.getInstance(requireActivity())!!
         val like = Like(userId, albumId)
@@ -79,6 +86,34 @@ class AlbumFragment : Fragment() {
         songDB.albumDao().likeAlbum(like)
     }
 
+    private fun isLikedAlbum(albumId : Int) : Boolean {
+        val songDB = SongDatabase.getInstance(requireActivity())!!
+        val userId = getJwt()
 
+        val likeId : Int? = songDB.albumDao().isLikedAlbum(userId, albumId)
+        return likeId != null
+    }
 
+    private fun disLikeAlbum(albumId : Int) {
+        val songDB = SongDatabase.getInstance(requireActivity())!!
+        val userId = getJwt()
+
+        songDB.albumDao().dislikedAlbum(userId, albumId)
+    }
+
+    private fun setOnClickListener(album : Album) {
+        val userId = getJwt()
+        binding.albumLikeIv.setOnClickListener {
+            if(isLiked) {
+                binding.albumLikeIv.setImageResource(R.drawable.ic_my_like_off)
+                disLikeAlbum(album.id)
+            }
+
+            else {
+                binding.albumLikeIv.setImageResource((R.drawable.ic_my_like_on))
+                likeAlbum(userId, album.id)
+            }
+        }
+
+    }
 }
