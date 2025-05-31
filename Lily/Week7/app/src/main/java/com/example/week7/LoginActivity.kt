@@ -38,7 +38,8 @@ class LoginActivity : AppCompatActivity(), LoginView {
             return
         }
 
-        val email : String = binding.loginIdEt.text.toString() + "@" + binding.loginDirectInputEt.text.toString()
+        val email = binding.loginIdEt.text.toString().trim() + "@" +
+                binding.loginDirectInputEt.text.toString().trim()
         val pwd : String = binding.loginPasswordEt.text.toString()
 
 //        val songDB = SongDatabase.getInstance(this)!!
@@ -79,8 +80,8 @@ class LoginActivity : AppCompatActivity(), LoginView {
         startActivity(intent)
     }
 
-    override fun onLoginSuccess(code : Int, result : Result) {
-        saveJwtFromServer(result.jwt)
+    override fun onLoginSuccess(code : String, result : LoginResult) {
+        saveJwtFromServer(result.accessToken)
         startMainActivity()
     }
 

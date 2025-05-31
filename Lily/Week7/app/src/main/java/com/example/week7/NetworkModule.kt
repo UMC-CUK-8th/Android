@@ -13,7 +13,7 @@ object NetworkModule {
             .build()
     }
 
-    val authApi: AuthApi by lazy {
-        retrofit.create(AuthApi::class.java)
+    val authApi: AuthRetrofitInterface by lazy {
+        retrofit.create(AuthRetrofitInterface::class.java)
     }
 }
