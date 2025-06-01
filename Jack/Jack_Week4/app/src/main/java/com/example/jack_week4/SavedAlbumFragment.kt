@@ -20,9 +20,7 @@ class SavedAlbumFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLibrarySavedalbumBinding.inflate(inflater, container, false)
-
         albumDB = SongDatabase.getInstance(requireContext())!!
-
         return binding.root
     }
 
@@ -31,28 +29,25 @@ class SavedAlbumFragment : Fragment() {
         initRecyclerview()
     }
 
-    private fun initRecyclerview(){
-        binding.lockerSavedSongRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    private fun initRecyclerview() {
+        binding.lockerSavedSongRecyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         val albumRVAdapter = AlbumLibraryRVAdapter()
-        //리스너 객체 생성 및 전달
-
-        albumRVAdapter.setMyItemClickListener(object : AlbumLibraryRVAdapter.MyItemClickListener{
+        albumRVAdapter.setMyItemClickListener(object : AlbumLibraryRVAdapter.MyItemClickListener {
             override fun onRemoveSong(songId: Int) {
                 albumDB.albumDao().getLikedAlbums(getJwt())
             }
         })
 
         binding.lockerSavedSongRecyclerView.adapter = albumRVAdapter
-
         albumRVAdapter.addAlbums(albumDB.albumDao().getLikedAlbums(getJwt()) as ArrayList)
     }
 
-    private fun getJwt() : Int {
-        val spf = activity?.getSharedPreferences("auth" , AppCompatActivity.MODE_PRIVATE)
+    private fun getJwt(): Int {
+        val spf = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
         val jwt = spf!!.getInt("jwt", 0)
         Log.d("MAIN_ACT/GET_JWT", "jwt_token: $jwt")
-
         return jwt
     }
 }
