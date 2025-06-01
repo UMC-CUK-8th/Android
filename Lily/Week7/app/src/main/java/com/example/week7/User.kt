@@ -13,7 +13,7 @@ data class User(
     var password : String,
 
     @SerializedName("name")
-    var name : String
+    var name : String =""
 ) {
     @PrimaryKey(autoGenerate = true) var id : Int = 0
 }

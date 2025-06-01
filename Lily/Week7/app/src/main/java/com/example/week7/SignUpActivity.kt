@@ -9,6 +9,7 @@ import com.example.week7.databinding.ActivitySignUpBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.content.Intent
 
 class SignUpActivity : AppCompatActivity(), SignUpView {
 
@@ -24,12 +25,19 @@ class SignUpActivity : AppCompatActivity(), SignUpView {
         }
     }
 
-    private fun getUser() : User {
-        val email : String = binding.signUpIdEt.text.toString() + "@" + binding.signUpDirectInputEt.text.toString()
-        val pwd : String = binding.signUpPasswordEt.text.toString()
-        var name : String = binding.signUpNameEt.text.toString()
+    private fun getUser(): User {
+        val email = binding.signUpIdEt.text.toString().trim() + "@" +
+                binding.signUpDirectInputEt.text.toString().trim()
 
-        return User(email, pwd, name)
+        val password = binding.signUpPasswordEt.text.toString()
+        val name = binding.signUpNameEt.text.toString()
+
+        val user = User(email = email, password = password, name = name)
+
+        Log.d("SignUpRequest", "조합된 이메일: $email")
+        Log.d("SignUpRequest", user.toString())
+
+        return user
     }
 
     private fun signUp() : Boolean {
@@ -57,7 +65,13 @@ class SignUpActivity : AppCompatActivity(), SignUpView {
     }
 
     override fun onSignUpSuccess() {
-        finish()
+        Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+
+        finish() // 로그인 창으로 넘어간 후 이 액티비티는 종료
     }
 
     override fun onSignUpFailure(message : String) {
