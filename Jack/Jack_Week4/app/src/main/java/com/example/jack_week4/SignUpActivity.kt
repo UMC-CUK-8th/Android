@@ -36,29 +36,29 @@ class SignUpActivity : AppCompatActivity(),SignUpView {
         return User(email, pwd, name)
     }
 
-private fun signUp() {
-    if (binding.signUpIdEt.text.toString().isEmpty() || binding.signUpDirectInputEt.text.toString().isEmpty()) {
-        Toast.makeText(this, "이메일 형식이 잘못되었습니다.", Toast.LENGTH_SHORT).show()
-        return
-    }
+    private fun signUp() {
+        if (binding.signUpIdEt.text.toString().isEmpty() || binding.signUpDirectInputEt.text.toString().isEmpty()) {
+            Toast.makeText(this, "이메일 형식이 잘못되었습니다.", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-    if (binding.signUpNameEt.text.toString().isEmpty()) {
-        Toast.makeText(this, "이름 형식이 잘못되었습니다.", Toast.LENGTH_SHORT).show()
-        return
-    }
+        if (binding.signUpNameEt.text.toString().isEmpty()) {
+            Toast.makeText(this, "이름 형식이 잘못되었습니다.", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-    if (binding.signUpPasswordEt.text.toString() != binding.signUpPasswordCheckEt.text.toString()) {
-        Toast.makeText(this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
-        return
-    }
+        if (binding.signUpPasswordEt.text.toString() != binding.signUpPasswordCheckEt.text.toString()) {
+            Toast.makeText(this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+            return
+        }
 
 
-    val authService= AuthService()
-    authService.setSignUpView(this)
+        val authService= AuthService()
+        authService.setSignUpView(this)
 
-    authService.signUp(getUser())
+        authService.signUp(getUser())
 
-    Log.d("SIGNUP-ACT/ASYNC", "Hello, FLO")
+        Log.d("SIGNUP-ACT/ASYNC", "Hello, FLO")
     }
 
     override fun onSignUpSuccess() {

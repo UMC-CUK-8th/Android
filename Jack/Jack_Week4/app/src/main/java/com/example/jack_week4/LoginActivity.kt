@@ -51,7 +51,6 @@ class LoginActivity : AppCompatActivity(), LoginView {
         return User(email = email, password = password, name = "")
     }
 
-
     private fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
@@ -66,7 +65,7 @@ class LoginActivity : AppCompatActivity(), LoginView {
 
     override fun onLoginSuccess(code: String, result: Result) {
         when (code) {
-            "200" -> {
+            "COMMON200" -> {
                 saveJwt2(result.accessToken)
                 Log.d("LOGIN-ACT/JWT", result.accessToken)
                 startMainActivity()

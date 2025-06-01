@@ -18,7 +18,6 @@ class AuthService {
     }
 
     fun signUp(user: User) {
-
         val signUpService = getRetrofit().create(AuthRetrofitInterface::class.java)
 
         signUpService.signUp(user).enqueue(object : Callback<AuthResponse> {
@@ -36,16 +35,14 @@ class AuthService {
                 Log.d("SIGNUP-FAILURE", "통신 오류: ${t.message}")
                 signUpView.onSignUpFailure("NETWORK_ERROR", t.message ?: "서버와 연결할 수 없습니다.")
             }
-
         })
     }
 
-
     fun login(user: User) {
         val loginService = getRetrofit().create(AuthRetrofitInterface::class.java)
+        val loginRequest = LoginRequest(user.email, user.password)
 
-
-        loginService.login(user).enqueue(object : Callback<AuthResponse> {
+        loginService.login(loginRequest).enqueue(object : Callback<AuthResponse> {
             override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
                 Log.d("LOGIN-RESPONSE", response.toString())
                 if (response.isSuccessful && response.code() == 200) {
@@ -53,7 +50,7 @@ class AuthService {
                     Log.d("LOGIN-SUCCESS", loginResponse.toString())
 
                     when (val code = loginResponse.code) {
-                        "200" -> loginView.onLoginSuccess(code, loginResponse.result!!)
+                        "COMMON200" -> loginView.onLoginSuccess(code, loginResponse.result!!)
                         else -> loginView.onLoginFailure()
                     }
                 } else {
@@ -66,7 +63,6 @@ class AuthService {
                 Log.e("LOGIN-NETWORK-FAILURE", t.message ?: "Unknown error")
                 loginView.onLoginFailure()
             }
-
         })
     }
 }
