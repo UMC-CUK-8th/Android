@@ -1,4 +1,4 @@
-package com.example.week7
+package com.example.week7.ui.main.locker.adapter
 
 import android.app.Application
 import android.content.pm.PackageManager
