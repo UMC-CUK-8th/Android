@@ -11,7 +11,6 @@ import com.example.jack_week4.data.entities.User
 import com.example.jack_week4.data.remote.AuthService
 import com.example.jack_week4.data.remote.Result
 import com.example.jack_week4.databinding.ActivityLoginBinding
-import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 
